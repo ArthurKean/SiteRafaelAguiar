@@ -648,6 +648,25 @@ select {
   font-size: 12px;
   margin: 20px 0;
 }
+.footer-signature {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding-block: 2px;
+}
+.footer-signature > span {
+  font: 400 clamp(28px, 3vw, 36px)/1.2 var(--font-editorial);
+  letter-spacing: -0.025em;
+  color: var(--color-on-primary);
+}
+.footer-signature > small {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-accent);
+}
 .footer-grid .eyebrow {
   color: var(--color-accent);
   margin-bottom: 14px;
@@ -1730,12 +1749,6 @@ select {
   .location-section {
     padding-top: 32px;
     padding-bottom: 48px;
-  }
-  .footer-logo {
-    width: 300px;
-    max-width: 100%;
-    height: auto;
-    border-radius: var(--radius-sm);
   }
   .location-placeholder {
     min-height: 270px;

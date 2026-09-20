@@ -64,15 +64,9 @@ export function Layout() {
         <div className="container">
           <div className="footer-grid">
             <div>
-              <Link to="/" aria-label="Rafael Aguiar, início">
-                <img
-                  className="footer-logo"
-                  src="/images/marca.jpeg"
-                  alt="Rafael Aguiar — Curadoria exclusiva de imóveis"
-                  width="300"
-                  height="100"
-                  loading="lazy"
-                />
+              <Link to="/" className="footer-signature" aria-label="Rafael Aguiar, início">
+                <span>Rafael Aguiar</span>
+                <small>Curadoria de imóveis</small>
               </Link>
               <p>Corretor de imóveis · CRECI 8404</p>
               <p>
