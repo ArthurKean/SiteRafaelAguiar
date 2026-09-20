@@ -31,7 +31,7 @@ export function PropertyGallery({ property }: { property: Property }) {
         ))}
       </div>
       <p className="demo-caption gallery-caption">
-        Imagens ilustrativas · Empreendimento de demonstração
+        {property.isDemo ? "Imagens ilustrativas · Empreendimento de demonstração" : "Perspectivas artísticas e fotomontagens do empreendimento"}
       </p>
       {index !== null && (
         <Modal
@@ -58,7 +58,7 @@ export function PropertyGallery({ property }: { property: Property }) {
               >
                 ← Anterior
               </button>
-              <span>Fotografia ilustrativa</span>
+              <span>{property.isDemo ? "Fotografia ilustrativa" : "Perspectiva artística"}</span>
               <button
                 className="button button-outline"
                 onClick={() => move(1)}

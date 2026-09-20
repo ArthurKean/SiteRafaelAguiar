@@ -65,7 +65,7 @@ Sem número configurado, o site mostra uma mensagem de demonstração. Variávei
 
 ## Dados demonstrativos
 
-Os seis imóveis, preços, características, plantas e associações a bairros são exemplos. As fotos de arquitetura são ilustrativas. Não há backend, banco de dados, login ou painel administrativo nesta versão.
+O Vernazza contém os dados fornecidos pelo corretor em 20/09/2026, em `src/data/vernazza.ts`, e perspectivas artísticas do empreendimento. Os outros cinco imóveis são exemplos identificados. Ainda faltam o estágio da obra, o código da unidade maior e o número de banheiros do Vernazza. Não há backend, banco de dados, login ou painel administrativo nesta versão.
 
 Leia [a documentação técnica](docs/PROJECT.md) para detalhes da arquitetura, referência no Figma, limitações de SEO e origem dos assets.
 

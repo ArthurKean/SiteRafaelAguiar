@@ -25,7 +25,7 @@ export default function Catalog() {
   );
   useSeo(
     "Imóveis na planta",
-    "Explore o catálogo de demonstração e filtre imóveis por bairro, preço, área e número de quartos.",
+    "Explore o catálogo de imóveis e filtre imóveis por bairro, preço, área e número de quartos.",
   );
   function update(key: keyof Filters, value: string) {
     setParams(
@@ -140,8 +140,8 @@ export default function Catalog() {
               </div>
             )}
             <p className="demo-caption">
-              Catálogo de demonstração. Nenhuma informação constitui oferta de
-              venda.
+              Imóveis de demonstração estão identificados. Consulte disponibilidade
+              e condições dos empreendimentos.
             </p>
           </div>
         </div>

@@ -1,22 +1,9 @@
+import { vernazza } from "./vernazza";
 import type { Property } from "../types/property";
 
 // TODOS os empreendimentos, valores, características e bairros abaixo são demonstrações.
 // Fotografias de referência: não retratam os empreendimentos anunciados.
 const seeds = [
-  {
-    name: "Vernazza Residenziale",
-    slug: "vernazza-residenziale",
-    neighborhood: "Ponta d’Areia",
-    price: 1308744,
-    area: 87,
-    max: 130,
-    bedrooms: 3,
-    suites: 3,
-    parking: 2,
-    photo: "interior",
-    status: "Lançamento",
-    type: "Apartamento",
-  },
   {
     name: "Jardins da Península",
     slug: "jardins-da-peninsula",
@@ -89,7 +76,7 @@ const seeds = [
   },
 ] as const;
 export const demoProperties: Property[] = seeds.map((seed, i) => ({
-  id: `demo-${i + 1}`,
+  id: `demo-${i + 2}`,
   slug: seed.slug,
   name: seed.name,
   neighborhood: seed.neighborhood,
@@ -106,7 +93,7 @@ export const demoProperties: Property[] = seeds.map((seed, i) => ({
   parkingSpaces: seed.parking,
   type: seed.type,
   status: seed.status,
-  featured: i < 3,
+  featured: i < 2,
   isDemo: true,
   createdAt: `2026-0${9 - i}-01`,
   images: [
@@ -137,3 +124,5 @@ export const demoProperties: Property[] = seeds.map((seed, i) => ({
     price: j ? Math.round(seed.price * 1.35) : seed.price,
   })),
 }));
+
+export const properties: Property[] = [vernazza, ...demoProperties];

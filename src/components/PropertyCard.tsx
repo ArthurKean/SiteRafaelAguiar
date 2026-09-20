@@ -1,3 +1,4 @@
+import { area } from "../utils/format";
 import { Link } from "react-router-dom";
 import type { Property } from "../types/property";
 import { currency } from "../utils/format";
@@ -18,8 +19,8 @@ export function PropertyCard({ property: p }: { property: Property }) {
           width="640"
           height="460"
         />
-        <span className="status">{p.status}</span>
-        <span className="image-note">Imagem ilustrativa</span>
+        <span className="status">{p.isDemo ? `${p.status} · Demonstração` : (p.status ?? p.type)}</span>
+        <span className="image-note">{p.isDemo ? "Imagem ilustrativa" : "Perspectiva artística"}</span>
       </Link>
       <div className="card-content">
         <p className="card-location">
@@ -30,7 +31,7 @@ export function PropertyCard({ property: p }: { property: Property }) {
         </h3>
         <div className="card-specs">
           <span>
-            {p.areaMin}–{p.areaMax} m²
+            {area(p.areaMin)}–{area(p.areaMax)} m²
           </span>
           <span>{p.bedrooms} quartos</span>
           <span>{p.parkingSpaces} vagas</span>

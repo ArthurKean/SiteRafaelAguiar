@@ -8,7 +8,10 @@ export interface PropertyPlan {
   area: number;
   bedrooms: number;
   suites: number;
-  bathrooms: number;
+  bathrooms?: number;
+  suiteDescription?: string;
+  unit?: string;
+  orientation?: string;
   price: number;
   image?: PropertyImage;
 }
@@ -23,11 +26,14 @@ export interface Property {
   areaMin: number;
   areaMax: number;
   bedrooms: number;
-  suites: number;
-  bathrooms: number;
+  suites?: number;
+  suiteDescription?: string;
+  bathrooms?: number;
   parkingSpaces: number;
   type: "Apartamento" | "Cobertura";
-  status: PropertyStatus;
+  status?: PropertyStatus;
+  developer?: string;
+  surroundings?: string;
   deliveryDate?: string;
   city: string;
   neighborhood: string;

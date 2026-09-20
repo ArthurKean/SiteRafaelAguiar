@@ -31,9 +31,8 @@ export function AboutSection({ full = false }: { full?: boolean }) {
           </p>
           {full && (
             <p>
-              Este catálogo reúne exemplos de como os empreendimentos serão
-              apresentados. Os dados reais e as informações profissionais do
-              corretor serão incluídos após confirmação.
+              Conheça os empreendimentos da curadoria e suas opções de metragem.
+              Os imóveis usados como exemplo estão identificados como demonstração.
             </p>
           )}
           {full ? (

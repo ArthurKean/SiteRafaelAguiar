@@ -1,4 +1,4 @@
-import { demoProperties } from "../data/properties";
+import { properties } from "../data/properties";
 import type { Property, PropertyFilters } from "../types/property";
 import { normalize } from "../utils/format";
 
@@ -52,20 +52,20 @@ export function filterProperties(
 // Contrato assíncrono: substituir somente este adaptador por fetch na V2.
 export const propertyService = {
   async list(filters: PropertyFilters = {}): Promise<Property[]> {
-    return filterProperties(demoProperties, filters);
+    return filterProperties(properties, filters);
   },
   async featured(): Promise<Property[]> {
-    return demoProperties.filter((p) => p.featured);
+    return properties.filter((p) => p.featured);
   },
   async getBySlug(slug: string): Promise<Property | undefined> {
-    return demoProperties.find((p) => p.slug === slug);
+    return properties.find((p) => p.slug === slug);
   },
   async options() {
     return {
-      cities: [...new Set(demoProperties.map((p) => p.city))],
-      neighborhoods: [...new Set(demoProperties.map((p) => p.neighborhood))],
-      types: [...new Set(demoProperties.map((p) => p.type))],
-      statuses: [...new Set(demoProperties.map((p) => p.status))],
+      cities: [...new Set(properties.map((p) => p.city))],
+      neighborhoods: [...new Set(properties.map((p) => p.neighborhood))],
+      types: [...new Set(properties.map((p) => p.type))],
+      statuses: [...new Set(properties.flatMap((p) => p.status ? [p.status] : []))],
     };
   },
 };

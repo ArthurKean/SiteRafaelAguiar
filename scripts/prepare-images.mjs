@@ -25,3 +25,12 @@ await sharp("assets/originals/brand/logo-fundo-branco.jpeg")
   .resize(85)
   .png()
   .toFile("public/images/monograma.png");
+
+await mkdir('public/images/vernazza', { recursive: true });
+for (const file of await readdir('assets/originals/properties/vernazza')) {
+ if (!/\.(jpg|png)$/i.test(file)) continue;
+ const name = file.replace(/\.[^.]+$/, '');
+ for (const width of [1400, 640]) {
+  await sharp('assets/originals/properties/vernazza/' + file).rotate().resize(width, null, { withoutEnlargement: true }).webp({ quality: 82 }).toFile('public/images/vernazza/' + name + (width === 640 ? '-640' : '') + '.webp');
+ }
+}

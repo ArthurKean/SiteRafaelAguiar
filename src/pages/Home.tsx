@@ -106,7 +106,7 @@ export default function Home() {
                   <span aria-hidden="true">↗</span>
                 </Link>
                 <span className="hero-demo">
-                  Empreendimento e imagem de demonstração
+                  {property.isDemo ? "Empreendimento e imagem de demonstração" : "Perspectiva artística do empreendimento"}
                 </span>
               </>
             )}
@@ -136,8 +136,7 @@ export default function Home() {
             <PropertyGrid properties={properties ?? []} />
           )}
           <p className="demo-caption">
-            Seleção demonstrativa. Preços, características e fotografias são
-            ilustrativos.
+            Os imóveis de demonstração estão identificados. Consulte disponibilidade e valores dos empreendimentos.
           </p>
         </div>
       </section>

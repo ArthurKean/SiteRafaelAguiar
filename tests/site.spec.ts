@@ -76,19 +76,19 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   );
   await page
     .locator(".investment")
-    .getByRole("button", { name: "130 m²", exact: true })
+    .getByRole("button", { name: "130,49 m²", exact: true })
     .click();
   await expect(page.locator(".investment-value strong")).toContainText(
-    "1.766.804",
+    "2.508.744,15",
   );
-  await expect(page.locator(".investment-summary")).toContainText("130 m²");
+  await expect(page.locator(".investment-summary")).toContainText("130,49 m²");
   await expect(page.locator("#planta-selecionada")).toHaveCount(0);
   await page
     .getByRole("button", { name: "Abrir foto 1 de Vernazza Residenziale" })
     .click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.getByRole("button", { name: "Próxima foto" }).click();
-  await expect(page.getByRole("dialog")).toHaveAccessibleName(/2 \/ 4/);
+  await expect(page.getByRole("dialog")).toHaveAccessibleName(/2 \/ 5/);
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await page

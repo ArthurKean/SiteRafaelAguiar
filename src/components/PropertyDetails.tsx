@@ -1,7 +1,8 @@
+import { area } from "../utils/format";
 import type { Property, PropertyPlan } from "../types/property";
 export function PropertySpecs({ property: p }: { property: Property }) {
   const specs = [
-    [`${p.areaMin}–${p.areaMax} m²`, "Área privativa"],
+    [`${area(p.areaMin)}–${area(p.areaMax)} m²`, "Área privativa"],
     [p.bedrooms, "Quartos"],
     [p.suites, "Suítes"],
     [p.bathrooms, "Banheiros"],
@@ -51,7 +52,7 @@ export function PropertyPlanSelector({
             aria-pressed={plan.id === selected}
             onClick={() => onSelect(plan.id)}
           >
-            {plan.area} m²
+            {area(plan.area)} m²
           </button>
         ))}
       </div>
@@ -66,7 +67,7 @@ export function PropertyPlanPreview({ plan }: { plan: PropertyPlan }) {
         <span className="eyebrow">Encontre o seu espaço</span>
         <h2>Conheça a planta selecionada.</h2>
         <div className="plan-info">
-          <h3>{plan.area} m² de área privativa</h3>
+          <h3>{area(plan.area)} m² de área privativa</h3>
           <p>
             {plan.bedrooms} quartos · {plan.suites} suítes · {plan.bathrooms}{" "}
             banheiros
@@ -97,7 +98,7 @@ export function LocationSection({ property }: { property: Property }) {
         </span>
         <h3>{property.neighborhood}</h3>
         <p>{property.city}</p>
-        <span>Região de demonstração · Endereço a confirmar</span>
+        <span>{property.isDemo ? "Região de demonstração · Endereço a confirmar" : property.surroundings}</span>
       </div>
     </section>
   );

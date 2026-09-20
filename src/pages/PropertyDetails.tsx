@@ -1,3 +1,4 @@
+import { area } from "../utils/format";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { propertyService } from "../services/propertyService";
@@ -44,16 +45,16 @@ export default function PropertyDetails() {
       </nav>
       <PropertyGallery property={p} />
       <div className="detail-heading">
-        <span className="eyebrow">{p.status} · Demonstração</span>
+        <span className="eyebrow">{p.isDemo ? `${p.status} · Demonstração` : p.developer}</span>
         <h1>{p.name}</h1>
         <p>
           {p.neighborhood} · {p.city}, MA
         </p>
         <div className="detail-highlights">
           <span>
-            {p.areaMin}–{p.areaMax} m²
+            {area(p.areaMin)}–{area(p.areaMax)} m²
           </span>
-          <span>{p.suites} suítes</span>
+          <span>{p.suiteDescription ?? `${p.suites} suítes`}</span>
           <span>{p.parkingSpaces} vagas</span>
           <span>{p.type}</span>
         </div>
@@ -85,8 +86,7 @@ export default function PropertyDetails() {
           >
             {plan && (
               <p className="investment-summary">
-                {plan.area} m² · {plan.bedrooms} quartos · {plan.suites} suítes
-                · {plan.bathrooms} banheiros
+                {[`${area(plan.area)} m²`, plan.suiteDescription ?? `${plan.suites} suítes`, plan.bathrooms ? `${plan.bathrooms} banheiros` : null, plan.unit ? `Unidade ${plan.unit}` : null, plan.orientation ? `Posição ${plan.orientation}` : null].filter(Boolean).join(" · ")}
               </p>
             )}
             <p>A partir de</p>
@@ -98,8 +98,7 @@ export default function PropertyDetails() {
             </a>
           )}
           <p className="investment-note">
-            Valor ilustrativo. Consulte as informações reais antes de tomar uma
-            decisão.
+            {p.isDemo ? "Valor ilustrativo. Consulte as informações reais antes de tomar uma decisão." : "Consulte disponibilidade e condições de pagamento."}
           </p>
           <ContactCTA propertyName={p.name} className="button-whatsapp">
             Falar com Rafael
@@ -127,7 +126,7 @@ export default function PropertyDetails() {
             escolher.
           </p>
           <small>
-            Fotografia de referência, sem vínculo com o empreendimento.
+            {p.isDemo ? "Fotografia de referência, sem vínculo com o empreendimento." : "Perspectiva artística do Vernazza Residenziale."}
           </small>
         </div>
       </section>

@@ -94,7 +94,7 @@ export function Layout() {
           <div className="footer-bottom">
             <span>© {new Date().getFullYear()} Rafael Aguiar</span>
             <span>
-              Catálogo de demonstração · Imóveis, preços e fotos ilustrativos.
+              Consulte disponibilidade e condições. Imóveis de demonstração estão identificados.
             </span>
           </div>
         </div>
