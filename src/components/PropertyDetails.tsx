@@ -92,14 +92,32 @@ export function LocationSection({ property }: { property: Property }) {
           {property.neighborhood} · {property.city}
         </p>
       </div>
-      <div className="location-placeholder">
+      {property.mapEmbedUrl ? (
+        <div className="location-map">
+          <iframe
+            src={property.mapEmbedUrl}
+            title={`Localização de ${property.name} no Google Maps`}
+            width="1200"
+            height="420"
+            loading="eager"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+          <div className="location-map-footer">
+            <p>{property.surroundings}</p>
+            <a className="text-link" href={property.mapUrl} target="_blank" rel="noopener noreferrer">
+              Abrir no Google Maps <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      ) : <div className="location-placeholder">
         <span className="location-marker" aria-hidden="true">
           ⌖
         </span>
         <h3>{property.neighborhood}</h3>
         <p>{property.city}</p>
         <span>{property.isDemo ? "Região de demonstração · Endereço a confirmar" : property.surroundings}</span>
-      </div>
+      </div>}
     </section>
   );
 }

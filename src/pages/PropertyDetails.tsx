@@ -70,7 +70,8 @@ export default function PropertyDetails() {
             <PropertySpecs property={p} />
           </section>
         </div>
-        <aside className="investment">
+        <aside className="detail-sidebar">
+        <div className="investment">
           <span className="eyebrow">Investimento</span>
           {plan && (
             <PropertyPlanSelector
@@ -104,6 +105,8 @@ export default function PropertyDetails() {
             Falar com Rafael
           </ContactCTA>
           <small>Converse pelo WhatsApp</small>
+        </div>
+        <LocationSection property={p} />
         </aside>
       </div>
       <section className="editorial-section">
@@ -131,7 +134,6 @@ export default function PropertyDetails() {
         </div>
       </section>
       {plan && <PropertyPlanPreview plan={plan} />}
-      <LocationSection property={p} />
       <section className="detail-contact">
         <div>
           <span className="eyebrow">Seu próximo passo</span>

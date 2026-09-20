@@ -34,6 +34,8 @@ export interface Property {
   status?: PropertyStatus;
   developer?: string;
   surroundings?: string;
+  mapEmbedUrl?: string;
+  mapUrl?: string;
   deliveryDate?: string;
   city: string;
   neighborhood: string;

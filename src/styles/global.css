@@ -1808,3 +1808,24 @@ select {
 }
 
 .description { white-space: pre-line; }
+.detail-sidebar { min-width: 0; align-self: start; }
+.detail-sidebar .investment { position: static; }
+.detail-sidebar .location-section { margin-top: 24px; padding: 0; border: 0; }
+.detail-sidebar .section-heading { display: block; margin-bottom: 14px; }
+.detail-sidebar .section-heading .eyebrow { display: none; }
+.detail-sidebar .section-heading h2 { font-size: 24px; margin-bottom: 6px; }
+.detail-sidebar .section-heading p { font-size: 12px; }
+.detail-sidebar .location-map iframe { height: 240px; }
+.detail-sidebar .location-map-footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+.detail-sidebar .location-placeholder { min-height: 200px; padding: 20px; text-align: center; }
+@media (max-width: 600px) {
+  .detail-sidebar { order: -1; }
+}
+.location-map iframe { display: block; width: 100%; height: 420px; border: 0; border-radius: 12px; }
+.location-map-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 18px; }
+.location-map-footer p { margin: 0; font-size: 13px; }
+.location-map-footer a { flex-shrink: 0; }
+@media (max-width: 600px) {
+  .location-map iframe { height: 320px; }
+  .location-map-footer { flex-direction: column; align-items: flex-start; }
+}
