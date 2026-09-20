@@ -1809,6 +1809,8 @@ select {
 
 .description { white-space: pre-line; }
 .detail-sidebar { min-width: 0; align-self: start; }
+.location-map iframe { background: var(--color-surface-container); }
+.map-retry { background: none; border: 0; padding: 4px 0; font: inherit; font-size: 12px; text-decoration: underline; cursor: pointer; }
 .detail-sidebar .investment { position: static; }
 .detail-sidebar .location-section { margin-top: 24px; padding: 0; border: 0; }
 .detail-sidebar .section-heading { display: block; margin-bottom: 14px; }

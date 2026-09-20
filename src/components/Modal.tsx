@@ -1,15 +1,17 @@
 import { useEffect, useRef } from "react";
-import type { ReactNode } from "react";
+import type { ReactNode, KeyboardEventHandler } from "react";
 export function Modal({
   title,
   children,
   onClose,
   className = "",
+  onKeyDown,
 }: {
   title: string;
   children: ReactNode;
   onClose: () => void;
   className?: string;
+  onKeyDown?: KeyboardEventHandler<HTMLDialogElement>;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
@@ -31,6 +33,7 @@ export function Modal({
       aria-label={title}
       onCancel={onClose}
       onKeyDown={(event) => {
+        onKeyDown?.(event);
         if (event.key !== 'Tab') return;
         const focusable = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex="0"]')).filter(element => element.getClientRects().length > 0);
         const first = focusable[0];

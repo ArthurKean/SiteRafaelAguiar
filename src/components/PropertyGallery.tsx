@@ -38,13 +38,14 @@ export function PropertyGallery({ property }: { property: Property }) {
           title={`${property.name} · ${index + 1} / ${images.length}`}
           className="lightbox"
           onClose={() => setIndex(null)}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+              e.preventDefault();
+              move(e.key === "ArrowLeft" ? -1 : 1);
+            }
+          }}
         >
-          <div
-            onKeyDown={(e) => {
-              if (e.key === "ArrowLeft") move(-1);
-              if (e.key === "ArrowRight") move(1);
-            }}
-          >
+          <div>
             <img
               className="lightbox-image"
               src={images[index].src}

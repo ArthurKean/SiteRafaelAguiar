@@ -1,4 +1,5 @@
 import { area } from "../utils/format";
+import { useState } from "react";
 import type { Property, PropertyPlan } from "../types/property";
 export function PropertySpecs({ property: p }: { property: Property }) {
   const specs = [
@@ -69,8 +70,7 @@ export function PropertyPlanPreview({ plan }: { plan: PropertyPlan }) {
         <div className="plan-info">
           <h3>{area(plan.area)} m² de área privativa</h3>
           <p>
-            {plan.bedrooms} quartos · {plan.suites} suítes · {plan.bathrooms}{" "}
-            banheiros
+            {[`${plan.bedrooms} quartos`, plan.suiteDescription ?? `${plan.suites} suítes`, plan.bathrooms != null ? `${plan.bathrooms} banheiros` : null].filter(Boolean).join(" · ")}
           </p>
         </div>
       </div>
@@ -81,6 +81,7 @@ export function PropertyPlanPreview({ plan }: { plan: PropertyPlan }) {
   );
 }
 export function LocationSection({ property }: { property: Property }) {
+  const [mapVersion, setMapVersion] = useState(0);
   return (
     <section className="location-section">
       <div className="section-heading">
@@ -95,6 +96,7 @@ export function LocationSection({ property }: { property: Property }) {
       {property.mapEmbedUrl ? (
         <div className="location-map">
           <iframe
+            key={mapVersion}
             src={property.mapEmbedUrl}
             title={`Localização de ${property.name} no Google Maps`}
             width="1200"
@@ -108,6 +110,9 @@ export function LocationSection({ property }: { property: Property }) {
             <a className="text-link" href={property.mapUrl} target="_blank" rel="noopener noreferrer">
               Abrir no Google Maps <span aria-hidden="true">↗</span>
             </a>
+            <button type="button" className="map-retry" onClick={() => setMapVersion(value => value + 1)}>
+              Mapa não apareceu? Recarregar
+            </button>
           </div>
         </div>
       ) : <div className="location-placeholder">
