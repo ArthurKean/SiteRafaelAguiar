@@ -1,6 +1,5 @@
-import { InstagramLink } from "./InstagramLink";
+import { SocialContacts } from "./SocialContacts";
 import { Link } from "react-router-dom";
-import { ContactCTA } from "./ContactCTA";
 export function AboutSection({ full = false }: { full?: boolean }) {
   return (
     <section className="about-section">
@@ -37,10 +36,7 @@ export function AboutSection({ full = false }: { full?: boolean }) {
             </p>
           )}
           {full ? (
-            <>
-              <ContactCTA />
-              <InstagramLink about />
-            </>
+            <SocialContacts />
           ) : (
             <Link to="/sobre" className="text-link">
               Conheça Rafael <span aria-hidden="true">↗</span>
