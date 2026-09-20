@@ -109,7 +109,7 @@ export function LocationSection({ property }: { property: Property }) {
           <div className="location-map-footer">
             <p>{property.surroundings}</p>
             <a className="text-link" href={property.mapUrl} target="_blank" rel="noopener noreferrer">
-              Abrir no Google Maps <span aria-hidden="true"><Icon name="arrowUpRight" /></span>
+              Abrir no Google Maps 
             </a>
             <button type="button" className="map-retry" onClick={() => setMapVersion(value => value + 1)}>
               Mapa não apareceu? Recarregar

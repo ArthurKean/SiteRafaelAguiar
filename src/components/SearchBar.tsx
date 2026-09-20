@@ -1,4 +1,3 @@
-import { Icon } from "./Icon";
 import { useNavigate } from "react-router-dom";
 import { propertyService } from "../services/propertyService";
 import { useAsync } from "../utils/hooks";
@@ -47,7 +46,7 @@ export function SearchBar() {
         </select>
       </label>
       <button className="button button-gold" type="submit">
-        Buscar imóvel <span aria-hidden="true"><Icon name="arrowUpRight" /></span>
+        Buscar imóvel 
       </button>
     </form>
   );

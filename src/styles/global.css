@@ -117,7 +117,9 @@ button:active,
   letter-spacing: 0.075em;
   transition:
     background var(--motion-fast),
-    transform var(--motion-fast);
+    border-color var(--motion-fast),
+    box-shadow 180ms ease,
+    transform 180ms cubic-bezier(.2,.8,.2,1);
 }
 .button span {
   font-size: 19px;
@@ -160,12 +162,14 @@ button:active,
   border-bottom: 1px solid var(--color-outline-variant);
   background: none;
   padding: 0;
+  transition: color 160ms ease, border-color 160ms ease;
 }
 .text-link span {
   font-size: 20px;
 }
 .text-link:hover {
   color: var(--color-accent-dark);
+  border-bottom-color: currentColor;
 }
 .header {
   background: var(--color-surface);
@@ -1879,4 +1883,34 @@ select {
 .hero-controls .carousel-toggle .ui-icon {
   width: 14px;
   height: 14px;
+}
+/* Feedback tátil inspirado no botão elástico: movimento curto, sem deslocar o layout. */
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgb(14 19 29 / 14%);
+  }
+  .button-outline:hover {
+    border-color: currentColor;
+    background: rgb(198 161 91 / 12%);
+  }
+  .hero-property:hover strong {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-thickness: 1px;
+  }
+}
+.button:active {
+  transform: translateY(1px) scale(.98);
+  box-shadow: none;
+}
+.text-link:active { opacity: .72; }
+.hero-property:active { background: var(--color-surface-container-low); }
+.button:focus-visible, .text-link:focus-visible, .hero-property:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .button, .text-link { transition: none; }
+  .button:hover, .button:active { transform: none; }
 }

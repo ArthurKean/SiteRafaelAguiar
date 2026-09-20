@@ -1,4 +1,3 @@
-import { Icon } from "../components/Icon";
 import { Link } from "react-router-dom";
 import { useSeo } from "../utils/hooks";
 export default function NotFound() {
@@ -16,7 +15,7 @@ export default function NotFound() {
       </h1>
       <p>Esta página não existe ou o imóvel não está disponível.</p>
       <Link className="button" to="/imoveis">
-        Explorar imóveis <Icon name="arrowUpRight" />
+        Explorar imóveis 
       </Link>
     </div>
   );

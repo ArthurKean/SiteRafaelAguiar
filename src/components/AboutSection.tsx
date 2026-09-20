@@ -1,4 +1,3 @@
-import { Icon } from "./Icon";
 import { SocialContacts } from "./SocialContacts";
 import { Link } from "react-router-dom";
 export function AboutSection({ full = false }: { full?: boolean }) {
@@ -40,7 +39,7 @@ export function AboutSection({ full = false }: { full?: boolean }) {
             <SocialContacts />
           ) : (
             <Link to="/sobre" className="text-link">
-              Conheça Rafael <span aria-hidden="true"><Icon name="arrowUpRight" /></span>
+              Conheça Rafael 
             </Link>
           )}
         </div>

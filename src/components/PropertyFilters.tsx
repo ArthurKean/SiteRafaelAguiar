@@ -4,7 +4,6 @@ import { propertyService } from "../services/propertyService";
 import { useAsync } from "../utils/hooks";
 export const filterLabels: Record<string, string> = {
   query: "Busca",
-  city: "Cidade",
   neighborhood: "Bairro",
   type: "Tipo",
   minPrice: "Preço mínimo",
@@ -43,7 +42,6 @@ export function PropertyFilters({
         <h2>Refine sua busca</h2>
         <span aria-hidden="true">≡</span>
       </div>
-      {select("city", data?.cities ?? [], "Todas as cidades")}
       {select("neighborhood", data?.neighborhoods ?? [], "Todos os bairros")}
       {select("type", data?.types ?? [], "Todos os tipos")}
       <fieldset>
@@ -102,7 +100,7 @@ export function PropertyFilters({
       </label>
       {select("status", data?.statuses ?? [], "Todos os status")}
       <button className="clear-filters" onClick={onClear}>
-        Limpar filtros <Icon name="reset" />
+        Limpar filtros 
       </button>
     </div>
   );

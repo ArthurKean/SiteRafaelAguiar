@@ -1,4 +1,3 @@
-import { Icon } from "./Icon";
 import { useState } from "react";
 import type { Property } from "../types/property";
 import { Modal } from "./Modal";
@@ -25,7 +24,7 @@ export function PropertyGallery({ property }: { property: Property }) {
             />
             {i === 2 && (
               <span className="gallery-more">
-                Ver todas as {images.length} fotos <Icon name="arrowUpRight" />
+                Ver todas as {images.length} fotos 
               </span>
             )}
           </button>
@@ -58,7 +57,7 @@ export function PropertyGallery({ property }: { property: Property }) {
                 onClick={() => move(-1)}
                 aria-label="Foto anterior"
               >
-                <Icon name="arrowLeft" /> Anterior
+                 Anterior
               </button>
               <span>{property.isDemo ? "Fotografia ilustrativa" : "Perspectiva artística"}</span>
               <button
@@ -66,7 +65,7 @@ export function PropertyGallery({ property }: { property: Property }) {
                 onClick={() => move(1)}
                 aria-label="Próxima foto"
               >
-                Próxima <Icon name="arrowRight" />
+                Próxima 
               </button>
             </div>
           </div>

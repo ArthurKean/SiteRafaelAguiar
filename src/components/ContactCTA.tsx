@@ -1,4 +1,3 @@
-import { Icon } from "./Icon";
 import { useState } from "react";
 import { buildWhatsAppUrl, getContactMessage } from "../utils/contact";
 import type { ContactPlan } from "../utils/contact";
@@ -26,12 +25,12 @@ export function ContactCTA({
           rel="noopener noreferrer"
         >
           {children}
-          <span aria-hidden="true"><Icon name="arrowUpRight" /></span>
+          
         </a>
       ) : (
         <button className={`button ${className}`} onClick={() => setOpen(true)}>
           {children}
-          <span aria-hidden="true"><Icon name="arrowUpRight" /></span>
+          
         </button>
       )}
       {open && (

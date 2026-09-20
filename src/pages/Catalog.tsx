@@ -19,6 +19,8 @@ export default function Catalog() {
   const [params, setParams] = useSearchParams();
   const [open, setOpen] = useState(false);
   const filters = Object.fromEntries(params) as Filters;
+  // URLs antigas não devem aplicar um filtro de cidade que não existe mais na interface.
+  delete filters.city;
   const { data, loading, error } = useAsync(
     () => propertyService.list(filters),
     params.toString(),
