@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { buildWhatsAppUrl, getContactMessage } from "../utils/contact";
+import type { ContactPlan } from "../utils/contact";
 import { Modal } from "./Modal";
 export function ContactCTA({
   propertyName,
+  plan,
   children = "Falar com Rafael",
   className = "",
 }: {
   propertyName?: string;
+  plan?: ContactPlan;
   children?: React.ReactNode;
   className?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const url = buildWhatsAppUrl(propertyName);
+  const url = buildWhatsAppUrl(propertyName, undefined, plan);
   return (
     <>
       {url ? (
@@ -39,7 +42,7 @@ export function ContactCTA({
             Assim que o contato for configurado, você poderá enviar esta
             mensagem:
           </p>
-          <blockquote>{getContactMessage(propertyName)}</blockquote>
+          <blockquote>{getContactMessage(propertyName, plan)}</blockquote>
           <button className="button" onClick={() => setOpen(false)}>
             Voltar ao site
           </button>

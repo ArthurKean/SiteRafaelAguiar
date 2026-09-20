@@ -101,7 +101,7 @@ export default function PropertyDetails() {
           <p className="investment-note">
             {p.isDemo ? "Valor ilustrativo. Consulte as informações reais antes de tomar uma decisão." : "Consulte disponibilidade e condições de pagamento."}
           </p>
-          <ContactCTA propertyName={p.name} className="button-whatsapp">
+          <ContactCTA propertyName={p.name} plan={plan} className="button-whatsapp">
             Falar com Rafael
           </ContactCTA>
           <small>Converse pelo WhatsApp</small>
@@ -140,7 +140,7 @@ export default function PropertyDetails() {
           <h2>Ficou com alguma dúvida?</h2>
           <p>Converse com Rafael sobre este imóvel.</p>
         </div>
-        <ContactCTA propertyName={p.name} />
+        <ContactCTA propertyName={p.name} plan={plan} />
       </section>
     </div>
   );

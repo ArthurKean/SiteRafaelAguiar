@@ -6,21 +6,8 @@ test("teclado, foco e link de contato", async ({ page }) => {
   await expect(
     page.getByRole("link", { name: "Pular para o conteúdo" }),
   ).toBeFocused();
-  await page
-    .locator(".header")
-    .getByRole("button", { name: "Falar com Rafael" })
-    .click();
-  await expect(
-    page.getByRole("dialog").getByRole("button", { name: "Fechar" }),
-  ).toBeFocused();
-  await page.keyboard.press("Shift+Tab");
-  await expect(
-    page.getByRole("dialog").getByRole("button", { name: "Voltar ao site" }),
-  ).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(
-    page.locator(".header").getByRole("button", { name: "Falar com Rafael" }),
-  ).toBeFocused();
+  await expect(page.locator(".header").getByRole("link", { name: "Falar com Rafael" }))
+    .toHaveAttribute("href", /^https:\/\/wa.me\/559891588444\?text=/);
   await page
     .getByRole("navigation", { name: "Navegação principal" })
     .getByRole("link", { name: "Contato", exact: true })
@@ -91,14 +78,20 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   await expect(page.getByRole("dialog")).toHaveAccessibleName(/2 \/ 5/);
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
-  await page
-    .locator(".investment")
-    .getByRole("button", { name: "Falar com Rafael" })
-    .click();
-  await expect(page.getByRole("dialog")).toContainText(
-    "vi o Vernazza Residenziale",
-  );
-  await page.keyboard.press("Escape");
+  for (const selector of [".investment", ".detail-contact"]) {
+    const href = await page.locator(selector).getByRole("link", { name: "Falar com Rafael" }).getAttribute("href");
+    const contactUrl = new URL(href!);
+    expect(contactUrl.pathname).toBe("/559891588444");
+    expect(contactUrl.searchParams.get("text")).toContain("Vernazza Residenziale");
+    expect(contactUrl.searchParams.get("text")).toContain("130,49 m²");
+    expect(contactUrl.searchParams.get("text")).not.toContain("S-101");
+  }
+  await page.locator(".investment").getByRole("button", { name: "87,98 m²", exact: true }).click();
+  const smallHref = await page.locator(".investment").getByRole("link", { name: "Falar com Rafael" }).getAttribute("href");
+  const smallMessage = new URL(smallHref!).searchParams.get("text");
+  expect(smallMessage).toContain("87,98 m²");
+  expect(smallMessage).toContain("S-101");
+  expect(smallMessage).not.toContain("130,49");
   await page.screenshot({
     path: "test-results/detail-desktop.png",
     fullPage: true,

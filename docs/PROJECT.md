@@ -49,7 +49,7 @@ Não foram publicados telefone, Instagram, endereço, coordenadas, histórico pr
 
 As plantas não possuem desenhos fornecidos. O seletor de metragem fica no card de investimento e atualiza preço e características. A seção de visualização da planta aparece somente quando a opção selecionada possui uma imagem cadastrada. A localização indica apenas a região de demonstração, sem simular um endereço preciso.
 
-Para habilitar o WhatsApp, copie `.env.example` para `.env.local` e preencha `VITE_WHATSAPP_NUMBER` com o número real, incluindo código do país e DDD, apenas dígitos. Reinicie o servidor ou refaça o build. Sem número válido, o CTA apresenta um aviso e a mensagem que seria enviada; não abre um contato fictício. Não há coleta nem armazenamento de leads.
+O WhatsApp utiliza o número confirmado `559891588444`. A variável `VITE_WHATSAPP_NUMBER` pode sobrescrevê-lo; vazia mantém o padrão. Os botões dos detalhes incluem o imóvel e a metragem selecionada, com unidade e posição quando cadastradas. O visitante confirma o envio no WhatsApp. Não há coleta nem armazenamento de leads.
 
 ## Referência visual e diferenças
 

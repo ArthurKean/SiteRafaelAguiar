@@ -59,9 +59,9 @@ Os originais ficam fora do código e da pasta pública. As versões de `public/i
 
 ## Configuração de contato
 
-Copie `.env.example` para `.env.local` e preencha `VITE_WHATSAPP_NUMBER` com o número real, incluindo país e DDD, apenas dígitos. Reinicie o servidor ou gere um novo build.
+O WhatsApp usa o número confirmado de Rafael: `559891588444` (Brasil + DDD 98 + 9158-8444). Para alterar, configure `VITE_WHATSAPP_NUMBER` e reinicie o servidor ou gere um novo build. A variável vazia mantém o número padrão.
 
-Sem número configurado, o site mostra uma mensagem de demonstração. Variáveis com prefixo `VITE_` são públicas no frontend; não use esse prefixo para segredos.
+Nos detalhes, os dois botões de contato incluem o imóvel, a metragem selecionada, a unidade e a posição quando disponíveis, além de uma pergunta sobre disponibilidade e pagamento. O link abre a conversa com a mensagem preenchida; o visitante decide enviá-la. Variáveis com prefixo `VITE_` são públicas no frontend; não use esse prefixo para segredos.
 
 ## Dados demonstrativos
 
