@@ -1840,5 +1840,5 @@ select {
  border: 1px solid currentColor; border-radius: var(--radius-full); font-size: 12px;
 }
 .social-contacts .social-button svg { flex: 0 0 21px; }
-.social-contacts .social-button .social-label { flex: 1; font-size: inherit; line-height: 1.4; }
+.social-contacts .social-button .social-label { flex: 1; font-size: inherit; line-height: 1.4; text-align: left; }
 .social-contacts .social-button:hover { background: #88888815; }
