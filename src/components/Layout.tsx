@@ -1,3 +1,4 @@
+import { InstagramLink } from "./InstagramLink";
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { ContactCTA } from "./ContactCTA";
@@ -89,6 +90,7 @@ export function Layout() {
                 para o seu próximo momento.
               </p>
               <ContactCTA className="button-outline" />
+              <InstagramLink />
             </div>
           </div>
           <div className="footer-bottom">

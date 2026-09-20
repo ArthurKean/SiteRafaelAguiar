@@ -1831,3 +1831,11 @@ select {
   .location-map iframe { height: 320px; }
   .location-map-footer { flex-direction: column; align-items: flex-start; }
 }
+
+.instagram-link, .footer .instagram-link {
+ display: flex; align-items: center; gap: 10px; width: fit-content; max-width: 100%; min-height: 44px;
+ margin-top: 16px; font-size: 13px; line-height: 1.6; text-decoration: none;
+}
+.instagram-link svg { flex-shrink: 0; }
+.instagram-link span { overflow-wrap: anywhere; }
+.instagram-link:hover span:first-of-type { text-decoration: underline; text-underline-offset: 4px; }
