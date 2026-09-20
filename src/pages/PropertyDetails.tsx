@@ -1,10 +1,12 @@
 import { Link, useParams } from "react-router-dom";
+import { useState } from "react";
 import { propertyService } from "../services/propertyService";
 import { useAsync, useSeo } from "../utils/hooks";
 import { PropertyGallery } from "../components/PropertyGallery";
 import {
   PropertySpecs,
   PropertyPlanSelector,
+  PropertyPlanPreview,
   LocationSection,
 } from "../components/PropertyDetails";
 import { ContactCTA } from "../components/ContactCTA";
@@ -13,6 +15,7 @@ import { currency } from "../utils/format";
 import NotFound from "./NotFound";
 export default function PropertyDetails() {
   const { slug = "" } = useParams();
+  const [selection, setSelection] = useState({ slug: "", planId: "" });
   const {
     data: p,
     loading,
@@ -26,6 +29,10 @@ export default function PropertyDetails() {
   if (loading) return <LoadingState />;
   if (error) return <ErrorState />;
   if (!p) return <NotFound />;
+  const plan =
+    p.plans.find(
+      (item) => selection.slug === slug && item.id === selection.planId,
+    ) ?? p.plans[0];
   return (
     <div className="container detail-page">
       <nav className="breadcrumbs" aria-label="Caminho de navegação">
@@ -64,8 +71,32 @@ export default function PropertyDetails() {
         </div>
         <aside className="investment">
           <span className="eyebrow">Investimento</span>
-          <p>A partir de</p>
-          <strong>{currency(p.priceFrom)}</strong>
+          {plan && (
+            <PropertyPlanSelector
+              plans={p.plans}
+              selected={plan.id}
+              onSelect={(planId) => setSelection({ slug, planId })}
+            />
+          )}
+          <div
+            className="investment-value"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {plan && (
+              <p className="investment-summary">
+                {plan.area} m² · {plan.bedrooms} quartos · {plan.suites} suítes
+                · {plan.bathrooms} banheiros
+              </p>
+            )}
+            <p>A partir de</p>
+            <strong>{currency(plan?.price ?? p.priceFrom)}</strong>
+          </div>
+          {plan?.image && (
+            <a href="#planta-selecionada" className="text-link">
+              Ver planta <span aria-hidden="true">↓</span>
+            </a>
+          )}
           <p className="investment-note">
             Valor ilustrativo. Consulte as informações reais antes de tomar uma
             decisão.
@@ -100,7 +131,7 @@ export default function PropertyDetails() {
           </small>
         </div>
       </section>
-      <PropertyPlanSelector key={p.id} property={p} />
+      {plan && <PropertyPlanPreview plan={plan} />}
       <LocationSection property={p} />
       <section className="detail-contact">
         <div>

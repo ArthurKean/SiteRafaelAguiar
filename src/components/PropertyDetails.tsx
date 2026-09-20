@@ -1,6 +1,4 @@
-import { useState } from "react";
-import type { Property } from "../types/property";
-import { currency } from "../utils/format";
+import type { Property, PropertyPlan } from "../types/property";
 export function PropertySpecs({ property: p }: { property: Property }) {
   const specs = [
     [`${p.areaMin}–${p.areaMax} m²`, "Área privativa"],
@@ -32,54 +30,51 @@ export function PropertySpecs({ property: p }: { property: Property }) {
     </>
   );
 }
-export function PropertyPlanSelector({ property }: { property: Property }) {
-  const [selected, setSelected] = useState(property.plans[0]?.id);
-  const plan = property.plans.find((p) => p.id === selected);
-  if (!plan) return null;
+export function PropertyPlanSelector({
+  plans,
+  selected,
+  onSelect,
+}: {
+  plans: PropertyPlan[];
+  selected: string;
+  onSelect: (id: string) => void;
+}) {
   return (
-    <section className="plan-section">
+    <fieldset className="investment-plans">
+      <legend>Escolha a metragem</legend>
+      <div className="plan-tabs">
+        {plans.map((plan) => (
+          <button
+            key={plan.id}
+            type="button"
+            className={plan.id === selected ? "selected" : ""}
+            aria-pressed={plan.id === selected}
+            onClick={() => onSelect(plan.id)}
+          >
+            {plan.area} m²
+          </button>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+export function PropertyPlanPreview({ plan }: { plan: PropertyPlan }) {
+  if (!plan.image) return null;
+  return (
+    <section className="plan-section" id="planta-selecionada">
       <div>
         <span className="eyebrow">Encontre o seu espaço</span>
-        <h2>Uma planta para o seu momento.</h2>
-        <p>Compare as configurações disponíveis neste exemplo.</p>
-        <div className="plan-tabs" aria-label="Opções de planta">
-          {property.plans.map((p) => (
-            <button
-              className={p.id === selected ? "selected" : ""}
-              aria-pressed={p.id === selected}
-              key={p.id}
-              onClick={() => setSelected(p.id)}
-            >
-              {p.area} m²
-            </button>
-          ))}
-        </div>
-        <div aria-live="polite" className="plan-info">
+        <h2>Conheça a planta selecionada.</h2>
+        <div className="plan-info">
           <h3>{plan.area} m² de área privativa</h3>
           <p>
             {plan.bedrooms} quartos · {plan.suites} suítes · {plan.bathrooms}{" "}
             banheiros
           </p>
-          <p>
-            A partir de <strong>{currency(plan.price)}</strong>
-          </p>
         </div>
       </div>
       <div className="plan-preview">
-        {plan.image ? (
-          <img src={plan.image.src} alt={plan.image.alt} loading="lazy" />
-        ) : (
-          <>
-            <span className="plan-area">
-              {plan.area}
-              <small>m²</small>
-            </span>
-            <p>Desenho da planta ainda não disponível</p>
-            <small>
-              Configuração ilustrativa. Aguarda material do empreendimento.
-            </small>
-          </>
-        )}
+        <img src={plan.image.src} alt={plan.image.alt} loading="lazy" />
       </div>
     </section>
   );

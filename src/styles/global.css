@@ -294,7 +294,9 @@ button:active,
   color: #ddd;
   font-size: 10px;
 }
-.hero-controls .carousel-toggle:hover { background: #ffffff12; }
+.hero-controls .carousel-toggle:hover {
+  background: #ffffff12;
+}
 .hero-controls button span {
   display: block;
   width: 6px;
@@ -398,6 +400,10 @@ button:active,
   gap: 10px;
 }
 .search-bar label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
   background: var(--color-surface-container-low);
   padding: 9px 16px;
   border-radius: var(--radius-sm);
@@ -405,6 +411,13 @@ button:active,
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-on-surface-variant);
+}
+.search-bar label:focus-within {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+.search-bar select:focus {
+  outline: none;
 }
 select,
 input {
@@ -558,7 +571,9 @@ select {
   font-size: 11px;
   font-weight: 600;
 }
-.card-arrow span { font-size: 18px; }
+.card-arrow span {
+  font-size: 18px;
+}
 .card-arrow:hover {
   background: var(--color-surface-container);
 }
@@ -984,10 +999,35 @@ select {
   margin-top: 24px;
   font-size: 13px;
 }
-.investment > strong {
+.investment-value > strong {
   display: block;
   font: 400 36px/1.5 var(--font-editorial);
   letter-spacing: -0.03em;
+}
+.investment-plans {
+  border: 0;
+  padding: 0;
+  margin: 24px 0 0;
+  min-width: 0;
+}
+.investment-plans legend {
+  font-size: 13px;
+  font-weight: 600;
+}
+.investment-plans .plan-tabs {
+  margin: 12px 0 18px;
+  max-width: none;
+  flex-wrap: wrap;
+}
+.investment-plans .plan-tabs button {
+  flex: 1 0 80px;
+}
+.investment-value > p {
+  font-size: 13px;
+}
+.investment-value .investment-summary {
+  font-size: 12px;
+  margin-bottom: 20px;
 }
 .investment .investment-note {
   font-size: 11px;
@@ -1377,7 +1417,7 @@ select {
     gap: 18px;
     font-size: 12px;
   }
-  .investment > strong {
+  .investment-value > strong {
     font-size: 30px;
   }
   .plan-section {
@@ -1441,7 +1481,9 @@ select {
     padding: 24px 18px;
     border-radius: var(--radius-lg);
   }
-  .hero-grid > .quick-search > .container { width:100%; }
+  .hero-grid > .quick-search > .container {
+    width: 100%;
+  }
   .quick-search h2 {
     font-size: 16px;
     line-height: 1.5;
@@ -1651,8 +1693,9 @@ select {
   .investment {
     position: static;
     padding: 28px;
+    order: -1;
   }
-  .investment > strong {
+  .investment-value > strong {
     font-size: 36px;
   }
   .editorial-section {

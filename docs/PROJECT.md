@@ -47,7 +47,7 @@ Todos os imóveis, valores, metragens, características, configurações de plan
 
 Não foram publicados telefone, Instagram, endereço, coordenadas, histórico profissional ou prazos de entrega sem confirmação. O Figma contém placeholders e dados genéricos; não foram tratados como informações profissionais verificadas.
 
-As plantas não possuem desenhos fornecidos. O seletor já suporta imagem por planta e atualiza os dados ao trocar de opção; enquanto faltam arquivos, a interface mostra a área selecionada e informa que o desenho não está disponível. A localização indica apenas a região de demonstração, sem simular um endereço preciso.
+As plantas não possuem desenhos fornecidos. O seletor de metragem fica no card de investimento e atualiza preço e características. A seção de visualização da planta aparece somente quando a opção selecionada possui uma imagem cadastrada. A localização indica apenas a região de demonstração, sem simular um endereço preciso.
 
 Para habilitar o WhatsApp, copie `.env.example` para `.env.local` e preencha `VITE_WHATSAPP_NUMBER` com o número real, incluindo código do país e DDD, apenas dígitos. Reinicie o servidor ou refaça o build. Sem número válido, o CTA apresenta um aviso e a mensagem que seria enviada; não abre um contato fictício. Não há coleta nem armazenamento de leads.
 

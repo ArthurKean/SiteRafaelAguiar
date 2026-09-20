@@ -1,18 +1,32 @@
 import { test, expect } from "@playwright/test";
-test('teclado, foco e link de contato', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/');
-  await page.keyboard.press('Tab');
-  await expect(page.getByRole('link', { name: 'Pular para o conteúdo' })).toBeFocused();
-  await page.locator('.header').getByRole('button', { name: 'Falar com Rafael' }).click();
-  await expect(page.getByRole('dialog').getByRole('button', { name: 'Fechar' })).toBeFocused();
-  await page.keyboard.press('Shift+Tab');
-  await expect(page.getByRole('dialog').getByRole('button', { name: 'Voltar ao site' })).toBeFocused();
-  await page.keyboard.press('Escape');
-  await expect(page.locator('.header').getByRole('button', { name: 'Falar com Rafael' })).toBeFocused();
-  await page.getByRole('navigation', { name: 'Navegação principal' }).getByRole('link', { name: 'Contato', exact: true }).click();
+test("teclado, foco e link de contato", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("link", { name: "Pular para o conteúdo" }),
+  ).toBeFocused();
+  await page
+    .locator(".header")
+    .getByRole("button", { name: "Falar com Rafael" })
+    .click();
+  await expect(
+    page.getByRole("dialog").getByRole("button", { name: "Fechar" }),
+  ).toBeFocused();
+  await page.keyboard.press("Shift+Tab");
+  await expect(
+    page.getByRole("dialog").getByRole("button", { name: "Voltar ao site" }),
+  ).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(
+    page.locator(".header").getByRole("button", { name: "Falar com Rafael" }),
+  ).toBeFocused();
+  await page
+    .getByRole("navigation", { name: "Navegação principal" })
+    .getByRole("link", { name: "Contato", exact: true })
+    .click();
   await expect(page).toHaveURL(/#contato$/);
-  await expect(page.locator('.footer')).toBeInViewport();
+  await expect(page.locator(".footer")).toBeInViewport();
 });
 test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   page,
@@ -57,10 +71,18 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   await expect(
     page.getByRole("heading", { name: "Descrição do empreendimento" }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "130 m²", exact: true }).click();
-  await expect(
-    page.getByRole("heading", { name: "130 m² de área privativa" }),
-  ).toBeVisible();
+  await expect(page.locator(".investment-value strong")).toContainText(
+    "1.308.744",
+  );
+  await page
+    .locator(".investment")
+    .getByRole("button", { name: "130 m²", exact: true })
+    .click();
+  await expect(page.locator(".investment-value strong")).toContainText(
+    "1.766.804",
+  );
+  await expect(page.locator(".investment-summary")).toContainText("130 m²");
+  await expect(page.locator("#planta-selecionada")).toHaveCount(0);
   await page
     .getByRole("button", { name: "Abrir foto 1 de Vernazza Residenziale" })
     .click();
