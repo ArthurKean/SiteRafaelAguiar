@@ -1,3 +1,4 @@
+import { Icon } from "./Icon";
 import { useEffect, useRef } from "react";
 import type { ReactNode, KeyboardEventHandler } from "react";
 export function Modal({
@@ -60,7 +61,7 @@ export function Modal({
       <div className="modal-top">
         <h2>{title}</h2>
         <button className="icon-button" onClick={onClose} aria-label="Fechar">
-          ×
+          <Icon name="close" />
         </button>
       </div>
       {children}

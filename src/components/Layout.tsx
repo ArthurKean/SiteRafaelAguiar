@@ -1,3 +1,4 @@
+import { Icon } from "./Icon";
 import { SocialContacts } from "./SocialContacts";
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
@@ -38,7 +39,7 @@ export function Layout() {
             aria-controls="navigation"
             aria-label={menu ? "Fechar menu" : "Abrir menu"}
           >
-            {menu ? "×" : "☰"}
+            <Icon name={menu ? "close" : "menu"} />
           </button>
           <nav
             id="navigation"

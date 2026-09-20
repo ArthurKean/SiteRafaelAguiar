@@ -1,3 +1,4 @@
+import { Icon } from "./Icon";
 import { area } from "../utils/format";
 import { useState } from "react";
 import type { Property, PropertyPlan } from "../types/property";
@@ -24,7 +25,7 @@ export function PropertySpecs({ property: p }: { property: Property }) {
       <ul className="features-list">
         {p.features.map((f) => (
           <li key={f}>
-            <span aria-hidden="true">✓</span>
+            <span aria-hidden="true"><Icon name="check" /></span>
             {f}
           </li>
         ))}
@@ -108,7 +109,7 @@ export function LocationSection({ property }: { property: Property }) {
           <div className="location-map-footer">
             <p>{property.surroundings}</p>
             <a className="text-link" href={property.mapUrl} target="_blank" rel="noopener noreferrer">
-              Abrir no Google Maps <span aria-hidden="true">↗</span>
+              Abrir no Google Maps <span aria-hidden="true"><Icon name="arrowUpRight" /></span>
             </a>
             <button type="button" className="map-retry" onClick={() => setMapVersion(value => value + 1)}>
               Mapa não apareceu? Recarregar
@@ -117,7 +118,7 @@ export function LocationSection({ property }: { property: Property }) {
         </div>
       ) : <div className="location-placeholder">
         <span className="location-marker" aria-hidden="true">
-          ⌖
+          <Icon name="location" />
         </span>
         <h3>{property.neighborhood}</h3>
         <p>{property.city}</p>

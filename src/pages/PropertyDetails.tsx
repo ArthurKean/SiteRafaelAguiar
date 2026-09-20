@@ -1,3 +1,4 @@
+import { Icon } from "../components/Icon";
 import { area } from "../utils/format";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
@@ -95,7 +96,7 @@ export default function PropertyDetails() {
           </div>
           {plan?.image && (
             <a href="#planta-selecionada" className="text-link">
-              Ver planta <span aria-hidden="true">↓</span>
+              Ver planta <span aria-hidden="true"><Icon name="arrowDown" /></span>
             </a>
           )}
           <p className="investment-note">

@@ -1,3 +1,4 @@
+import { Icon } from "./Icon";
 export function InstagramLink() {
   return (
     <a className="button button-outline social-button" href="https://www.instagram.com/rafaelaguiar_s/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Rafael Aguiar: @rafaelaguiar_s (abre em nova aba)">
@@ -7,7 +8,7 @@ export function InstagramLink() {
         <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
       </svg>
       <span className="social-label">Instagram</span>
-      <span aria-hidden="true">↗</span>
+      <span aria-hidden="true"><Icon name="arrowUpRight" /></span>
     </a>
   );
 }

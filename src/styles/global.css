@@ -1861,3 +1861,22 @@ select {
  .hero-visual .hero-controls { right: 8px; left: 8px; justify-content: center; }
  .hero-visual .hero-controls button:not(.carousel-toggle) { width: 40px; }
 }
+.ui-icon {
+  display: inline-block;
+  flex: 0 0 auto;
+  vertical-align: middle;
+}
+.icon-button {
+  align-items: center;
+  justify-content: center;
+}
+.hero-visual .hero-controls .carousel-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.hero-controls .carousel-toggle .ui-icon {
+  width: 14px;
+  height: 14px;
+}

@@ -1,3 +1,4 @@
+import { Icon } from "./Icon";
 import { area } from "../utils/format";
 import { Link } from "react-router-dom";
 import type { Property } from "../types/property";
@@ -46,7 +47,7 @@ export function PropertyCard({ property: p }: { property: Property }) {
             className="card-arrow"
             aria-label={`Ver detalhes de ${p.name}`}
           >
-            Ver detalhes <span aria-hidden="true">↗</span>
+            Ver detalhes <span aria-hidden="true"><Icon name="arrowUpRight" /></span>
           </Link>
         </div>
       </div>

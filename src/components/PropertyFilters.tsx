@@ -1,3 +1,4 @@
+import { Icon } from "./Icon";
 import type { PropertyFilters as Filters } from "../types/property";
 import { propertyService } from "../services/propertyService";
 import { useAsync } from "../utils/hooks";
@@ -101,7 +102,7 @@ export function PropertyFilters({
       </label>
       {select("status", data?.statuses ?? [], "Todos os status")}
       <button className="clear-filters" onClick={onClear}>
-        Limpar filtros <span aria-hidden="true">↺</span>
+        Limpar filtros <Icon name="reset" />
       </button>
     </div>
   );
@@ -120,7 +121,7 @@ export function FilterChip({
       aria-label={`Remover filtro ${label}`}
     >
       {label}
-      <span aria-hidden="true">×</span>
+      <span aria-hidden="true"><Icon name="close" /></span>
     </button>
   );
 }

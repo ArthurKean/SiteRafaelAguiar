@@ -1,3 +1,4 @@
+import { Icon } from "../components/Icon";
 import { useCarousel } from "../utils/useCarousel";
 import { useMediaQuery } from "../utils/useMediaQuery";
 import { Link } from "react-router-dom";
@@ -43,7 +44,7 @@ export default function Home() {
               combina com o seu jeito de viver.
             </p>
             <Link className="button button-gold" to="/imoveis">
-              Explore os imóveis <span aria-hidden="true">↗</span>
+              Explore os imóveis <span aria-hidden="true"><Icon name="arrowUpRight" /></span>
             </Link>
 
           </div>
@@ -81,7 +82,7 @@ export default function Home() {
                 className="carousel-toggle"
                 onClick={() => setPaused(current => !current)}
                 aria-label={paused ? 'Iniciar rotação automática' : 'Pausar rotação automática'}
-              >{paused ? '▶ Reproduzir' : 'Ⅱ Pausar'}</button>}
+              ><Icon name={paused ? "play" : "pause"} />{paused ? "Reproduzir" : "Pausar"}</button>}
             </div>
             {property && (
               <>
@@ -106,7 +107,7 @@ export default function Home() {
                     </small>
                     <strong>{property.name}</strong>
                   </div>
-                  <span aria-hidden="true">↗</span>
+                  <span aria-hidden="true"><Icon name="arrowUpRight" /></span>
                 </Link>
                 <span className="hero-demo">
                   {property.isDemo ? "Empreendimento e imagem de demonstração" : "Perspectiva artística do empreendimento"}
@@ -128,7 +129,7 @@ export default function Home() {
               <p>Conheça os espaços. Imagine as possibilidades.</p>
             </div>
             <Link to="/imoveis" className="text-link">
-              Ver todos os imóveis <span aria-hidden="true">↗</span>
+              Ver todos os imóveis <span aria-hidden="true"><Icon name="arrowUpRight" /></span>
             </Link>
           </div>
           {loading ? (
