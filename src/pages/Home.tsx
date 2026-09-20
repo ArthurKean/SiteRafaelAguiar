@@ -45,6 +45,16 @@ export default function Home() {
             <Link className="button button-gold" to="/imoveis">
               Explore os imóveis <span aria-hidden="true">↗</span>
             </Link>
+
+          </div>
+          {mobile && search}
+          <div className="hero-visual"
+            role="region" aria-roledescription="carrossel" aria-label="Imóveis em destaque"
+            onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+            onFocusCapture={(event) => {
+              if (!(event.target as HTMLElement).closest('.hero-controls')) setPaused(true);
+            }}
+          >
             <div
               className="hero-controls"
               aria-label="Empreendimentos em destaque"
@@ -73,13 +83,6 @@ export default function Home() {
                 aria-label={paused ? 'Iniciar rotação automática' : 'Pausar rotação automática'}
               >{paused ? '▶ Reproduzir' : 'Ⅱ Pausar'}</button>}
             </div>
-          </div>
-          {mobile && search}
-          <div className="hero-visual"
-            role="region" aria-roledescription="carrossel" aria-label="Imóveis em destaque"
-            onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-            onFocusCapture={() => setPaused(true)}
-          >
             {property && (
               <>
                 <img

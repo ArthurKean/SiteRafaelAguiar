@@ -18,6 +18,7 @@ test('carrossel avança a cada 5 segundos, repete e respeita pausa', async ({ pa
   await page.clock.runFor(20_000);
   await expect(card).toContainText('Vernazza');
   await page.getByRole('button', { name: 'Iniciar rotação automática' }).click();
+  await page.mouse.move(0, 0);
   await page.clock.runFor(5_100);
   await expect(card).toContainText('Jardins');
   await page.locator('.hero-visual').hover();
