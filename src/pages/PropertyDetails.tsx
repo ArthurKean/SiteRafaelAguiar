@@ -47,7 +47,7 @@ export default function PropertyDetails() {
       </nav>
       <PropertyGallery property={p} />
       <div className="detail-heading">
-        <span className="eyebrow">{p.isDemo ? `${p.status} · Demonstração` : p.developer}</span>
+        <span className="eyebrow">{p.developer ?? p.status}</span>
         <div className="detail-title-row"><h1>{p.name}</h1><FavoriteButton id={p.id} name={p.name} label /></div>
         <p>
           {p.neighborhood} · {p.city}, MA
@@ -102,7 +102,7 @@ export default function PropertyDetails() {
             </a>
           )}
           <p className="investment-note">
-            {p.isDemo ? "Valor ilustrativo. Consulte as informações reais antes de tomar uma decisão." : "Consulte disponibilidade e condições de pagamento."}
+            Consulte disponibilidade e condições de pagamento.
           </p>
           <ContactCTA propertyName={p.name} plan={plan} className="button-whatsapp">
             Falar com Rafael
@@ -131,9 +131,6 @@ export default function PropertyDetails() {
             Observe os ambientes, compare as opções e reserve um tempo para
             escolher.
           </p>
-          <small>
-            {p.isDemo ? "Fotografia de referência, sem vínculo com o empreendimento." : "Perspectiva artística do Vernazza Residenziale."}
-          </small>
         </div>
       </section>
       {plan && <PropertyPlanPreview plan={plan} />}

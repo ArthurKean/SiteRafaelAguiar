@@ -36,7 +36,7 @@ export function ContactCTA({
       {open && (
         <Modal title="Contato com Rafael" onClose={() => setOpen(false)}>
           <p>
-            O WhatsApp ainda não está disponível nesta versão de demonstração.
+            O WhatsApp está indisponível no momento.
           </p>
           <p>
             Assim que o contato for configurado, você poderá enviar esta

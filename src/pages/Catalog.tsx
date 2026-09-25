@@ -141,10 +141,6 @@ export default function Catalog() {
                 </button>
               </div>
             )}
-            <p className="demo-caption">
-              Imóveis de demonstração estão identificados. Consulte disponibilidade
-              e condições dos empreendimentos.
-            </p>
           </div>
         </div>
       </section>

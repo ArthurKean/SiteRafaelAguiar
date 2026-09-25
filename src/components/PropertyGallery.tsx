@@ -1,3 +1,4 @@
+import { Watermark } from "./Watermark";
 import { useState } from "react";
 import type { Property } from "../types/property";
 import { Modal } from "./Modal";
@@ -22,6 +23,7 @@ export function PropertyGallery({ property }: { property: Property }) {
               width="1000"
               height="700"
             />
+            <Watermark />
             {i === 2 && (
               <span className="gallery-more">
                 Ver todas as {images.length} fotos 
@@ -30,9 +32,6 @@ export function PropertyGallery({ property }: { property: Property }) {
           </button>
         ))}
       </div>
-      <p className="demo-caption gallery-caption">
-        {property.isDemo ? "Imagens ilustrativas · Empreendimento de demonstração" : "Perspectivas artísticas e fotomontagens do empreendimento"}
-      </p>
       {index !== null && (
         <Modal
           title={`${property.name} · ${index + 1} / ${images.length}`}
@@ -46,11 +45,11 @@ export function PropertyGallery({ property }: { property: Property }) {
           }}
         >
           <div>
-            <img
+            <div className="watermarked-lightbox"><img
               className="lightbox-image"
               src={images[index].src}
               alt={images[index].alt}
-            />
+            /><Watermark /></div>
             <div className="lightbox-controls">
               <button
                 className="button button-outline"
@@ -59,7 +58,6 @@ export function PropertyGallery({ property }: { property: Property }) {
               >
                  Anterior
               </button>
-              <span>{property.isDemo ? "Fotografia ilustrativa" : "Perspectiva artística"}</span>
               <button
                 className="button button-outline"
                 onClick={() => move(1)}

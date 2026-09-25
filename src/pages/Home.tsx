@@ -56,7 +56,7 @@ export default function Home() {
             <h2>Encontre o imóvel ideal para o seu momento</h2>
             <SearchBar />
           </section>
-          {active && <p className="immersive-caption">{active.propertyName} · {active.alt}</p>}
+          {active && <p className="immersive-caption">{active.propertyName}</p>}
         </div>
       </section>
       <section className="section featured">
@@ -78,9 +78,6 @@ export default function Home() {
           ) : (
             <PropertyGrid properties={properties ?? []} />
           )}
-          <p className="demo-caption">
-            Os imóveis de demonstração estão identificados. Consulte disponibilidade e valores dos empreendimentos.
-          </p>
         </div>
       </section>
       <AboutSection />

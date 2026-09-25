@@ -123,7 +123,7 @@ export function LocationSection({ property }: { property: Property }) {
         </span>
         <h3>{property.neighborhood}</h3>
         <p>{property.city}</p>
-        <span>{property.isDemo ? "Região de demonstração · Endereço a confirmar" : property.surroundings}</span>
+        <span>{property.isDemo ? "Endereço a confirmar" : property.surroundings}</span>
       </div>}
     </section>
   );

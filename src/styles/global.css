@@ -2048,3 +2048,19 @@ select {
 .card-specs > span { white-space: nowrap; }
 .card-specs span + span { border-left: 0; padding-left: 0; }
 .specs dt .property-icon { width: 16px; height: 16px; flex-basis: 16px; }
+
+.photo-watermark { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; opacity: .28; color: white; text-shadow: 0 1px 3px #0008; z-index: 1; }
+.photo-watermark > svg { position: absolute; }
+.card-image .photo-watermark img, .property-gallery .photo-watermark img, .photo-watermark img { width: 38px; height: 53px; object-fit: contain; filter: url(#watermark-remove-white); transform: none !important; margin-bottom: 6px; }
+.photo-watermark strong { font: 700 16px/1.2 Manrope, sans-serif; letter-spacing: .12em; }
+.photo-watermark small { font: 500 7px/1.5 Manrope, sans-serif; letter-spacing: .28em; margin-top: 3px; }
+.watermarked-lightbox { position: relative; }
+.card-photo-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; padding: 10px; border: 0; border-radius: 50%; background: #10151e55; color: white; display: grid; place-items: center; cursor: pointer; z-index: 2; }
+.card-photo-nav.previous { left: 8px; }
+.card-photo-nav.next { right: 8px; }
+.card-photo-nav svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.card-photo-nav:hover { background: #10151e99; }
+.card-photo-count { position: absolute; right: 12px; bottom: 12px; color: white; background: #10151e88; border-radius: 12px; padding: 3px 9px; font-size: 11px; pointer-events: none; }
+.card-image { position: relative; }
+
+.card-photo-nav:hover, .card-photo-nav:active { transform: translateY(-50%); }

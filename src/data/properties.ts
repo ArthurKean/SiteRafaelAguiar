@@ -82,7 +82,7 @@ export const demoProperties: Property[] = seeds.map((seed, i) => ({
   neighborhood: seed.neighborhood,
   city: "São Luís",
   shortDescription: "Espaço para viver no seu ritmo.",
-  description: `Neste exemplo de catálogo, o ${seed.name} apresenta opções de ${seed.area} a ${seed.max} m², com ${seed.bedrooms} quartos e ${seed.parking} vagas. Compare as metragens e conheça as características de cada opção. As informações e imagens são ilustrativas e não representam uma oferta real.`,
+  description: `O ${seed.name} apresenta opções de ${seed.area} a ${seed.max} m², com ${seed.bedrooms} quartos e ${seed.parking} vagas. Compare as metragens e conheça as características de cada opção.`,
   priceFrom: seed.price,
   priceTo: Math.round(seed.price * 1.35),
   areaMin: seed.area,

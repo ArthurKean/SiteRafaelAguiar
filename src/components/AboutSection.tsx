@@ -32,7 +32,6 @@ export function AboutSection({ full = false }: { full?: boolean }) {
           {full && (
             <p>
               Conheça os empreendimentos da curadoria e suas opções de metragem.
-              Os imóveis usados como exemplo estão identificados como demonstração.
             </p>
           )}
           {full ? (

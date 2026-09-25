@@ -99,7 +99,7 @@ export function Layout() {
           <div className="footer-bottom">
             <span>© {new Date().getFullYear()} Rafael Aguiar</span>
             <span>
-              Consulte disponibilidade e condições. Imóveis de demonstração estão identificados.
+              Consulte disponibilidade e condições.
             </span>
           </div>
         </div>
