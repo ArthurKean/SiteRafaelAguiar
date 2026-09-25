@@ -10,10 +10,10 @@ test("teclado, foco e link de contato", async ({ page }) => {
     .toHaveAttribute("href", /^https:\/\/wa.me\/559891588444\?text=/);
   await page
     .getByRole("navigation", { name: "Navegação principal" })
-    .getByRole("link", { name: "Contato", exact: true })
+    .getByRole("link", { name: "Favoritos, 0 imóveis", exact: true })
     .click();
-  await expect(page).toHaveURL(/#contato$/);
-  await expect(page.locator(".footer")).toBeInViewport();
+  await expect(page).toHaveURL(/favoritos$/);
+  await expect(page.getByRole("heading", { name: "Seus favoritos" })).toBeVisible();
 });
 test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   page,

@@ -2009,3 +2009,42 @@ select {
  .immersive-backdrop img { object-position: 60% center; }
 }
 @media(prefers-reduced-motion: reduce) { .immersive-backdrop img { transition: none; } }
+
+/* Favoritos: controles compartilhados no catálogo, detalhe e navegação. */
+.card-visual { position: relative; }
+.favorite-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-width: 44px; height: 44px; padding: 10px; border: 1px solid var(--color-outline-variant); border-radius: 50%; background: #fff; color: #10151e; cursor: pointer; flex-shrink: 0; }
+.card-visual > .favorite-button { position: absolute; top: 12px; right: 12px; box-shadow: 0 2px 8px #0002; }
+.card-visual .status { max-width: calc(100% - 80px); }
+.favorite-button[aria-pressed="true"] { color: #9a7129; }
+.favorite-button[aria-pressed="true"] svg { fill: #c3a056; }
+.favorite-button[aria-pressed="true"] { animation: favorite-pop 220ms ease-out; }
+.favorite-button:hover { background: #f6f2e8; }
+.favorite-button.with-label { border-radius: 24px; padding-inline: 18px; }
+.detail-title-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.favorites-link { position: relative; min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+.favorites-count { position: absolute; top: 0; right: -3px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 20px; display: grid; place-items: center; background: #c3a056; color: #10151e; font-size: 10px; font-weight: 700; }
+.favorites-mobile { display: none; }
+.favorites-intro { margin: 12px 0 32px; }
+.favorites-page { min-height: 55vh; }
+.favorite-notice { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 50; width: max-content; max-width: min(480px, calc(100% - 32px)); background: #10151e; color: white; border-radius: 10px; padding: 14px 20px; font-size: 13px; pointer-events: none; opacity: 0; }
+.favorite-notice.visible { opacity: 1; }
+@keyframes favorite-pop { 50% { transform: scale(1.1); } }
+@media(max-width: 900px) {
+  .favorites-mobile { display: inline-flex; margin-left: auto; flex-shrink: 0; }
+  .navigation > .favorites-desktop { display: none; }
+  .header-inner { gap: 12px; }
+  .menu-toggle { flex-shrink: 0; }
+  .favorite-notice { bottom: 90px; }
+}
+@media(max-width: 380px) { .header .brand { gap: 7px; font-size: 12px; } .header .brand small { font-size: 6px; } .header .brand img { width: 26px; } .header-inner { gap: 8px; } }
+@media(prefers-reduced-motion: reduce) { .favorite-button[aria-pressed="true"] { animation: none; } }
+
+/* Ícones das características e proporção do acesso a favoritos. */
+.favorites-link > svg { width: 26px; height: 26px; stroke-width: 1.6; }
+.favorites-link .favorites-count { top: 1px; right: -1px; min-width: 16px; height: 16px; font-size: 9px; }
+.property-icon { width: 18px; height: 18px; flex: 0 0 18px; object-fit: contain; opacity: .75; }
+.card-specs { flex-wrap: wrap; column-gap: 14px; row-gap: 10px; }
+.card-specs > span, .detail-highlights > span, .specs dt { display: flex; align-items: center; gap: 6px; }
+.card-specs > span { white-space: nowrap; }
+.card-specs span + span { border-left: 0; padding-left: 0; }
+.specs dt .property-icon { width: 16px; height: 16px; flex-basis: 16px; }

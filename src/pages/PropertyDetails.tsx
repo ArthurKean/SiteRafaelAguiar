@@ -1,3 +1,5 @@
+import { PropertyIcon } from "../components/PropertyIcon";
+import { FavoriteButton } from "../components/Favorites";
 import { area } from "../utils/format";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
@@ -46,16 +48,17 @@ export default function PropertyDetails() {
       <PropertyGallery property={p} />
       <div className="detail-heading">
         <span className="eyebrow">{p.isDemo ? `${p.status} · Demonstração` : p.developer}</span>
-        <h1>{p.name}</h1>
+        <div className="detail-title-row"><h1>{p.name}</h1><FavoriteButton id={p.id} name={p.name} label /></div>
         <p>
           {p.neighborhood} · {p.city}, MA
         </p>
         <div className="detail-highlights">
           <span>
-            {area(p.areaMin)}–{area(p.areaMax)} m²
+            <PropertyIcon name="ruler" />{area(p.areaMin)}–{area(p.areaMax)} m²
           </span>
-          <span>{p.suiteDescription ?? `${p.suites} suítes`}</span>
-          <span>{p.parkingSpaces} vagas</span>
+          <span><PropertyIcon name="bed-double" />{p.suiteDescription ?? `${p.suites} suítes`}</span>
+          {p.bathrooms != null && <span><PropertyIcon name="bath" />{p.bathrooms} banheiros</span>}
+          <span><PropertyIcon name="car-front" />{p.parkingSpaces} vagas</span>
           <span>{p.type}</span>
         </div>
       </div>

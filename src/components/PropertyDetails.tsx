@@ -1,3 +1,4 @@
+import { PropertyIcon } from "./PropertyIcon";
 import { Icon } from "./Icon";
 import { area } from "../utils/format";
 import { useState } from "react";
@@ -17,7 +18,7 @@ export function PropertySpecs({ property: p }: { property: Property }) {
           .filter(([v]) => v !== undefined && v !== null)
           .map(([v, label]) => (
             <div key={label}>
-              <dt>{label}</dt>
+              <dt><PropertyIcon name={label === "Área privativa" ? "ruler" : label === "Vagas" ? "car-front" : label === "Banheiros" ? "bath" : "bed-double"} />{label}</dt>
               <dd>{v}</dd>
             </div>
           ))}

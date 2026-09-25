@@ -1,3 +1,5 @@
+import { PropertyIcon } from "./PropertyIcon";
+import { FavoriteButton } from "./Favorites";
 import { area } from "../utils/format";
 import { Link } from "react-router-dom";
 import type { Property } from "../types/property";
@@ -5,6 +7,7 @@ import { currency } from "../utils/format";
 export function PropertyCard({ property: p }: { property: Property }) {
   return (
     <article className="property-card">
+      <div className="card-visual">
       <Link
         to={`/imoveis/${p.slug}`}
         className="card-image"
@@ -22,6 +25,8 @@ export function PropertyCard({ property: p }: { property: Property }) {
         <span className="status">{p.isDemo ? `${p.status} · Demonstração` : (p.status ?? p.type)}</span>
         <span className="image-note">{p.isDemo ? "Imagem ilustrativa" : "Perspectiva artística"}</span>
       </Link>
+      <FavoriteButton id={p.id} name={p.name} />
+      </div>
       <div className="card-content">
         <p className="card-location">
           {p.neighborhood} · {p.city}
@@ -31,10 +36,11 @@ export function PropertyCard({ property: p }: { property: Property }) {
         </h3>
         <div className="card-specs">
           <span>
-            {area(p.areaMin)}–{area(p.areaMax)} m²
+            <PropertyIcon name="ruler" />{area(p.areaMin)}–{area(p.areaMax)} m²
           </span>
-          <span>{p.bedrooms} quartos</span>
-          <span>{p.parkingSpaces} vagas</span>
+          <span><PropertyIcon name="bed-double" />{p.bedrooms} quartos</span>
+          {p.bathrooms != null && <span><PropertyIcon name="bath" />{p.bathrooms} banheiros</span>}
+          <span><PropertyIcon name="car-front" />{p.parkingSpaces} vagas</span>
         </div>
         <div className="card-bottom">
           <div>

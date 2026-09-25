@@ -1,3 +1,4 @@
+import { FavoritesLink } from "./Favorites";
 import { Icon } from "./Icon";
 import { SocialContacts } from "./SocialContacts";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
@@ -33,6 +34,7 @@ export function Layout() {
       <header className="header">
         <div className="container header-inner">
           <Brand />
+          <FavoritesLink mobile />
           <button
             className="menu-toggle icon-button"
             onClick={() => setMenu(!menu)}
@@ -55,7 +57,7 @@ export function Layout() {
             </NavLink>
             <NavLink to="/imoveis">Imóveis</NavLink>
             <NavLink to="/sobre">Sobre</NavLink>
-            <Link to="/#contato">Contato</Link>
+            <FavoritesLink />
             <ContactCTA />
           </nav>
         </div>
