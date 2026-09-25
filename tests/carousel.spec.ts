@@ -1,42 +1,31 @@
 import { test, expect } from '@playwright/test';
 
-test('carrossel avança a cada 5 segundos, repete e respeita pausa', async ({ page }) => {
+test('fundo alterna em cinco segundos e pausa após seleção manual', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.clock.install();
   await page.goto('/');
-  const card = page.locator('.hero-property');
-  await expect(card).toContainText('Vernazza');
-  await page.clock.runFor(4_000);
-  await expect(card).toContainText('Vernazza');
-  await page.clock.runFor(1_100);
-  await expect(card).toContainText('Jardins');
-  await page.clock.runFor(5_000);
-  await expect(card).toContainText('Villa');
-  await page.clock.runFor(5_000);
-  await expect(card).toContainText('Vernazza');
-  await page.getByRole('button', { name: 'Pausar rotação automática' }).click();
-  await page.clock.runFor(20_000);
-  await expect(card).toContainText('Vernazza');
-  await page.getByRole('button', { name: 'Iniciar rotação automática' }).click();
-  await page.mouse.move(0, 0);
-  await page.clock.runFor(5_100);
-  await expect(card).toContainText('Jardins');
-  await page.locator('.hero-visual').hover();
-  await page.clock.runFor(20_000);
-  await expect(card).toContainText('Jardins');
+  const active = page.locator('.immersive-backdrop img.is-active');
+  await expect(active).toHaveAttribute('src', /fachada-noturna/);
+  await page.clock.runFor(5100);
+  await expect(active).toHaveAttribute('src', /entrada-norte/);
+  await page.getByRole('button', { name: 'Mostrar imagem 3 de Vernazza Residenziale' }).click();
+  await page.clock.runFor(15000);
+  await expect(active).toHaveAttribute('src', /aerea-diurna/);
 });
 
-test('movimento reduzido mantém o controle manual e layout mobile', async ({ page }) => {
+test('busca centralizada e bolinhas no celular com movimento reduzido', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.clock.install();
   await page.goto('/');
-  await expect(page.locator('.hero-property')).toContainText('Vernazza');
-  await page.clock.runFor(20_000);
-  await expect(page.locator('.hero-property')).toContainText('Vernazza');
-  await page.getByRole('button', { name: 'Mostrar Villa Atlântica' }).click();
-  await expect(page.locator('.hero-property')).toContainText('Villa');
+  await page.clock.runFor(15000);
+  await expect(page.locator('.immersive-backdrop img.is-active')).toHaveAttribute('src', /fachada-noturna/);
+  await page.getByRole('button', { name: 'Mostrar imagem 2 de Vernazza Residenziale' }).click();
+  await expect(page.locator('.immersive-backdrop img.is-active')).toHaveAttribute('src', /entrada-norte/);
+  const bounds = await page.locator('.immersive-search').boundingBox();
+  expect(Math.abs(bounds!.x - (390 - bounds!.x - bounds!.width))).toBeLessThan(2);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await page.screenshot({ path: 'test-results/carousel-mobile.png' });
+  await page.screenshot({ path: 'test-results/carousel-mobile.png', fullPage: true });
+  await page.getByRole('button', { name: 'Buscar imóvel', exact: true }).click();
+  await expect(page).toHaveURL(/imoveis/);
 });
-

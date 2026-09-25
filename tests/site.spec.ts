@@ -23,7 +23,7 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "extraordinário",
+    "Seu próximo endereço",
   );
   await expect(page.locator(".property-card")).toHaveCount(3);
   await page.locator("select[name=neighborhood]").selectOption("Renascença");
@@ -112,13 +112,13 @@ test("home desktop, assets e galeria de destaques", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   await page
-    .getByRole("button", { name: "Mostrar Jardins da Península" })
+    .getByRole("button", { name: "Mostrar imagem 2 de Vernazza Residenziale" })
     .click();
-  await expect(page.locator(".hero-property")).toContainText(
-    "Jardins da Península",
+  await expect(page.locator(".immersive-caption")).toContainText(
+    "Vernazza Residenziale",
   );
   await page
-    .getByRole("button", { name: "Mostrar Vernazza Residenziale" })
+    .getByRole("button", { name: "Mostrar imagem 1 de Vernazza Residenziale" })
     .click();
   await page.evaluate(() => document.fonts.ready);
   await page.locator(".footer").scrollIntoViewIfNeeded();
@@ -139,7 +139,7 @@ for (const width of [390, 768]) {
   test(`responsividade e filtros em ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
     await page.goto("/");
-    await expect(page.locator(".hero-property")).toBeVisible();
+    await expect(page.locator(".immersive-caption")).toBeVisible();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= window.innerWidth,
