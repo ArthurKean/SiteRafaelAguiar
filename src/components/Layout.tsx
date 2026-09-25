@@ -1,5 +1,6 @@
 import { Icon } from "./Icon";
 import { SocialContacts } from "./SocialContacts";
+import { FloatingWhatsApp } from "./FloatingWhatsApp";
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { ContactCTA } from "./ContactCTA";
@@ -101,6 +102,7 @@ export function Layout() {
           </div>
         </div>
       </footer>
+      <FloatingWhatsApp />
     </>
   );
 }

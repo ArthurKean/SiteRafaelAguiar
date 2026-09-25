@@ -1914,3 +1914,62 @@ select {
   .button, .text-link { transition: none; }
   .button:hover, .button:active { transform: none; }
 }
+
+/* Contato persistente: entrada única e feedback discreto ao interagir. */
+.floating-whatsapp {
+  position: fixed;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  z-index: 30;
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-whatsapp);
+  color: #fff;
+  box-shadow: 0 6px 18px rgb(14 19 29 / 22%);
+  animation: whatsapp-enter 450ms ease-out both;
+  transition: transform 180ms ease, background 180ms ease;
+}
+.floating-whatsapp-label {
+  position: absolute;
+  right: calc(100% + 12px);
+  white-space: nowrap;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+.floating-whatsapp:focus-visible .floating-whatsapp-label {
+  opacity: 1;
+  visibility: visible;
+}
+@media (hover: hover) and (pointer: fine) {
+  .floating-whatsapp:hover { transform: translateY(-3px); background: #174d35; }
+  .floating-whatsapp:hover .floating-whatsapp-label { opacity: 1; visibility: visible; }
+}
+.floating-whatsapp:active { transform: scale(.94); }
+.footer { padding-bottom: 104px; }
+@keyframes whatsapp-enter {
+  from { opacity: 0; transform: translateY(12px) scale(.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-width: 600px) {
+  .floating-whatsapp {
+    width: 56px;
+    height: 56px;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-whatsapp { animation: none; transition: none; }
+  .floating-whatsapp:hover, .floating-whatsapp:active { transform: none; }
+  .floating-whatsapp-label { transition: none; }
+}
