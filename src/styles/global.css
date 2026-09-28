@@ -172,7 +172,22 @@ button:active,
   border-bottom-color: currentColor;
 }
 .header {
-  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: #fff;
+  border-bottom: 1px solid rgb(16 21 30 / 6%);
+  box-shadow: 0 2px 12px rgb(16 21 30 / 3%);
+}
+@supports ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
+  .header {
+    background: rgb(255 255 255 / 92%);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .header { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 .header-inner {
   display: flex;
@@ -1357,21 +1372,24 @@ select {
   }
   .navigation.open {
     position: absolute;
-    top: 80px;
+    top: 100%;
     left: 0;
     right: 0;
     z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    background: var(--color-surface);
-    padding: 24px var(--gutter);
-    gap: 8px;
+    background: rgb(255 255 255 / 98%);
+    padding: 12px var(--gutter) 18px;
+    gap: 4px;
     border-bottom: 1px solid var(--color-outline-variant);
     box-shadow: var(--shadow-sm);
   }
   .navigation.open > a {
-    padding-block: 10px;
+    min-height: 48px;
+    padding-block: 12px;
+    justify-content: center;
+    text-align: center;
   }
   .navigation .button {
     margin-top: 10px;

@@ -4,7 +4,6 @@ import { SocialContacts } from "./SocialContacts";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { ContactCTA } from "./ContactCTA";
 export function Brand() {
   return (
     <Link to="/" className="brand" aria-label="Rafael Aguiar, início">
@@ -58,7 +57,6 @@ export function Layout() {
             <NavLink to="/imoveis">Imóveis</NavLink>
             <NavLink to="/sobre">Sobre</NavLink>
             <FavoritesLink />
-            <ContactCTA />
           </nav>
         </div>
       </header>

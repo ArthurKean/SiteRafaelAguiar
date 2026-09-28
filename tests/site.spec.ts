@@ -1,5 +1,5 @@
 import { test, expect } from "./fixtures";
-test("teclado, foco e link de contato", async ({ page }) => {
+test("teclado, foco e navegação", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await page.keyboard.press("Tab");
@@ -7,7 +7,7 @@ test("teclado, foco e link de contato", async ({ page }) => {
     page.getByRole("link", { name: "Pular para o conteúdo" }),
   ).toBeFocused();
   await expect(page.locator(".header").getByRole("link", { name: "Falar com Rafael" }))
-    .toHaveAttribute("href", /^https:\/\/wa.me\/559891588444\?text=/);
+    .toHaveCount(0);
   await page
     .getByRole("navigation", { name: "Navegação principal" })
     .getByRole("link", { name: "Favoritos, 0 imóveis", exact: true })
