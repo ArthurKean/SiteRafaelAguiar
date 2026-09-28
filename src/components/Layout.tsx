@@ -51,11 +51,11 @@ export function Layout() {
               if (e.key === "Escape") setMenu(false);
             }}
           >
-            <NavLink to="/" end>
+            <NavLink to="/" end onClick={() => setMenu(false)}>
               Início
             </NavLink>
-            <NavLink to="/imoveis">Imóveis</NavLink>
-            <NavLink to="/sobre">Sobre</NavLink>
+            <NavLink to="/imoveis" onClick={() => setMenu(false)}>Imóveis</NavLink>
+            <NavLink to="/sobre" onClick={() => setMenu(false)}>Sobre</NavLink>
             <FavoritesLink />
           </nav>
         </div>
