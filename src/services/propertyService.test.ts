@@ -1,7 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { properties } from "../data/properties";
+import { describe, expect, it, vi } from "vitest";
 import { propertyService } from "./propertyService";
 import { buildWhatsAppUrl } from "../utils/contact";
-describe("catálogo local", () => {
+vi.mock("./sanity", () => ({ loadProperties: async () => properties }));
+describe("filtros com catálogo de teste", () => {
   it("rejeita intervalos invertidos e números inválidos recebidos pela URL", async () => {
     expect(await propertyService.list({ minPrice: '1700000', maxPrice: '1400000' })).toHaveLength(0);
     expect(await propertyService.list({ minArea: '-1' })).toHaveLength(0);

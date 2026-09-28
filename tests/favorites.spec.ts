@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 test("favoritos persistem, sincronizam e podem ser removidos", async ({ page }) => {
   await page.goto("/imoveis");
   await expect(page.locator(".favorite-button")).toHaveCount(6);

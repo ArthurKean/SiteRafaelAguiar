@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 test("setas alternam fotos sem navegar e marca aparece na galeria", async ({page}) => {
  await page.goto("/");
  const card=page.locator(".property-card").first();

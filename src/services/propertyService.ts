@@ -1,4 +1,4 @@
-import { properties } from "../data/properties";
+import { loadProperties } from "./sanity";
 import type { Property, PropertyFilters } from "../types/property";
 import { normalize } from "../utils/format";
 
@@ -35,7 +35,7 @@ export function filterProperties(
       (!filters.status || p.status === filters.status) &&
       (!filters.minPrice || p.priceTo >= Number(filters.minPrice)) &&
       (!filters.maxPrice || p.priceFrom <= Number(filters.maxPrice)) &&
-      (!filters.bedrooms || p.bedrooms >= Number(filters.bedrooms)) &&
+      (!filters.bedrooms || (p.bedrooms ?? -1) >= Number(filters.bedrooms)) &&
       (!filters.minArea || p.areaMax >= Number(filters.minArea))
     );
   });
@@ -49,18 +49,19 @@ export function filterProperties(
           : b.createdAt.localeCompare(a.createdAt),
   );
 }
-// Contrato assíncrono: substituir somente este adaptador por fetch na V2.
+// Catálogo publicado no Sanity, sem dados locais de demonstração.
 export const propertyService = {
   async list(filters: PropertyFilters = {}): Promise<Property[]> {
-    return filterProperties(properties, filters);
+    return filterProperties(await loadProperties(), filters);
   },
   async featured(): Promise<Property[]> {
-    return properties.filter((p) => p.featured);
+    return (await loadProperties()).filter((p) => p.featured);
   },
   async getBySlug(slug: string): Promise<Property | undefined> {
-    return properties.find((p) => p.slug === slug);
+    return (await loadProperties()).find((p) => p.slug === slug);
   },
   async options() {
+    const properties = await loadProperties();
     return {
       cities: [...new Set(properties.map((p) => p.city))],
       neighborhoods: [...new Set(properties.map((p) => p.neighborhood))],

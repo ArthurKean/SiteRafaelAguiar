@@ -1,4 +1,4 @@
-export type PropertyStatus = "Lançamento" | "Em construção" | "Na planta";
+export type PropertyStatus = "Lançamento" | "Em construção" | "Na planta" | "Pronto para morar";
 export interface PropertyImage {
   src: string;
   alt: string;
@@ -6,8 +6,8 @@ export interface PropertyImage {
 export interface PropertyPlan {
   id: string;
   area: number;
-  bedrooms: number;
-  suites: number;
+  bedrooms?: number;
+  suites?: number;
   bathrooms?: number;
   suiteDescription?: string;
   unit?: string;
@@ -25,12 +25,12 @@ export interface Property {
   priceTo: number;
   areaMin: number;
   areaMax: number;
-  bedrooms: number;
+  bedrooms?: number;
   suites?: number;
   suiteDescription?: string;
   bathrooms?: number;
-  parkingSpaces: number;
-  type: "Apartamento" | "Cobertura";
+  parkingSpaces?: number;
+  type: string;
   status?: PropertyStatus;
   developer?: string;
   surroundings?: string;

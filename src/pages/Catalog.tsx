@@ -26,7 +26,7 @@ export default function Catalog() {
     params.toString(),
   );
   useSeo(
-    "Imóveis na planta",
+    "Imóveis",
     "Explore o catálogo de imóveis e filtre imóveis por bairro, preço, área e número de quartos.",
   );
   function update(key: keyof Filters, value: string) {
@@ -58,7 +58,7 @@ export default function Catalog() {
       <section className="catalog-intro">
         <div className="container">
           <span className="eyebrow">Encontre seu próximo endereço</span>
-          <h1>Imóveis na planta</h1>
+          <h1>Imóveis</h1>
           <p>Explore a seleção e descubra o que faz sentido para você.</p>
           <label className="catalog-search">
             <span>Buscar por nome, bairro ou cidade</span>

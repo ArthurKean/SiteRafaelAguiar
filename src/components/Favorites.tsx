@@ -1,18 +1,28 @@
+import { loadProperties } from "../services/sanity";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { NavLink } from "react-router-dom";
-import { properties } from "../data/properties";
+
 const KEY = "rafael:favorites:v1";
-const validIds = new Set(properties.map(p => p.id));
+
 function read(): string[] {
   try {
     const value: unknown = JSON.parse(localStorage.getItem(KEY) ?? "[]");
-    return Array.isArray(value) ? [...new Set(value.filter((id): id is string => typeof id === "string" && validIds.has(id)))] : [];
+    return Array.isArray(value) ? [...new Set(value.filter((id): id is string => typeof id === "string" && id.length > 0 && id.length < 200))] : [];
   } catch { return []; }
 }
 const FavoritesContext = createContext<{ ids: string[]; toggle: (id: string, name: string) => void }>({ ids: [], toggle: () => {} });
 export function FavoritesProvider({ children }: { children: ReactNode }) {
   const [ids, setIds] = useState(read);
   const [notice, setNotice] = useState("");
+  useEffect(() => {
+    let active = true;
+    loadProperties().then(properties => {
+      if (!active) return;
+      const available = new Set(properties.map(p => p.id));
+      setIds(current => current.filter(id => available.has(id)));
+    }).catch(() => { /* Preserve favorites if the catalog cannot be loaded. */ });
+    return () => { active = false; };
+  }, []);
   useEffect(() => {
     const sync = (event: StorageEvent) => { if (event.key === KEY || event.key === null) setIds(read()); };
     window.addEventListener("storage", sync);

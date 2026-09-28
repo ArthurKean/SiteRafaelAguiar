@@ -72,7 +72,7 @@ export function PropertyPlanPreview({ plan }: { plan: PropertyPlan }) {
         <div className="plan-info">
           <h3>{area(plan.area)} m² de área privativa</h3>
           <p>
-            {[`${plan.bedrooms} quartos`, plan.suiteDescription ?? `${plan.suites} suítes`, plan.bathrooms != null ? `${plan.bathrooms} banheiros` : null].filter(Boolean).join(" · ")}
+            {[plan.bedrooms != null ? `${plan.bedrooms} quartos` : null, plan.suiteDescription ?? (plan.suites != null ? `${plan.suites} suítes` : null), plan.bathrooms != null ? `${plan.bathrooms} banheiros` : null].filter(Boolean).join(" · ")}
           </p>
         </div>
       </div>

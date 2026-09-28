@@ -1,0 +1,37 @@
+import { test, expect } from "@playwright/test";
+test("Sanity publicado: catálogo, detalhes, imagens e favoritos persistentes", async ({page}) => {
+ const errors: string[]=[]; page.on("pageerror",e=>errors.push(e.message));
+ await page.goto("/imoveis");
+ const card=page.locator(".property-card").filter({has:page.getByRole("heading",{name:"Teste",exact:true})});
+ await expect(card).toBeVisible();
+ await expect(card.locator(".card-image > img")).toHaveAttribute("src",/cdn.sanity.io/);
+ await card.getByRole("button",{name:"Adicionar Teste aos favoritos"}).click();
+ await page.reload();
+ await expect(card.getByRole("button",{name:"Remover Teste dos favoritos"})).toBeVisible();
+ await card.getByRole("link",{name:"Conhecer Teste"}).click();
+ await expect(page).toHaveURL(/imoveis\/teste$/);
+ await expect(page.getByRole("heading",{name:"Teste",exact:true})).toBeVisible();
+ await expect(page.locator(".description")).toContainText("Apartamento de alto padrão");
+ await expect(page.locator(".investment").getByRole("link",{name:"Falar com Rafael"})).toHaveAttribute("href",/Teste/);
+ await page.reload();
+ await expect(page.locator(".property-gallery")).toBeVisible();
+ await expect.poll(() => page.locator(".property-gallery button > img").evaluateAll(images => images.every(img => (img as HTMLImageElement).complete && (img as HTMLImageElement).naturalWidth > 0)), {timeout:15000}).toBe(true);
+ await page.setViewportSize({width:390,height:844});
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.screenshot({path:"test-results/sanity-mobile.png",fullPage:true});
+ await page.goto("/favoritos"); await expect(page.locator(".property-card")).toHaveCount(1);
+ expect(errors).toEqual([]);
+});
+const api = "**/data/query/production?**";
+test("cadastro com uma foto, plantas e falha da API", async ({page})=> {
+ await page.route(api,route=>route.fulfill({json:{result:[{id:"new",slug:"apartamento-jardins",name:"Apartamento Jardins",priceFrom:100,areaMin:50,cover:{src:"https://cdn.sanity.io/images/jn7uxitm/production/missing.jpg"},plans:[{id:"p1",area:50,price:100},{id:"p2",area:80,price:200,unit:"A2"}]}]}}));
+ await page.goto("/imoveis/apartamento-jardins");
+ await expect(page.getByRole("heading",{name:"Apartamento Jardins",exact:true})).toBeVisible();
+ await expect(page.locator(".editorial-section")).toHaveCount(0);
+ await page.locator(".investment").getByRole("button",{name:"80 m²",exact:true}).click();
+ await expect(page.locator(".investment-value strong")).toContainText("200");
+ const href=await page.locator(".investment").getByRole("link",{name:"Falar com Rafael"}).getAttribute("href");
+ expect(new URL(href!).searchParams.get("text")).toContain("80 m²");
+ await page.unroute(api); await page.route(api,route=>route.fulfill({status:503,body:"unavailable"}));
+ await page.goto("/imoveis"); await expect(page.getByText("Não foi possível carregar os imóveis.")).toBeVisible();
+});

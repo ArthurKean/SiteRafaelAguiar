@@ -1,3 +1,4 @@
+import { cardImageSet } from "../services/sanity";
 import { useRef, useState } from "react";
 import { Watermark } from "./Watermark";
 import { PropertyIcon } from "./PropertyIcon";
@@ -23,7 +24,7 @@ export function PropertyCard({ property: p }: { property: Property }) {
       >
         <img
           src={p.images[photo].src}
-          srcSet={`${p.images[photo].src.replace(".webp", "-640.webp")} 640w, ${p.images[photo].src} 1400w`}
+          srcSet={cardImageSet(p.images[photo].src)}
           sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 33vw"
           alt={p.images[photo].alt}
           loading="lazy"
@@ -51,9 +52,9 @@ export function PropertyCard({ property: p }: { property: Property }) {
           <span>
             <PropertyIcon name="ruler" />{area(p.areaMin)}–{area(p.areaMax)} m²
           </span>
-          <span><PropertyIcon name="bed-double" />{p.bedrooms} quartos</span>
+          {p.bedrooms != null && <span><PropertyIcon name="bed-double" />{p.bedrooms} quartos</span>}
           {p.bathrooms != null && <span><PropertyIcon name="bath" />{p.bathrooms} banheiros</span>}
-          <span><PropertyIcon name="car-front" />{p.parkingSpaces} vagas</span>
+          {p.parkingSpaces != null && <span><PropertyIcon name="car-front" />{p.parkingSpaces} vagas</span>}
         </div>
         <div className="card-bottom">
           <div>

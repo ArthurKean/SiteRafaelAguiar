@@ -56,9 +56,9 @@ export default function PropertyDetails() {
           <span>
             <PropertyIcon name="ruler" />{area(p.areaMin)}–{area(p.areaMax)} m²
           </span>
-          <span><PropertyIcon name="bed-double" />{p.suiteDescription ?? `${p.suites} suítes`}</span>
+          {(p.suiteDescription || p.suites != null) && <span><PropertyIcon name="bed-double" />{p.suiteDescription ?? `${p.suites} suítes`}</span>}
           {p.bathrooms != null && <span><PropertyIcon name="bath" />{p.bathrooms} banheiros</span>}
-          <span><PropertyIcon name="car-front" />{p.parkingSpaces} vagas</span>
+          {p.parkingSpaces != null && <span><PropertyIcon name="car-front" />{p.parkingSpaces} vagas</span>}
           <span>{p.type}</span>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function PropertyDetails() {
           >
             {plan && (
               <p className="investment-summary">
-                {[`${area(plan.area)} m²`, plan.suiteDescription ?? `${plan.suites} suítes`, plan.bathrooms ? `${plan.bathrooms} banheiros` : null, plan.unit ? `Unidade ${plan.unit}` : null, plan.orientation ? `Posição ${plan.orientation}` : null].filter(Boolean).join(" · ")}
+                {[`${area(plan.area)} m²`, plan.suiteDescription ?? (plan.suites != null ? `${plan.suites} suítes` : null), plan.bathrooms ? `${plan.bathrooms} banheiros` : null, plan.unit ? `Unidade ${plan.unit}` : null, plan.orientation ? `Posição ${plan.orientation}` : null].filter(Boolean).join(" · ")}
               </p>
             )}
             <p>A partir de</p>
@@ -104,7 +104,7 @@ export default function PropertyDetails() {
           <p className="investment-note">
             Consulte disponibilidade e condições de pagamento.
           </p>
-          <ContactCTA propertyName={p.name} plan={plan} className="button-whatsapp">
+          <ContactCTA propertyName={p.name} plan={plan ?? {area: p.areaMin}} className="button-whatsapp">
             Falar com Rafael
           </ContactCTA>
           <small>Converse pelo WhatsApp</small>
@@ -112,7 +112,7 @@ export default function PropertyDetails() {
         <LocationSection property={p} />
         </aside>
       </div>
-      <section className="editorial-section">
+      {p.images[1] && <section className="editorial-section">
         <img
           src={p.images[1].src}
           alt={p.images[1].alt}
@@ -133,6 +133,7 @@ export default function PropertyDetails() {
           </p>
         </div>
       </section>
+      }
       {plan && <PropertyPlanPreview plan={plan} />}
       <section className="detail-contact">
         <div>
@@ -140,7 +141,7 @@ export default function PropertyDetails() {
           <h2>Ficou com alguma dúvida?</h2>
           <p>Converse com Rafael sobre este imóvel.</p>
         </div>
-        <ContactCTA propertyName={p.name} plan={plan} />
+        <ContactCTA propertyName={p.name} plan={plan ?? {area: p.areaMin}} />
       </section>
     </div>
   );

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test('fundo alterna em cinco segundos e pausa após seleção manual', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
@@ -18,6 +18,7 @@ test('busca centralizada e bolinhas no celular com movimento reduzido', async ({
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.clock.install();
   await page.goto('/');
+  await expect(page.locator(".immersive-backdrop img.is-active")).toBeVisible();
   await page.clock.runFor(15000);
   await expect(page.locator('.immersive-backdrop img.is-active')).toHaveAttribute('src', /fachada-noturna/);
   await page.getByRole('button', { name: 'Mostrar imagem 2 de Vernazza Residenziale' }).click();
