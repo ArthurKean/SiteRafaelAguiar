@@ -1,11 +1,11 @@
 import { PropertyIcon } from "./PropertyIcon";
 import { Icon } from "./Icon";
-import { area } from "../utils/format";
+import { area, areaRange } from "../utils/format";
 import { useState } from "react";
 import type { Property, PropertyPlan } from "../types/property";
 export function PropertySpecs({ property: p }: { property: Property }) {
   const specs = [
-    [`${area(p.areaMin)}–${area(p.areaMax)} m²`, "Área privativa"],
+    [areaRange(p.areaMin, p.areaMax), "Área privativa"],
     [p.bedrooms, "Quartos"],
     [p.suites, "Suítes"],
     [p.bathrooms, "Banheiros"],

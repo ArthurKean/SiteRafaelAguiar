@@ -11,3 +11,6 @@ export const normalize = (value: string) =>
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
+
+export const areaRange = (min: number, max: number) =>
+  `${min === max ? area(min) : `${area(min)}–${area(max)}`} m²`;

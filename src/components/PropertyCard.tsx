@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { Watermark } from "./Watermark";
 import { PropertyIcon } from "./PropertyIcon";
 import { FavoriteButton } from "./Favorites";
-import { area } from "../utils/format";
+import { areaRange } from "../utils/format";
 import { Link } from "react-router-dom";
 import type { Property } from "../types/property";
 import { currency } from "../utils/format";
@@ -50,7 +50,7 @@ export function PropertyCard({ property: p }: { property: Property }) {
         </h3>
         <div className="card-specs">
           <span>
-            <PropertyIcon name="ruler" />{area(p.areaMin)}–{area(p.areaMax)} m²
+            <PropertyIcon name="ruler" />{areaRange(p.areaMin, p.areaMax)}
           </span>
           {p.bedrooms != null && <span><PropertyIcon name="bed-double" />{p.bedrooms} quartos</span>}
           {p.bathrooms != null && <span><PropertyIcon name="bath" />{p.bathrooms} banheiros</span>}

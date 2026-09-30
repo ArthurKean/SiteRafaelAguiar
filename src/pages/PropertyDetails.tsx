@@ -1,6 +1,6 @@
 import { PropertyIcon } from "../components/PropertyIcon";
 import { FavoriteButton } from "../components/Favorites";
-import { area } from "../utils/format";
+import { area, areaRange } from "../utils/format";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { propertyService } from "../services/propertyService";
@@ -54,7 +54,7 @@ export default function PropertyDetails() {
         </p>
         <div className="detail-highlights">
           <span>
-            <PropertyIcon name="ruler" />{area(p.areaMin)}–{area(p.areaMax)} m²
+            <PropertyIcon name="ruler" />{areaRange(p.areaMin, p.areaMax)}
           </span>
           {(p.suiteDescription || p.suites != null) && <span><PropertyIcon name="bed-double" />{p.suiteDescription ?? `${p.suites} suítes`}</span>}
           {p.bathrooms != null && <span><PropertyIcon name="bath" />{p.bathrooms} banheiros</span>}
