@@ -1,5 +1,6 @@
 import { useCarousel } from "../utils/useCarousel";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { propertyService } from "../services/propertyService";
 import { useAsync, useSeo } from "../utils/hooks";
 import {
@@ -19,6 +20,13 @@ export default function Home() {
     loading,
     error,
   } = useAsync(() => propertyService.featured(), "featured");
+  const location = useLocation();
+  useEffect(() => {
+    if (!loading && location.hash === "#sobre") {
+      const frame = requestAnimationFrame(() => document.getElementById("sobre")?.scrollIntoView());
+      return () => cancelAnimationFrame(frame);
+    }
+  }, [loading, location.hash]);
   const slides = (properties ?? []).filter(p => !p.isDemo).flatMap(p =>
     p.images.slice(0, 3).map(image => ({ ...image, propertyName: p.name }))
   );

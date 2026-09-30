@@ -602,6 +602,7 @@ select {
   margin-top: 24px;
 }
 .about-section {
+  scroll-margin-top: 110px;
   background: var(--color-surface-container);
   padding: 72px 0;
 }

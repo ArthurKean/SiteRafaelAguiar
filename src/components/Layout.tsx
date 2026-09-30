@@ -51,11 +51,11 @@ export function Layout() {
               if (e.key === "Escape") setMenu(false);
             }}
           >
-            <NavLink to="/" end onClick={() => setMenu(false)}>
+            <Link to="/" className={location.pathname === "/" && !location.hash ? "active" : undefined} aria-current={location.pathname === "/" && !location.hash ? "page" : undefined} onClick={() => setMenu(false)}>
               Início
-            </NavLink>
+            </Link>
             <NavLink to="/imoveis" onClick={() => setMenu(false)}>Imóveis</NavLink>
-            <NavLink to="/sobre" onClick={() => setMenu(false)}>Sobre</NavLink>
+            <Link to="/#sobre" className={location.pathname === "/" && location.hash === "#sobre" ? "active" : undefined} onClick={() => { setMenu(false); if (location.pathname === "/") document.getElementById("sobre")?.scrollIntoView(); }}>Sobre</Link>
             <FavoritesLink />
           </nav>
         </div>
@@ -82,7 +82,7 @@ export function Layout() {
               <span className="eyebrow">Explore</span>
               <Link to="/">Início</Link>
               <Link to="/imoveis">Imóveis</Link>
-              <Link to="/sobre">Sobre Rafael</Link>
+              <Link to="/#sobre">Sobre Rafael</Link>
             </div>
             <div>
               <span className="eyebrow">Vamos conversar</span>

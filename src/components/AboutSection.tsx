@@ -1,8 +1,7 @@
 import { SocialContacts } from "./SocialContacts";
-import { Link } from "react-router-dom";
-export function AboutSection({ full = false }: { full?: boolean }) {
+export function AboutSection() {
   return (
-    <section className="about-section">
+    <section id="sobre" className="about-section" aria-labelledby="sobre-title">
       <div className="container about-grid">
         <div className="portrait-wrap">
           <img
@@ -14,33 +13,22 @@ export function AboutSection({ full = false }: { full?: boolean }) {
           />
           <div className="portrait-caption">
             <strong>Rafael Aguiar</strong>
-            <span>Curadoria de imóveis</span>
+            <span>Corretor de imóveis · CRECI 8404</span>
           </div>
         </div>
         <div className="about-copy">
-          <span className="eyebrow">Um olhar mais próximo</span>
-          {full ? (
-            <h1>Escolhas certas começam com uma boa curadoria.</h1>
-          ) : (
-            <h2>Escolhas certas começam com uma boa curadoria.</h2>
-          )}
+          <span className="eyebrow">Sobre Rafael</span>
+          <h2 id="sobre-title">Escolhas certas começam com uma boa curadoria.</h2>
           <p>
-            Encontrar um imóvel começa por entender o que faz sentido para você.
-            Explore as opções, compare os detalhes e converse com Rafael sobre o
-            que procura.
+            Para Rafael Aguiar, encontrar um imóvel começa com uma boa conversa.
+            Seu atendimento parte de ouvir você, entender seu momento e conhecer
+            o que importa na escolha de um lugar para morar ou investir em São Luís.
           </p>
-          {full && (
-            <p>
-              Conheça os empreendimentos da curadoria e suas opções de metragem.
-            </p>
-          )}
-          {full ? (
-            <SocialContacts />
-          ) : (
-            <Link to="/sobre" className="text-link">
-              Conheça Rafael 
-            </Link>
-          )}
+          <p>
+            A partir disso, ele ajuda você a comparar os imóveis, esclarecer dúvidas
+            e avaliar as opções com atenção às suas necessidades.
+          </p>
+          <SocialContacts />
         </div>
       </div>
     </section>
