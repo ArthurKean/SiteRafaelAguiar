@@ -27,7 +27,9 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   );
   await expect(page.locator(".property-card")).toHaveCount(3);
   await page.locator("select[name=neighborhood]").selectOption("Renascença");
-  await page.locator("select[name=maxPrice]").selectOption("700000");
+  await page.getByRole("button", { name: "Valor máximo" }).click();
+  await page.getByRole("button", { name: "700 mil", exact: true }).click();
+  await page.getByRole("button", { name: "Aplicar", exact: true }).click();
   await page.getByRole("button", { name: "Buscar imóvel" }).click();
   await expect(page).toHaveURL(/neighborhood=Renasc/);
   await expect(page.locator(".property-card")).toHaveCount(1);
@@ -103,7 +105,7 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   await page.goto("/rota-inexistente");
   await expect(page.getByText("404 · Endereço não encontrado")).toBeVisible();
   await page.goto("/sobre");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+  await expect(page.locator("#sobre").getByRole("heading")).toContainText(
     "curadoria",
   );
   expect(errors).toEqual([]);

@@ -10,6 +10,7 @@ export const test = base.extend<{catalogFixture: void}>({
      await route.fulfill({response});
    });
    await use();
+   await page.unrouteAll({behavior: "ignoreErrors"});
  },{auto:true}],
 });
 export { expect };
