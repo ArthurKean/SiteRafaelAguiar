@@ -2137,6 +2137,7 @@ select {
 .price-actions button { min-height: 44px; padding: 8px 16px; border: 0; border-radius: 8px; cursor: pointer; background: transparent; color: #10151e; }
 .price-actions button:last-child { background: #c3a056; font-weight: 600; }
 @media(max-width: 900px) {
+ .price-trigger { height: auto; min-height: 64px; }
  .price-panel { position: relative; top: auto; width: 100%; max-width: none; margin-top: 8px; box-shadow: none; }
 }
 @media(prefers-reduced-motion: reduce) { .price-trigger svg { transition: none; } }
