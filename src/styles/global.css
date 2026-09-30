@@ -1040,7 +1040,7 @@ select {
 }
 .investment-value > strong {
   display: block;
-  font: 400 36px/1.5 var(--font-editorial);
+  font: 600 30px/1.4 var(--font-body);
   letter-spacing: -0.03em;
 }
 .investment-plans {
@@ -2156,4 +2156,10 @@ select {
     font-size: 13px;
     gap: 8px;
   }
+}
+
+.card-bottom strong { font-family: var(--font-body); font-weight: 600; }
+.investment-value > strong, .card-bottom strong { font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) {
+  .investment-value > strong { font-size: clamp(21px, 6vw, 30px); letter-spacing: -.025em; }
 }
