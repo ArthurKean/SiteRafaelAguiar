@@ -1,7 +1,7 @@
 import type { PropertyPlan } from "../types/property";
 import { area } from "./format";
 
-export type ContactPlan = Pick<PropertyPlan, "area" | "unit" | "orientation">;
+export type ContactPlan = Pick<PropertyPlan, "area" | "unit" | "orientation" | "name">;
 
 // Número confirmado pelo responsável, com código do Brasil e DDD, sem acrescentar dígitos.
 export const contactConfig = {
@@ -12,6 +12,7 @@ export function getContactMessage(propertyName?: string, plan?: ContactPlan) {
   if (!plan) return `Olá Rafael, vi o ${propertyName} no seu site e gostaria de receber mais informações.`;
   return [
     `Olá Rafael! Vi o ${propertyName} no seu site e tenho interesse na opção de ${area(plan.area)} m².`,
+    plan.name ? `Opção: ${plan.name}.` : null,
     plan.unit ? `Unidade: ${plan.unit}.` : null,
     plan.orientation ? `Posição: ${plan.orientation}.` : null,
     "Você pode me informar a disponibilidade e as condições de pagamento?",

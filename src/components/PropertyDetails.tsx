@@ -45,7 +45,7 @@ export function PropertyPlanSelector({
 }) {
   return (
     <fieldset className="investment-plans">
-      <legend>Escolha a metragem</legend>
+      <legend>Escolha a opção</legend>
       <div className="plan-tabs">
         {plans.map((plan) => (
           <button
@@ -55,7 +55,7 @@ export function PropertyPlanSelector({
             aria-pressed={plan.id === selected}
             onClick={() => onSelect(plan.id)}
           >
-            {area(plan.area)} m²
+            {area(plan.area)} m²{plan.name ? ` · ${plan.name}` : plans.filter(p => p.area === plan.area).length > 1 ? ` · ${plan.unit || `Opção ${plans.indexOf(plan) + 1}`}` : ""}
           </button>
         ))}
       </div>
@@ -63,7 +63,8 @@ export function PropertyPlanSelector({
   );
 }
 export function PropertyPlanPreview({ plan }: { plan: PropertyPlan }) {
-  if (!plan.image) return null;
+  const drawings = plan.drawings?.length ? plan.drawings : plan.image ? [plan.image] : [];
+  if (!drawings.length) return null;
   return (
     <section className="plan-section" id="planta-selecionada">
       <div>
@@ -76,8 +77,13 @@ export function PropertyPlanPreview({ plan }: { plan: PropertyPlan }) {
           </p>
         </div>
       </div>
-      <div className="plan-preview">
-        <img src={plan.image.src} alt={plan.image.alt} loading="lazy" />
+      <div className="plan-drawings">
+        {drawings.map((image, index) => <figure className="plan-preview" key={image.src}>
+          <a href={image.src} target="_blank" rel="noopener noreferrer" aria-label={`Ampliar ${image.title || `planta ${index + 1}`}`}>
+            <img src={image.src} alt={image.alt} loading="lazy" />
+          </a>
+          <figcaption>{image.title || (drawings.length > 1 ? `Planta ${index + 1}` : 'Planta da opção')} · Toque para ampliar</figcaption>
+        </figure>)}
       </div>
     </section>
   );

@@ -2163,3 +2163,13 @@ select {
 @media (max-width: 600px) {
   .investment-value > strong { font-size: clamp(21px, 6vw, 30px); letter-spacing: -.025em; }
 }
+
+.plan-drawings { display: grid; gap: 20px; min-width: 0; }
+.plan-drawings figure { margin: 0; }
+.plan-drawings figcaption { padding: 12px; font-size: 13px; }
+.option-photos { margin-block: 40px; }
+.option-photos h2 { margin-bottom: 24px; }
+
+.plan-drawings .plan-preview { padding: 12px; min-height: 0; }
+.plan-drawings .plan-preview > a { display: block; width: 100%; }
+.plan-drawings .plan-preview img { display: block; width: 100%; height: auto; }

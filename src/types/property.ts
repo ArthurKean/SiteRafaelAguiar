@@ -2,8 +2,13 @@ export type PropertyStatus = "Lançamento" | "Em construção" | "Na planta" | "
 export interface PropertyImage {
   src: string;
   alt: string;
+  title?: string;
 }
 export interface PropertyPlan {
+  name?: string;
+  parkingSpaces?: number;
+  drawings?: PropertyImage[];
+  photos?: PropertyImage[];
   id: string;
   area: number;
   bedrooms?: number;
@@ -41,6 +46,7 @@ export interface Property {
   neighborhood: string;
   featured: boolean;
   images: PropertyImage[];
+  presentationImage?: PropertyImage;
   features: string[];
   plans: PropertyPlan[];
   latitude?: number;

@@ -35,7 +35,9 @@ export default function PropertyDetails() {
   const plan =
     p.plans.find(
       (item) => selection.slug === slug && item.id === selection.planId,
-    ) ?? p.plans[0];
+    ) ?? p.plans.reduce<(typeof p.plans)[number] | undefined>((lowest, item) => !lowest || item.price < lowest.price ? item : lowest, undefined);
+  const presentation = p.presentationImage ?? p.images[1];
+  const selectedProperty = plan ? {...p, areaMin: plan.area, areaMax: plan.area, bedrooms: plan.bedrooms, suites: plan.suites, suiteDescription: plan.suiteDescription, bathrooms: plan.bathrooms, parkingSpaces: plan.parkingSpaces} : p;
   return (
     <div className="container detail-page">
       <nav className="breadcrumbs" aria-label="Caminho de navegação">
@@ -54,11 +56,11 @@ export default function PropertyDetails() {
         </p>
         <div className="detail-highlights">
           <span>
-            <PropertyIcon name="ruler" />{areaRange(p.areaMin, p.areaMax)}
+            <PropertyIcon name="ruler" />{areaRange(selectedProperty.areaMin, selectedProperty.areaMax)}
           </span>
-          {(p.suiteDescription || p.suites != null) && <span><PropertyIcon name="bed-double" />{p.suiteDescription ?? `${p.suites} suítes`}</span>}
-          {p.bathrooms != null && <span><PropertyIcon name="bath" />{p.bathrooms} banheiros</span>}
-          {p.parkingSpaces != null && <span><PropertyIcon name="car-front" />{p.parkingSpaces} vagas</span>}
+          {(selectedProperty.suiteDescription || selectedProperty.suites != null) && <span><PropertyIcon name="bed-double" />{selectedProperty.suiteDescription ?? `${selectedProperty.suites} suítes`}</span>}
+          {selectedProperty.bathrooms != null && <span><PropertyIcon name="bath" />{selectedProperty.bathrooms} banheiros</span>}
+          {selectedProperty.parkingSpaces != null && <span><PropertyIcon name="car-front" />{selectedProperty.parkingSpaces} vagas</span>}
           <span>{p.type}</span>
         </div>
       </div>
@@ -69,8 +71,8 @@ export default function PropertyDetails() {
             <p className="description">{p.description}</p>
           </section>
           <section className="spec-section">
-            <h3>Os detalhes fazem a diferença</h3>
-            <PropertySpecs property={p} />
+            <h3>{plan ? "Características da opção selecionada" : "Os detalhes fazem a diferença"}</h3>
+            <PropertySpecs property={selectedProperty} />
           </section>
         </div>
         <aside className="detail-sidebar">
@@ -90,13 +92,13 @@ export default function PropertyDetails() {
           >
             {plan && (
               <p className="investment-summary">
-                {[`${area(plan.area)} m²`, plan.suiteDescription ?? (plan.suites != null ? `${plan.suites} suítes` : null), plan.bathrooms ? `${plan.bathrooms} banheiros` : null, plan.unit ? `Unidade ${plan.unit}` : null, plan.orientation ? `Posição ${plan.orientation}` : null].filter(Boolean).join(" · ")}
+                {[`${area(plan.area)} m²`, plan.suiteDescription ?? (plan.suites != null ? `${plan.suites} suítes` : null), plan.bathrooms != null ? `${plan.bathrooms} banheiros` : null, plan.parkingSpaces != null ? `${plan.parkingSpaces} vagas` : null, plan.unit ? `Unidade ${plan.unit}` : null, plan.orientation ? `Posição ${plan.orientation}` : null].filter(Boolean).join(" · ")}
               </p>
             )}
             <p>A partir de</p>
             <strong>{currency(plan?.price ?? p.priceFrom)}</strong>
           </div>
-          {plan?.image && (
+          {(plan?.image || plan?.drawings?.length) && (
             <a href="#planta-selecionada" className="text-link">
               Ver planta 
             </a>
@@ -112,10 +114,10 @@ export default function PropertyDetails() {
         <LocationSection property={p} />
         </aside>
       </div>
-      {p.images[1] && <section className="editorial-section">
+      {presentation && <section className="editorial-section">
         <img
-          src={p.images[1].src}
-          alt={p.images[1].alt}
+          src={presentation.src}
+          alt={presentation.alt}
           loading="lazy"
           width="1400"
           height="800"
@@ -135,6 +137,10 @@ export default function PropertyDetails() {
       </section>
       }
       {plan && <PropertyPlanPreview plan={plan} />}
+      {!!plan?.photos?.length && <section className="option-photos">
+        <h2>Fotos da opção selecionada</h2>
+        <PropertyGallery key={plan.id} property={{...p, name: `${p.name} · ${plan.name || `${area(plan.area)} m²`}`, images: plan.photos}} />
+      </section>}
       <section className="detail-contact">
         <div>
           <span className="eyebrow">Seu próximo passo</span>

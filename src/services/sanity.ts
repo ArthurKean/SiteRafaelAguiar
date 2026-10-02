@@ -14,9 +14,12 @@ const query = `*[_type == "imovel" && ativo != false && defined(slug.current)] |
   "latitude": coordenadas.lat, "longitude": coordenadas.lng,
   "city": cidade, "neighborhood": bairro, "featured": destaque, "isDemo": demonstracao,
   "features": comodidades,
+  "presentationImage": imagemApresentacao {"src": asset->url, alt},
   "cover": imagemPrincipal {"src": asset->url, alt},
   "images": galeria[] {"src": asset->url, alt},
-  "plans": plantas[] {"id": _key, "area": area, "price": preco,
+  "plans": plantas[] {"id": _key, "name": nome, "parkingSpaces": vagas,
+    "drawings": desenhos[] {"src": asset->url, alt, "title": titulo},
+    "photos": fotos[] {"src": asset->url, alt, "title": titulo}, "area": area, "price": preco,
     "bedrooms": quartos, "suites": suites, "bathrooms": banheiros,
     "suiteDescription": descricaoSuites, "unit": unidade, "orientation": orientacao,
     "image": imagem {"src": asset->url, alt}}
@@ -29,13 +32,23 @@ function picture(value: Partial<PropertyImage> | undefined, name: string): Prope
   if (!value?.src || !value.src.startsWith("https://cdn.sanity.io/images/")) return;
   const url = new URL(value.src);
   url.searchParams.set("w", "1400"); url.searchParams.set("fit", "max"); url.searchParams.set("auto", "format"); url.searchParams.set("q", "80");
-  return {src: url.toString(), alt: value.alt || name};
+  return {src: url.toString(), alt: value.alt || value.title || name, title: value.title};
 }
 export function normalizeProperty(p: RecordData): Property | undefined {
   if (!p.id || !p.slug || !p.name) return;
-  const plans = (p.plans ?? []).filter(plan => plan.id && number(plan.area) && number(plan.price)).map(plan => ({
-    ...plan, image: picture(plan.image, `Planta de ${p.name}`),
-  } as PropertyPlan));
+  const plans = (p.plans ?? []).filter(plan => plan.id && number(plan.area) && number(plan.price)).map(plan => {
+    const image = picture(plan.image, `Planta de ${p.name}`);
+    const drawings = [image, ...(plan.drawings ?? []).map(img => picture(img, `Planta de ${p.name}`))]
+      .filter((img): img is PropertyImage => !!img)
+      .filter((img, i, all) => all.findIndex(other => other.src === img.src) === i);
+    return {...plan, image, drawings,
+      photos: (plan.photos ?? []).map(img => picture(img, p.name!)).filter((img): img is PropertyImage => !!img),
+    } as PropertyPlan;
+  });
+  const maximum = (key: 'bedrooms' | 'suites' | 'bathrooms' | 'parkingSpaces') => {
+    const values = plans.map(plan => plan[key]).filter(number);
+    return values.length ? Math.max(...values) : p[key];
+  };
   const areas = plans.map(plan => plan.area);
   const prices = plans.map(plan => plan.price);
   const areaMin = areas.length ? Math.min(...areas) : p.areaMin;
@@ -50,6 +63,9 @@ export function normalizeProperty(p: RecordData): Property | undefined {
     city:p.city || "São Luís", neighborhood:p.neighborhood || "", type:p.type || "Imóvel",
     featured:p.featured === true, isDemo:p.isDemo === true, createdAt:p.createdAt || "",
     features:p.features ?? [], plans,
+    bedrooms: maximum('bedrooms'), suites: maximum('suites'),
+    bathrooms: maximum('bathrooms'), parkingSpaces: maximum('parkingSpaces'),
+    presentationImage: picture(p.presentationImage, `Apresentação de ${p.name}`),
     images:unique.length ? unique : [{src:"/images/property-placeholder.svg",alt:"Imagem do imóvel ainda não disponível"}],
     mapEmbedUrl:p.mapEmbedUrl && /^https:\/\/(?:(?:www\.)?google\.com\/maps\/embed(?:[/?]|$)|maps\.google\.com\/maps\?)/.test(p.mapEmbedUrl) ? p.mapEmbedUrl : undefined,
   };

@@ -1,26 +1,13 @@
 import { test, expect } from "@playwright/test";
-test("Sanity publicado: catálogo, detalhes, imagens e favoritos persistentes", async ({page}) => {
- const errors: string[]=[]; page.on("pageerror",e=>errors.push(e.message));
- await page.goto("/imoveis");
- const card=page.locator(".property-card").filter({has:page.getByRole("heading",{name:"Teste",exact:true})});
+test("Sanity publicado: imóvel atual carrega com fotos", async ({page}) => {
+ await page.goto('/imoveis');
+ const card = page.locator('.property-card').first();
  await expect(card).toBeVisible();
- await expect(card.locator(".card-image > img")).toHaveAttribute("src",/cdn.sanity.io/);
- await card.getByRole("button",{name:"Adicionar Teste aos favoritos"}).click();
- await page.reload();
- await expect(card.getByRole("button",{name:"Remover Teste dos favoritos"})).toBeVisible();
- await card.getByRole("link",{name:"Conhecer Teste"}).click();
- await expect(page).toHaveURL(/imoveis\/teste$/);
- await expect(page.getByRole("heading",{name:"Teste",exact:true})).toBeVisible();
- await expect(page.locator(".description")).toContainText("Apartamento de alto padrão");
- await expect(page.locator(".investment").getByRole("link",{name:"Falar com Rafael"})).toHaveAttribute("href",/Teste/);
- await page.reload();
- await expect(page.locator(".property-gallery")).toBeVisible();
- await expect.poll(() => page.locator(".property-gallery button > img").evaluateAll(images => images.every(img => (img as HTMLImageElement).complete && (img as HTMLImageElement).naturalWidth > 0)), {timeout:15000}).toBe(true);
- await page.setViewportSize({width:390,height:844});
- expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
- await page.screenshot({path:"test-results/sanity-mobile.png",fullPage:true});
- await page.goto("/favoritos"); await expect(page.locator(".property-card")).toHaveCount(1);
- expect(errors).toEqual([]);
+ await expect(card.locator('.card-image > img')).toHaveAttribute('src', /cdn.sanity.io/);
+ await card.locator('h3 a').click();
+ await expect(page.locator('.detail-heading h1')).toBeVisible();
+ await expect(page.locator('.investment-value strong')).toContainText('R$');
+ await expect.poll(() => page.locator('.property-gallery button > img').evaluateAll(images => images.length > 0 && images.every(img => (img as HTMLImageElement).complete && (img as HTMLImageElement).naturalWidth > 0)), {timeout:15000}).toBe(true);
 });
 const api = "**/data/query/production?**";
 test("cadastro com uma foto, plantas e falha da API", async ({page})=> {

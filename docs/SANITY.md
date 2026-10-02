@@ -45,3 +45,29 @@ Favoritos usam IDs do Sanity. Favoritos de exemplos antigos não migram automati
 Não houve importação, edição ou exclusão de conteúdo remoto. O registro Teste existente continua com o preço informado no Sanity (120000000 reais).
 
 Origens CORS autorizadas sem credenciais: http://127.0.0.1:5173, http://localhost:5173 e https://site-rafael-aguiar.vercel.app.
+
+
+## Painel reorganizado (outubro de 2026)
+
+O cadastro agora tem abas: Informações básicas, Valores e opções, Fotos, Localização, Publicação e Dados anteriores / avançados.
+
+- Cadastre uma ou mais opções em `plantas`. Cada opção tem nome, preço, área, quartos totais (incluindo suítes), suítes, banheiros, vagas, unidade e posição solar.
+- O card calcula área mínima/máxima, menor preço e os máximos de quartos, suítes, banheiros e vagas a partir dos valores preenchidos nas opções. Sem valor em nenhuma opção para uma característica, usa o valor geral anterior no card.
+- O detalhe abre na opção mais barata. Características, preço, plantas e WhatsApp acompanham a seleção. Não se copiam as quantidades máximas para a opção: dados não preenchidos ficam ausentes nos detalhes. Preencha vagas nas opções antigas para voltarem a aparecer nos detalhes da seleção.
+- `desenhos` aceita várias imagens por opção, com `titulo` (ex.: Térreo e Superior). A antiga `imagem` continua exibida; imagens repetidas são deduplicadas. Remover a referência antiga não apaga o arquivo do Sanity.
+- `fotos` é uma galeria opcional exclusiva da opção, exibida separadamente das fotos gerais.
+- `imagemApresentacao` controla a seção Imagine seus dias. Sem ela, continua usando a segunda imagem geral, como antes.
+- Os campos gerais antigos foram mantidos e movidos à aba avançada. Documentos sem opções continuam funcionando. Preço e área gerais não são mais obrigatórios quando há opções.
+- Links, IDs, favoritos, conteúdos e arquivos remotos não foram migrados nem substituídos.
+
+### Cadastros a conferir (backup de 02/10/2026)
+
+Vernazza e Reserva Rangedor ainda não tinham opções: usam os dados gerais anteriores. Landscape, Dom Manuel e Cidade de Viena tinham opções, porém sem vagas por opção. Landscape tinha uma opção de 103,6 m² com 2 quartos e 3 suítes: confirmar o total de quartos, sem correção automática. Os avisos do painel não bloqueiam a publicação de cadastros antigos.
+
+### Backup e publicação
+
+Backup local em `backups/pre-cms-redesign.tar.gz` (documentos e assets), com histórico Git em `backups/pre-cms-redesign.bundle`. Arquivos ignorados pelo Git. Mantenha uma segunda cópia externa.
+
+Publique primeiro o frontend na Vercel e depois o Studio (`npm --prefix studio-rafaelaguiar run deploy`). Assim os novos campos já terão suporte no site quando forem preenchidos. Atualizações do conteúdo continuam sem exigir deploy.
+
+Não importe um backup em produção sem comparar as alterações posteriores. Para recuperação, prefira inspecionar o arquivo e recuperar apenas os documentos afetados ou validar em um dataset separado, conforme os limites da conta.
