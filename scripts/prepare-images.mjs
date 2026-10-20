@@ -1,6 +1,8 @@
 import sharp from "sharp";
 import { copyFile, mkdir, readdir } from "node:fs/promises";
 await mkdir('public/images', { recursive: true });
+// Fotos do catálogo de teste ficam fora da pasta publicada pelo Vite.
+await mkdir('tests/assets/images', { recursive: true });
 await copyFile('assets/originals/brand/logo-fundo-escuro.jpeg', 'public/images/marca.jpeg');
 for (const file of await readdir("assets/originals/properties")) {
   if (!file.endsWith(".jpg")) continue;
@@ -8,11 +10,11 @@ for (const file of await readdir("assets/originals/properties")) {
   await sharp(`assets/originals/properties/${file}`)
     .resize(1400, null, { withoutEnlargement: true })
     .webp({ quality: 82 })
-    .toFile(`public/images/${name}.webp`);
+    .toFile(`tests/assets/images/${name}.webp`);
   await sharp(`assets/originals/properties/${file}`)
     .resize(640, null, { withoutEnlargement: true })
     .webp({ quality: 78 })
-    .toFile(`public/images/${name}-640.webp`);
+    .toFile(`tests/assets/images/${name}-640.webp`);
 }
 await sharp("assets/originals/portraits/rafael-aguiar.jpeg")
   .rotate()
@@ -26,11 +28,11 @@ await sharp("assets/originals/brand/logo-fundo-branco.jpeg")
   .png()
   .toFile("public/images/monograma.png");
 
-await mkdir('public/images/vernazza', { recursive: true });
+await mkdir('tests/assets/images/vernazza', { recursive: true });
 for (const file of await readdir('assets/originals/properties/vernazza')) {
  if (!/\.(jpg|png)$/i.test(file)) continue;
  const name = file.replace(/\.[^.]+$/, '');
  for (const width of [1400, 640]) {
-  await sharp('assets/originals/properties/vernazza/' + file).rotate().resize(width, null, { withoutEnlargement: true }).webp({ quality: 82 }).toFile('public/images/vernazza/' + name + (width === 640 ? '-640' : '') + '.webp');
+  await sharp('assets/originals/properties/vernazza/' + file).rotate().resize(width, null, { withoutEnlargement: true }).webp({ quality: 82 }).toFile('tests/assets/images/vernazza/' + name + (width === 640 ? '-640' : '') + '.webp');
  }
 }

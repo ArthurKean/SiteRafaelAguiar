@@ -6,7 +6,6 @@ import "@fontsource/poppins/latin-600.css";
 import "@fontsource/poppins/latin-700.css";
 import "./styles/tokens.css";
 import "./styles/global.css";
-import "./styles/typography.css";
 import App from "./App";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

@@ -18,9 +18,8 @@ import { currency } from "../utils/format";
 export default function Catalog() {
   const [params, setParams] = useSearchParams();
   const [open, setOpen] = useState(false);
-  const filters = Object.fromEntries(params) as Filters;
-  // URLs antigas não devem aplicar um filtro de cidade que não existe mais na interface.
-  delete filters.city;
+  // URLs antigas podem conter cidade; esse filtro não faz parte da interface atual.
+  const filters = Object.fromEntries([...params].filter(([key]) => key !== "city")) as Filters;
   const { data, loading, error } = useAsync(
     () => propertyService.list(filters),
     params.toString(),

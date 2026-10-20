@@ -24,17 +24,17 @@ Catálogo em português brasileiro, com imóveis em São Luís, Maranhão. Valor
 
 O fluxo existente permite buscar e filtrar imóveis, consultar detalhes, comparar metragens e preços e entrar em contato. WhatsApp é o canal previsto para conversar com Rafael; Instagram permite acompanhar seu trabalho.
 
-O responsável informou ter realizado um deploy na Vercel; a URL pública não foi fornecida nesta conversa.
+Site publicado: https://site-rafael-aguiar.vercel.app/. CMS: https://rafaelaguiar.sanity.studio/.
 
 ## Capabilities and Constraints
 
-- V1 em React, TypeScript e Vite, com dados locais. Não possui backend, banco de dados, autenticação, painel administrativo ou armazenamento de leads.
-- Páginas de início, catálogo, detalhes do imóvel e apresentação de Rafael; filtros e ordenação; galeria; seleção de metragem com atualização de preço e características; localização.
-- WhatsApp confirmado: (98) 9158-8444, exatamente com oito dígitos após o DDD. Link internacional: `559891588444`. Esse é o padrão do site; `VITE_WHATSAPP_NUMBER` permite sobrescrevê-lo. Os botões dos detalhes enviam o imóvel e a metragem selecionada, incluindo unidade e posição quando cadastradas.
-- O Vernazza Residenziale possui informações fornecidas pelo responsável. Os outros cinco imóveis são exemplos e precisam continuar identificados como demonstração.
-- No Vernazza, foram confirmadas as opções de 87,98 m² com 2 suítes + 1 reversível e de 130,49 m² com 3 suítes. Os preços e demais dados são mantidos em `src/data/vernazza.ts`; disponibilidade e condições dependem de consulta ao corretor.
-- Permanecem pendentes o código da unidade maior, o estágio da obra e o número de banheiros do Vernazza. A divergência entre o bairro informado e a identificação no Maps também precisa de confirmação antes de corrigir o cadastro.
-- Desenhos das plantas não foram fornecidos. Não apresentar um desenho fictício como planta real.
+- React, TypeScript e Vite com conteúdo publicado no Sanity. O painel administrativo é separado; não há armazenamento próprio de leads.
+- Início, catálogo, favoritos, detalhes, filtros e ordenação, galeria com miniaturas, seleção de opções e localização. A apresentação de Rafael está na home; /sobre redireciona para essa seção.
+- Tipografia Poppins em todo o site, com azul, marfim e dourado e atenção ao uso no celular.
+- WhatsApp confirmado: (98) 9158-8444, exatamente com oito dígitos após o DDD. Link internacional: `559891588444`. `VITE_WHATSAPP_NUMBER` permite sobrescrevê-lo. O contato dos detalhes inclui imóvel e opção selecionada.
+- Rafael tem 17 anos de experiência em vendas, conforme informado pelo responsável. O texto destaca conversa, escuta e agilidade sem prometer disponibilidade ininterrupta.
+- O card usa menor preço, faixa de área e máximos das quantidades cadastradas. Quartos inclui suítes; os detalhes explicam a composição da opção selecionada. Valores e disponibilidade exigem confirmação com Rafael.
+- Dados e desenhos reais vêm do CMS. Não inventar características ausentes, endereços, plantas ou correções de cadastro. O suporte a campos gerais e plantas anteriores ainda é necessário.
 - A faixa de logos de construtoras foi discutida apenas como ideia. A lista de empresas e as marcas autorizadas ainda precisam ser confirmadas; sua implementação não foi autorizada.
 
 ## Brand Commitments
@@ -50,9 +50,9 @@ Preservar os assets de identidade e retrato fornecidos, além das decisões já 
 - `assets/originals/brand/`: arquivos originais da identidade.
 - `assets/originals/portraits/`: retrato fornecido de Rafael.
 - `assets/originals/properties/vernazza/`: materiais do empreendimento fornecidos ou obtidos na pasta compartilhada pelo responsável.
-- `public/images/vernazza/`: versões otimizadas para o site.
-- `src/data/vernazza.ts`: cadastro real fornecido, com campos pendentes identificados. As imagens são perspectivas artísticas e fotomontagens, não fotografias de uma obra concluída.
-- `src/data/properties.ts`: catálogo com imóveis demonstrativos, que não constituem ofertas verificadas.
+- `tests/assets/images/`: versões otimizadas usadas exclusivamente nos testes; marca/retrato/ícones ativos ficam em `public/images/`.
+- `tests/fixtures/vernazza.ts`: cenário histórico de teste. Os materiais são perspectivas artísticas e fotomontagens, não fotografias de uma obra concluída; valores não são fonte dos anúncios atuais.
+- `tests/fixtures/properties.ts`: catálogo demonstrativo para testes, sem participação no site publicado. O Sanity é a fonte dos anúncios atuais.
 - Não foram fornecidos depoimentos, resultados de investimento ou comprovação de parcerias para publicação. Não inventar essas evidências.
 
 ## Product Principles

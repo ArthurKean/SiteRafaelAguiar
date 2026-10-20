@@ -1,5 +1,5 @@
 import { test, expect } from './fixtures';
-import { vernazza } from '../src/data/vernazza';
+import { vernazza } from './fixtures/vernazza';
 
 for (const width of [390, 1440]) test(`galeria com miniaturas e cliques rápidos em ${width}px`, async ({page}) => {
   await page.setViewportSize({width,height:900});

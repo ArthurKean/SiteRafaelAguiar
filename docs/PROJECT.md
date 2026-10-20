@@ -1,98 +1,60 @@
-# Rafael Aguiar — Curadoria de Imóveis
+# Arquitetura do site
 
-V1 de um catálogo imobiliário em React, TypeScript, Vite e CSS próprio. Sem backend, banco de dados, autenticação ou painel administrativo.
+## Fluxo de dados
 
-## Executar
+`Página → propertyService → API pública Sanity → adaptação → componentes`.
 
-Requer Node.js 22.12+ (validado com Node.js 24) e npm.
+React e TypeScript são compilados pelo Vite. O React Router mantém as rotas; a Vercel encaminha URLs para `index.html`. Catálogo, favoritos, detalhes e 404 são carregados sob demanda. A apresentação de Rafael está na home; `/sobre` preserva links antigos por redirecionamento.
 
-```sh
-npm ci
-npm run dev
-```
+`loadProperties` consulta os documentos publicados e deduplica requisições simultâneas enquanto estão pendentes. Não existe cache permanente, sincronização em tempo real ou fallback para anúncios locais. As páginas tratam carregamento, falha e ausência de resultados.
 
-Abra http://127.0.0.1:5173. Para produção: `npm run build`. Para conferir o build: `npm run preview`.
+## Regras preservadas
 
-## O que está implementado
+- Filtros de bairro, tipo, preço, quartos mínimos, área e status, além de busca textual por nome/bairro/cidade e ordenação. Estado mantido na URL. O antigo parâmetro `city` é ignorado pelo catálogo.
+- Preço filtra a interseção com a faixa disponível; área mínima considera a maior opção.
+- Cards usam mínimo de preço, mínimo/máximo de área e máximos das quantidades. Dados gerais anteriores continuam sendo fallback quando não há valor nas opções.
+- Detalhes iniciam na opção mais barata. A seleção atualiza características, preço, plantas, fotos específicas e WhatsApp. Quantidades ausentes não são copiadas de outra opção.
+- Quartos inclui suítes. A composição usa esse total; um cadastro com mais suítes que quartos tem o total omitido e marcado para confirmação.
+- Galeria mostra a imagem completa, miniaturas, teclado e gesto horizontal; pré-carrega somente fotos vizinhas e evita que um carregamento antigo substitua a escolha mais recente.
+- Favoritos persistem no navegador e sincronizam entre abas. Não há envio automático de mensagens nem armazenamento de leads.
+- Diálogos preservam foco, Escape e navegação por teclado. Banner respeita pausa e movimento reduzido.
 
-- Home com carrossel de destaques a cada 5 segundos, controles manuais e pausa, busca rápida e apresentação do corretor. A rotação pausa sobre a foto, ao focar o conteúdo e em abas ocultas; inicia pausada quando há preferência por movimento reduzido.
-- Catálogo com busca por nome/bairro/cidade; filtros de cidade, bairro, tipo, intervalo de preço, quartos mínimos, área mínima e status; chips removíveis; quatro ordenações.
-- Filtros persistidos em parâmetros de URL. Preço considera interseção com a faixa das unidades; área mínima considera a maior planta disponível.
-- Detalhes com galeria, lightbox, descrição, especificações, características, investimento, apresentação editorial, seletor de plantas e localização.
-- Rotas `/`, `/imoveis`, `/imoveis/:slug`, `/sobre` e tratamento de página/imóvel não encontrado.
-- Navegação mobile, filtros em diálogo, galeria horizontal, foco visível, labels, skip link, Escape e contenção nativa de foco nos diálogos. Respeita movimento reduzido.
-- Fontes locais Manrope e Playfair Display via Fontsource, imagens WebP, versões menores para cards, lazy loading, páginas secundárias carregadas sob demanda.
-- Título, descrição e Open Graph atualizados por página.
+## Estilos e imagens
 
-## Arquivos principais
+A fonte é Poppins local (400, 500, 600 e 700). `tokens.css` contém valores compartilhados; `global.css` concentra os estilos atuais e breakpoints. Preservar a ordem da cascata ao reorganizar estilos.
 
-| Caminho | Responsabilidade |
-| --- | --- |
-| `src/App.tsx` | Rotas e carregamento das páginas |
-| `src/pages/` | Home, catálogo, detalhes, sobre e 404 |
-| `src/components/` | Layout, busca, filtros, cards, galeria, contato e informações do imóvel |
-| `src/types/property.ts` | Contratos de imóvel, imagem, planta e filtros |
-| `src/data/properties.ts` | Seis imóveis explicitamente demonstrativos |
-| `src/services/propertyService.ts` | Acesso assíncrono aos dados, filtros e ordenação |
-| `src/styles/tokens.css` | Cores, espaçamentos, fontes, radius, motion, sombras e containers |
-| `src/styles/global.css` | Componentes e breakpoints responsivos |
-| `src/utils/contact.ts` | Configuração, mensagem e URL de WhatsApp |
-| `src/utils/hooks.ts` | Consulta assíncrona com estados e metadados SEO |
-| `scripts/prepare-images.mjs` | Geração reproduzível das imagens WebP e recorte do monograma |
-| `tests/site.spec.ts` | Fluxos reais de navegador desktop/mobile/tablet |
+Imagens dos imóveis vêm do CDN do Sanity, com parâmetros de tamanho e qualidade. `public/images` contém os recursos de marca/retrato, ícones e imagem neutra necessários ao site. Fotos do catálogo de teste ficam em `tests/assets/images`, servidas por interceptação do Playwright; não entram na pasta publicada.
 
-## Dados que precisam ser substituídos
-
-Todos os imóveis, valores, metragens, características, configurações de plantas e associações a bairros são exemplos. As fotos de arquitetura são ilustrativas, não retratam os imóveis. A foto do Rafael e as marcas foram preservadas em `assets/originals/`, com nomes descritivos. O CRECI 8404 foi confirmado pelo responsável pelo projeto e está no rodapé.
-
-Não foram publicados telefone, Instagram, endereço, coordenadas, histórico profissional ou prazos de entrega sem confirmação. O Figma contém placeholders e dados genéricos; não foram tratados como informações profissionais verificadas.
-
-As plantas não possuem desenhos fornecidos. O seletor de metragem fica no card de investimento e atualiza preço e características. A seção de visualização da planta aparece somente quando a opção selecionada possui uma imagem cadastrada. A localização indica apenas a região de demonstração, sem simular um endereço preciso.
-
-O WhatsApp utiliza o número confirmado `559891588444`. A variável `VITE_WHATSAPP_NUMBER` pode sobrescrevê-lo; vazia mantém o padrão. Os botões dos detalhes incluem o imóvel e a metragem selecionada, com unidade e posição quando cadastradas. O visitante confirma o envio no WhatsApp. Não há coleta nem armazenamento de leads.
-
-## Referência visual e diferenças
-
-Referência: [Figma fornecido](https://www.figma.com/design/GLENjHQbhaXie7nKRDztGP/Rafael-Aguiar--Cat%C3%A1logo-de-Im%C3%B3veis?node-id=0-1).
-
-Foram consultados os frames de Home e catálogo, além da estrutura das telas desktop e mobile. O plano Starter do Figma atingiu o limite de chamadas antes da extração completa do frame de detalhes; essa página segue a estrutura de nós obtida e o briefing. Não há alegação de equivalência pixel a pixel com todas as telas.
-
-Preservados: azul `#0e131d`, marfim `#f6f2e8`, dourado `#c6a15b`, combinação tipográfica, hero dividido, busca, destaques, apresentação do corretor, sidebar do catálogo e galeria assimétrica de detalhes. A cor dourada foi escurecida em pequenos textos sobre fundo claro para legibilidade.
-
-Adaptações: fotografias ilustrativas no lugar dos blocos genéricos, logo e retrato reais, estados e filtros funcionais, altura fluida das seções, mais opções no catálogo, conteúdo editorial e seletor de plantas. O mapa esquemático foi substituído por uma área de localização explicitamente pendente, pois não foram fornecidos endereços.
-
-A redação para visitantes foi revisada com Humanizer, sem alterar dados técnicos, preços, nomes ou rotas. Essa ferramenta não é uma dependência do projeto.
+`npm run images:prepare` gera marca/retrato para `public/images` e fotos de teste para `tests/assets/images`, usando as fontes preservadas em `assets/originals`. Não executar esse script para importar imóveis reais: o cadastro publicado é feito no Sanity.
 
 ## Testes
 
-```sh
-npm test
-npm run test:e2e
-npm run build
-```
+- `src/**/*.test.ts`: adaptação Sanity, filtros, formatação de quartos e contato.
+- `tests/*.spec.ts`: fluxos de navegador, fotos, opções, favoritos, orçamento, responsividade e integração publicada.
+- `tests/fixtures/`: exemplos e cenário histórico Vernazza. Valores não representam uma oferta atual.
+- `tests/fixtures.ts`: intercepta API e imagens para cenários reprodutíveis, sem depender do CMS real.
 
-Os testes de navegador usam Microsoft Edge instalado e iniciam/reutilizam o servidor Vite local. Cobrem navegação, query strings, filtros, ordenação, estado vazio, galeria, plantas, contato sem número, 404, imagens e ausência de overflow em 390 e 768 pixels. O fluxo desktop também verifica erros JavaScript. Capturas ficam em `test-results/`.
+O teste publicado em `sanity.spec.ts` depende da disponibilidade da API. Erros de rede devem ser diferenciados de regressões. Testes, recursos e exemplos não são importados pelo aplicativo de produção.
 
-Validação da V1: 6 testes unitários e 7 testes de navegador aprovados, build de produção aprovado. Revisão visual feita em desktop, tablet e celular. A navegação por teclado inclui retorno e ciclo de foco nos diálogos.
+## Fontes e decisões históricas
 
-## Preparação para V2
+Referência visual inicial: https://www.figma.com/design/GLENjHQbhaXie7nKRDztGP/Rafael-Aguiar--Cat%C3%A1logo-de-Im%C3%B3veis?node-id=0-1. O site evoluiu desde essa referência por decisões do responsável; não há promessa de equivalência visual com os frames antigos.
 
-Fluxo atual: **UI → propertyService → dados locais**. As páginas e componentes não importam os mocks. O serviço retorna Promises, permitindo substituir o adaptador por chamadas HTTP e manter os componentes. Preservar os contratos de `Property`, `PropertyPlan` e dos filtros na API; mover filtragem e ordenação para o servidor quando houver paginação.
+Marca e retrato foram fornecidos pelo responsável. Materiais do Vernazza permanecem arquivados como perspectivas artísticas/fotomontagens e recursos de teste. As seis fotos ilustrativas antigas têm estas origens; hoje são usadas somente pelos testes:
 
-O backend futuro poderá conectar API, PostgreSQL e `/admin`. Nada disso foi implementado nesta V1. Localização, galeria, plantas e contato têm componentes separados para receber dados reais.
+| Nome | Origem |
+| --- | --- |
+| interior | https://images.unsplash.com/photo-1600607687939-ce8a6c25118c |
+| residencia | https://images.unsplash.com/photo-1600585154340-be6161a56a0c |
+| sala | https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3 |
+| edificio | https://images.unsplash.com/photo-1460317442991-0ec209397118 |
+| apartamento | https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde |
+| varanda | https://images.unsplash.com/photo-1600210492486-724fe5c67fb0 |
 
-SEO atual é atualizado no cliente. Prerenderização ou renderização no servidor será necessária se compartilhadores sociais precisarem receber metadados individuais no HTML inicial. A hospedagem deve encaminhar rotas da SPA para `index.html`. Não houve publicação externa.
+Licenças dos ícones estão junto dos recursos públicos. Originais e backups foram preservados; não reescrever histórico Git para uma limpeza comum.
 
-## Origem das fotografias ilustrativas
+## Limites atuais
 
-Arquivos baixados do Unsplash e armazenados localmente; não há dependência das URLs em tempo de execução:
+Metadados de título, descrição e Open Graph são atualizados no navegador. Compartilhadores que não executam JavaScript recebem o HTML inicial; metadados individuais garantidos exigiriam prerenderização ou renderização no servidor.
 
-- `interior`: `https://images.unsplash.com/photo-1600607687939-ce8a6c25118c`
-- `residencia`: `https://images.unsplash.com/photo-1600585154340-be6161a56a0c`
-- `sala`: `https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3`
-- `edificio`: `https://images.unsplash.com/photo-1460317442991-0ec209397118`
-- `apartamento`: `https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde`
-- `varanda`: `https://images.unsplash.com/photo-1600210492486-724fe5c67fb0`
-
-Os nomes locais descrevem referências internas, não características comprovadas de um imóvel.
-
+O site recebe conteúdo público do Sanity sem autenticação. O painel administrativo tem seu próprio login. Não há backend próprio de leads. Otimizar o carregamento do banner e o reaproveitamento de consultas deve ser tratado como melhoria funcional, com política explícita de atualização de preços.

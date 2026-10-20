@@ -1,5 +1,5 @@
 import { vernazza } from "./vernazza";
-import type { Property } from "../types/property";
+import type { Property } from "../../src/types/property";
 
 // TODOS os empreendimentos, valores, características e bairros abaixo são demonstrações.
 // Fotografias de referência: não retratam os empreendimentos anunciados.
@@ -81,7 +81,6 @@ export const demoProperties: Property[] = seeds.map((seed, i) => ({
   name: seed.name,
   neighborhood: seed.neighborhood,
   city: "São Luís",
-  shortDescription: "Espaço para viver no seu ritmo.",
   description: `O ${seed.name} apresenta opções de ${seed.area} a ${seed.max} m², com ${seed.bedrooms} quartos e ${seed.parking} vagas. Compare as metragens e conheça as características de cada opção.`,
   priceFrom: seed.price,
   priceTo: Math.round(seed.price * 1.35),

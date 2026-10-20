@@ -1,9 +1,17 @@
-# Sanity Clean Content Studio
+# Sanity Studio — Rafael Aguiar
 
-Congratulations, you have now installed the Sanity Content Studio, an open-source real-time content editing environment connected to the Sanity backend.
+Painel de imóveis do projeto `jn7uxitm`, dataset `production`. Hospedado em https://rafaelaguiar.sanity.studio/.
 
-Now you can do the following things:
+Na raiz deste Studio:
 
-- [Read “getting started” in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
-- [Join the Sanity community](https://www.sanity.io/community/join?utm_source=readme)
-- [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
+```sh
+npm ci
+npm run dev
+npm run build
+```
+
+Para publicar mudanças no painel, use `npm run deploy` e a conta autorizada no Sanity. Na raiz do repositório principal, acrescente `--prefix studio-rafaelaguiar` após `npm`.
+
+`schemaTypes/imovel.ts` define o cadastro. `sanity.config.ts` registra o projeto e os plugins de edição/consulta; `sanity.cli.ts` configura a CLI. O frontend é um projeto separado, na pasta superior.
+
+Campos antigos ainda atendem imóveis publicados e devem ser preservados até uma migração conferida. Instruções de cadastro, fotos, plantas, quartos e backup estão em [docs/SANITY.md](../docs/SANITY.md).

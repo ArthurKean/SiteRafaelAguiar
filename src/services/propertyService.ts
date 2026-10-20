@@ -29,7 +29,6 @@ export function filterProperties(
     const text = normalize(`${p.name} ${p.neighborhood} ${p.city}`);
     return (
       (!filters.query || text.includes(normalize(filters.query.trim()))) &&
-      (!filters.city || p.city === filters.city) &&
       (!filters.neighborhood || neighborhoodKey(neighborhoodLabel(p.neighborhood)) === neighborhoodKey(neighborhoodLabel(filters.neighborhood))) &&
       (!filters.type || p.type === filters.type) &&
       (!filters.status || p.status === filters.status) &&
@@ -63,7 +62,6 @@ export const propertyService = {
   async options() {
     const properties = await loadProperties();
     return {
-      cities: [...new Set(properties.map((p) => p.city))],
       neighborhoods: [...new Map(properties.map((p) => {
         const label = neighborhoodLabel(p.neighborhood);
         return [neighborhoodKey(label), label];
