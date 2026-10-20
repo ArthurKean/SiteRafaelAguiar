@@ -73,9 +73,7 @@ export function Layout() {
               </Link>
               <p>Corretor de imóveis · CRECI 8404</p>
               <p>
-                Uma escolha importante.
-                <br />
-                Um olhar atento a cada detalhe.
+                Imóveis em São Luís para morar ou investir.
               </p>
             </div>
             <div>
@@ -87,9 +85,7 @@ export function Layout() {
             <div>
               <span className="eyebrow">Vamos conversar</span>
               <p>
-                Conte o que você procura
-                <br />
-                para o seu próximo momento.
+                Conte ao Rafael o que você procura.
               </p>
               <SocialContacts />
             </div>

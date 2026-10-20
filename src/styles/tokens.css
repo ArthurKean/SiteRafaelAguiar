@@ -30,10 +30,10 @@
   --radius-lg: 12px;
   --radius-xl: 20px;
   --radius-full: 999px;
-  --font-body: "Manrope", sans-serif;
-  --font-editorial: "Playfair Display", Georgia, serif;
-  --text-display: clamp(2.8rem, 4.4vw, 4.2rem);
-  --text-headline: clamp(2rem, 3vw, 2.75rem);
+  --font-body: "Poppins", sans-serif;
+  --font-editorial: var(--font-body);
+  --text-display: clamp(2rem, 4vw, 3.5rem);
+  --text-headline: clamp(1.6rem, 2.8vw, 2.25rem);
   --text-title: 1.2rem;
   --text-body: 1rem;
   --text-label: 0.69rem;

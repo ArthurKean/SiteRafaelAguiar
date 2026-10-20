@@ -57,11 +57,11 @@ export default function Home() {
             </button>
           </div>}
           <div className="immersive-copy">
-            <h1>Seu próximo endereço começa <em>com uma boa conversa.</em></h1>
-            <p>Imóveis em São Luís para morar ou investir.</p>
+            <h1>Encontre seu imóvel em São Luís.</h1>
+            <p>Compare bairros, metragens e valores. Escolha os imóveis que quer conhecer.</p>
           </div>
           <section className="immersive-search" aria-label="Buscar imóveis">
-            <h2>Encontre o imóvel ideal para o seu momento</h2>
+            <h2>Busque por bairro, tipo e valor</h2>
             <SearchBar />
           </section>
           {active && <p className="immersive-caption">{active.propertyName}</p>}
@@ -71,9 +71,8 @@ export default function Home() {
         <div className="container">
           <div className="section-heading">
             <div>
-              <span className="eyebrow">Uma seleção para você</span>
               <h2>Imóveis em destaque</h2>
-              <p>Conheça os espaços. Imagine as possibilidades.</p>
+              <p>Veja as opções e compare os detalhes.</p>
             </div>
             <Link to="/imoveis" className="text-link">
               Ver todos os imóveis 

@@ -3,11 +3,14 @@ import { Icon } from "./Icon";
 import { area, areaRange } from "../utils/format";
 import { useState } from "react";
 import type { Property, PropertyPlan } from "../types/property";
+import { bedroomDetails } from "../utils/bedrooms";
 export function PropertySpecs({ property: p }: { property: Property }) {
+  const rooms = bedroomDetails(p);
   const specs = [
     [areaRange(p.areaMin, p.areaMax), "Área privativa"],
-    [p.bedrooms, "Quartos"],
-    [p.suites, "Suítes"],
+    [rooms.total, "Quartos no total"],
+    [rooms.total != null && p.suites != null && rooms.total > p.suites ? rooms.total - p.suites : undefined, "Quartos sem suíte"],
+    [p.suites, rooms.total != null ? "Destes, suítes" : "Suítes"],
     [p.bathrooms, "Banheiros"],
     [p.parkingSpaces, "Vagas"],
   ];
@@ -23,6 +26,7 @@ export function PropertySpecs({ property: p }: { property: Property }) {
             </div>
           ))}
       </dl>
+      {rooms.needsTotal && <p className="room-count-note">Total de quartos desta opção a confirmar com Rafael.</p>}
       <ul className="features-list">
         {p.features.map((f) => (
           <li key={f}>
@@ -63,6 +67,7 @@ export function PropertyPlanSelector({
   );
 }
 export function PropertyPlanPreview({ plan }: { plan: PropertyPlan }) {
+  const rooms = bedroomDetails(plan);
   const drawings = plan.drawings?.length ? plan.drawings : plan.image ? [plan.image] : [];
   if (!drawings.length) return null;
   return (
@@ -73,7 +78,7 @@ export function PropertyPlanPreview({ plan }: { plan: PropertyPlan }) {
         <div className="plan-info">
           <h3>{area(plan.area)} m² de área privativa</h3>
           <p>
-            {[plan.bedrooms != null ? `${plan.bedrooms} quartos` : null, plan.suiteDescription ?? (plan.suites != null ? `${plan.suites} suítes` : null), plan.bathrooms != null ? `${plan.bathrooms} banheiros` : null].filter(Boolean).join(" · ")}
+            {[rooms.summary, plan.bathrooms != null ? `${plan.bathrooms} banheiros` : null].filter(Boolean).join(" · ")}
           </p>
         </div>
       </div>

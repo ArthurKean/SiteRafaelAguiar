@@ -1,7 +1,7 @@
 import { Watermark } from "./Watermark";
 import { useState } from "react";
 import type { Property } from "../types/property";
-import { Modal } from "./Modal";
+import { GalleryLightbox } from "./GalleryLightbox";
 export function PropertyGallery({ property }: { property: Property }) {
   const [index, setIndex] = useState<number | null>(null);
   const images = property.images;
@@ -33,41 +33,8 @@ export function PropertyGallery({ property }: { property: Property }) {
         ))}
       </div>
       {index !== null && (
-        <Modal
-          title={`${property.name} · ${index + 1} / ${images.length}`}
-          className="lightbox"
-          onClose={() => setIndex(null)}
-          onKeyDown={(e) => {
-            if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-              e.preventDefault();
-              move(e.key === "ArrowLeft" ? -1 : 1);
-            }
-          }}
-        >
-          <div>
-            <div className="watermarked-lightbox"><img
-              className="lightbox-image"
-              src={images[index].src}
-              alt={images[index].alt}
-            /><Watermark /></div>
-            <div className="lightbox-controls">
-              <button
-                className="button button-outline"
-                onClick={() => move(-1)}
-                aria-label="Foto anterior"
-              >
-                 Anterior
-              </button>
-              <button
-                className="button button-outline"
-                onClick={() => move(1)}
-                aria-label="Próxima foto"
-              >
-                Próxima 
-              </button>
-            </div>
-          </div>
-        </Modal>
+        <GalleryLightbox property={property} index={index} onSelect={setIndex}
+          onMove={move} onClose={() => setIndex(null)} />
       )}
     </>
   );

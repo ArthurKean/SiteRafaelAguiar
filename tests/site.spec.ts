@@ -23,7 +23,7 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Seu próximo endereço",
+    "Encontre seu imóvel em São Luís.",
   );
   await expect(page.locator(".property-card")).toHaveCount(3);
   await page.locator("select[name=neighborhood]").selectOption("Renascença");
@@ -80,8 +80,10 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   await expect(page.getByRole("dialog")).toHaveAccessibleName(/2 \/ 5/);
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
-  for (const selector of [".investment", ".detail-contact"]) {
-    const href = await page.locator(selector).getByRole("link", { name: "Falar com Rafael" }).getAttribute("href");
+  await expect(page.locator(".detail-contact")).toHaveCount(0);
+  {
+    const selector = ".investment";
+    const href = await page.locator(selector).getByRole("link", { name: "Consultar valor e disponibilidade" }).getAttribute("href");
     const contactUrl = new URL(href!);
     expect(contactUrl.pathname).toBe("/559891588444");
     expect(contactUrl.searchParams.get("text")).toContain("Vernazza Residenziale");
@@ -89,7 +91,7 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
     expect(contactUrl.searchParams.get("text")).not.toContain("S-101");
   }
   await page.locator(".investment").getByRole("button", { name: "87,98 m²", exact: true }).click();
-  const smallHref = await page.locator(".investment").getByRole("link", { name: "Falar com Rafael" }).getAttribute("href");
+  const smallHref = await page.locator(".investment").getByRole("link", { name: "Consultar valor e disponibilidade" }).getAttribute("href");
   const smallMessage = new URL(smallHref!).searchParams.get("text");
   expect(smallMessage).toContain("87,98 m²");
   expect(smallMessage).toContain("S-101");
@@ -106,7 +108,7 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   await expect(page.getByText("404 · Endereço não encontrado")).toBeVisible();
   await page.goto("/sobre");
   await expect(page.locator("#sobre").getByRole("heading")).toContainText(
-    "curadoria",
+    "Conheça Rafael Aguiar",
   );
   expect(errors).toEqual([]);
 });

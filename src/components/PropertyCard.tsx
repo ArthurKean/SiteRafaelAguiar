@@ -52,7 +52,9 @@ export function PropertyCard({ property: p }: { property: Property }) {
           <span>
             <PropertyIcon name="ruler" />{areaRange(p.areaMin, p.areaMax)}
           </span>
-          {p.bedrooms != null && <span><PropertyIcon name="bed-double" />{p.bedrooms} quartos</span>}
+          {p.bedrooms != null ? (
+            <span><PropertyIcon name="bed-double" />{p.bedrooms} {p.bedrooms === 1 ? "quarto" : "quartos"}</span>
+          ) : null}
           {p.bathrooms != null && <span><PropertyIcon name="bath" />{p.bathrooms} banheiros</span>}
           {p.parkingSpaces != null && <span><PropertyIcon name="car-front" />{p.parkingSpaces} vagas</span>}
         </div>
@@ -66,7 +68,7 @@ export function PropertyCard({ property: p }: { property: Property }) {
             className="card-arrow"
             aria-label={`Ver detalhes de ${p.name}`}
           >
-            Ver detalhes 
+            Ver imóvel
           </Link>
         </div>
       </div>

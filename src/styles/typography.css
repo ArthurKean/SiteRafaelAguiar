@@ -1,0 +1,144 @@
+/* Poppins: hierarquia compartilhada por início, catálogo, favoritos e detalhes. */
+body { font: 400 15px/1.65 var(--font-body); }
+h1, h2 { font-weight: 600; line-height: 1.25; letter-spacing: -.025em; text-wrap: balance; }
+h3 { line-height: 1.4; letter-spacing: -.015em; }
+h1, h2, h3, .detail-heading-title { overflow-wrap: anywhere; min-width: 0; }
+button, input, select, textarea { font-family: var(--font-body); }
+.button, .text-link { text-transform: none; letter-spacing: 0; font-size: 13px; font-weight: 500; }
+.navigation > a { font-size: 13px; text-transform: none; letter-spacing: 0; font-weight: 500; }
+.eyebrow { text-transform: none; letter-spacing: .02em; font-size: 12px; font-weight: 500; }
+.immersive-copy h1 { font-size: var(--text-display); line-height: 1.2; max-width: 780px; }
+.immersive-copy p { font-size: 16px; line-height: 1.7; max-width: 600px; margin-top: 20px; }
+.immersive-search h2 { font-size: 16px; font-weight: 500; }
+.section-heading { margin-bottom: 28px; }
+.section-heading p { font-size: 15px; line-height: 1.65; margin-top: 12px; }
+.catalog-intro h1 { font-size: clamp(30px, 3.3vw, 42px); margin-top: 0; max-width: 850px; }
+.catalog-intro p { font-size: 15px; max-width: 650px; margin-top: 14px; }
+.catalog-search > span, .filter-panel > label, .filter-panel fieldset { font-size: 13px; }
+.catalog-search input, .filter-panel select, .filter-panel input, .search-bar select { font-size: 14px; }
+.search-bar label, .price-trigger > span { font-size: 11px; text-transform: none; letter-spacing: 0; }
+.price-trigger strong { font-size: 14px; }
+.search-bar label { gap: 6px; padding: 10px 14px; }
+.filter-title h2 { font-weight: 600; font-size: 17px; }
+.filter-panel { padding: 20px; }
+.price-inputs { grid-template-columns: 1fr; }
+.price-inputs label, .clear-filters, .segmented button, .plan-tabs button, .filter-chip { font-size: 12px; }
+.results-toolbar p { font-size: 14px; }
+.sort-label, .sort-label select { font-size: 12px; }
+.card-content { padding: 22px; display: flex; flex-direction: column; flex: 1; }
+.property-card { display: flex; flex-direction: column; }
+.card-visual { flex-shrink: 0; }
+.card-location { font-size: 12px; line-height: 1.6; margin-bottom: 8px; }
+.card-content h3 { font-size: 21px; font-weight: 600; line-height: 1.35; letter-spacing: -.02em; }
+.card-specs { font-size: 12px; gap: 10px 16px; margin-top: 18px; padding-bottom: 20px; flex-wrap: wrap; }
+.card-bottom { margin-top: auto; gap: 14px; padding-top: 18px; }
+.card-bottom small { font-size: 11px; margin-bottom: 3px; }
+.card-bottom strong { font-size: 20px; line-height: 1.4; letter-spacing: -.015em; }
+.card-arrow { font-size: 12px; font-weight: 500; border-radius: 8px; background: var(--color-primary); color: white; border-color: var(--color-primary); padding: 10px 16px; }
+.card-arrow:hover { background: #29333f; }
+.status { font-size: 11px; font-weight: 500; text-transform: none; letter-spacing: 0; }
+.about-copy h2 { max-width: 520px; }
+.about-copy p { font-size: 15px; line-height: 1.8; margin: 20px 0; max-width: 58ch; }
+.portrait-caption span { font-size: 11px; }
+.footer-signature > span { font-size: 28px; font-weight: 500; }
+.footer-grid p, .footer-grid > div:nth-child(2) > a { font-size: 13px; line-height: 1.75; }
+.footer-bottom { font-size: 11px; }
+.breadcrumbs { font-size: 11px; line-height: 1.6; }
+.detail-heading h1 { font-size: clamp(28px, 3.2vw, 42px); line-height: 1.25; margin: 14px 0; }
+.detail-heading > p, .detail-highlights { font-size: 14px; }
+.detail-highlights { gap: 14px 24px; flex-wrap: wrap; }
+.detail-columns { gap: 48px; }
+.detail-columns > *, .detail-sidebar, .investment { min-width: 0; }
+.detail-columns h2, .plan-section h2, .location-section h2, .detail-sidebar .section-heading h2 { font-size: clamp(22px, 2.4vw, 28px); }
+.description { font-size: 15px; line-height: 1.85; max-width: 72ch; }
+.specs dt, .investment-note, .investment > small { font-size: 12px; }
+.specs dd { font-size: 16px; overflow-wrap: anywhere; }
+.room-count-note { margin: 0 0 20px; font-size: 12px; line-height: 1.6; color: var(--color-on-surface-variant); }
+.features-list { font-size: 13px; }
+.investment-value > strong { font-size: clamp(23px, 2.5vw, 32px); line-height: 1.4; letter-spacing: -.02em; }
+.investment-value .investment-summary { font-size: 13px; line-height: 1.7; }
+.editorial-section h2 { font-size: clamp(25px, 2.6vw, 34px); }
+.editorial-section p { font-size: 14px; line-height: 1.7; }
+.detail-contact h2 { font-size: clamp(25px, 2.6vw, 34px); }
+.detail-contact p, .empty-state p { font-size: 15px; }
+.modal-header h2 { font-size: 24px; }
+@media (max-width: 700px) {
+  .immersive-copy h1 { font-size: clamp(30px, 7.5vw, 42px); }
+  .immersive-copy p { font-size: 15px; margin-top: 18px; }
+  .section-heading p { font-size: 14px; }
+  .section-heading .text-link { font-size: 13px; }
+  .about-copy p { font-size: 14px; }
+  .catalog-intro { padding-block: 32px; }
+  .catalog-intro h1 { font-size: 30px; }
+  .catalog-intro p { font-size: 14px; }
+  .catalog-search input, .filter-panel input, .filter-panel select, .search-bar select { font-size: 16px; }
+  .sort-label { white-space: normal; display: flex; flex-wrap: wrap; gap: 4px; }
+  .sort-label select { margin-left: 0; }
+  .card-content { padding: 20px; }
+  .card-content h3 { font-size: 21px; }
+  .card-bottom strong { font-size: 20px; }
+  .detail-heading h1 { font-size: 28px; }
+  .detail-highlights { font-size: 13px; gap: 12px 18px; }
+  .detail-columns { gap: 32px; }
+  .description { font-size: 14px; }
+  .investment { padding: 24px; }
+  .investment-value > strong { font-size: clamp(22px, 6vw, 28px); }
+  .specs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-grid { gap: 24px; }
+  .footer-grid > div { min-width: 0; }
+}
+
+/* O painel de preço aberto deve ficar acima dos cartões da próxima seção. */
+.immersive-hero { z-index: 1; }
+
+/* Galeria: controles fixos, foto inteira e miniaturas independentes. */
+.gallery-lightbox { padding: 24px; max-height: calc(100dvh - 24px); }
+.gallery-lightbox .modal-top { margin-bottom: 18px; }
+.gallery-lightbox .modal-top h2 { font-size: 18px; line-height: 1.5; }
+.gallery-stage { position: relative; border-radius: 8px; overflow: hidden; background: #080c11; touch-action: pan-y pinch-zoom; }
+.gallery-stage .watermarked-lightbox { height: clamp(180px, calc(100dvh - 290px), 620px); }
+.gallery-stage .lightbox-image { display: block; width: 100%; height: 100%; object-fit: contain; }
+.gallery-arrow { z-index: 2; position: absolute; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 48px; height: 48px; min-height: 44px; border: 1px solid #ffffff65; background: #10151ce8; color: white; border-radius: 50%; }
+.gallery-arrow:hover { background: #313d4b; }
+.gallery-arrow.previous { left: 14px; }
+.gallery-arrow.next { right: 14px; }
+.gallery-caption-row { display: flex; justify-content: space-between; align-items: start; gap: 16px; margin: 14px 0; font-size: 13px; }
+.gallery-caption-row span:last-child { color: #c4ccd4; white-space: nowrap; }
+.gallery-thumbnails { display: flex; gap: 10px; overflow-x: auto; padding: 4px 2px 8px; overscroll-behavior-inline: contain; scrollbar-width: thin; scrollbar-color: #788491 #10151c; }
+.gallery-thumbnails button { flex: 0 0 88px; height: 66px; padding: 3px; background: transparent; border: 2px solid transparent; border-radius: 8px; opacity: .65; }
+.gallery-thumbnails button[aria-current="true"] { border-color: #cfac68; opacity: 1; }
+.gallery-thumbnails button:hover { opacity: 1; }
+.gallery-thumbnails img { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; }
+.gallery-feedback { z-index: 3; position: absolute; bottom: 12px; left: 16px; right: 16px; display: flex; justify-content: center; pointer-events: none; }
+.gallery-feedback > span { background: #10151cee; padding: 8px 12px; border-radius: 6px; font-size: 12px; pointer-events: auto; }
+.gallery-feedback button { border: 0; background: transparent; color: #f3d291; text-decoration: underline; min-height: 44px; }
+.gallery-lightbox .gallery-hint { color: #b7c2cd; font-size: 12px; margin: 10px 0 0; }
+@media (max-width: 600px) {
+  .gallery-lightbox { width: calc(100% - 16px); padding: 16px; }
+  .gallery-lightbox .modal-top { gap: 12px; }
+  .gallery-lightbox .modal-top h2 { font-size: 15px; }
+  .gallery-arrow { width: 44px; height: 44px; }
+  .gallery-arrow.previous { left: 8px; }
+  .gallery-arrow.next { right: 8px; }
+  .gallery-thumbnails { gap: 6px; }
+  .gallery-thumbnails button { flex-basis: 62px; height: 52px; }
+}
+
+.gallery-arrow:hover, .gallery-arrow:active { transform: translateY(-50%); }
+
+/* Price guidance remains visible beside the selected property's value. */
+.investment-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 18px 0;
+  padding: 14px;
+  border: 1px solid #ddc58e;
+  border-radius: 8px;
+  background: #f5e9cd;
+  color: #493b20;
+}
+.investment-notice > svg { flex-shrink: 0; margin-top: 2px; }
+.investment-notice strong { display: block; font-size: 13px; font-weight: 600; line-height: 1.5; }
+.investment .investment-notice p { margin: 6px 0 0; font-size: 12px; line-height: 1.65; color: #493b20; }
+.investment .button-whatsapp { margin-top: 18px; padding-inline: 16px; white-space: normal; line-height: 1.5; text-align: center; }

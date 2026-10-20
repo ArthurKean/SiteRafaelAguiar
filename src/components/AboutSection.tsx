@@ -17,17 +17,18 @@ export function AboutSection() {
           </div>
         </div>
         <div className="about-copy">
-          <span className="eyebrow">Sobre Rafael</span>
-          <h2 id="sobre-title">Escolhas certas começam com uma boa curadoria.</h2>
+          <h2 id="sobre-title">Conheça Rafael Aguiar</h2>
           <p>
-            Para Rafael Aguiar, encontrar um imóvel começa com uma boa conversa.
-            Seu atendimento parte de ouvir você, entender seu momento e conhecer
-            o que importa na escolha de um lugar para morar ou investir em São Luís.
+            São 17 anos de experiência em vendas e uma preferência pelo que faz
+            diferença no atendimento: conversar e ouvir.
           </p>
           <p>
-            A partir disso, ele ajuda você a comparar os imóveis, esclarecer dúvidas
-            e avaliar as opções com atenção às suas necessidades.
+            Rafael gosta de entender o que você procura, responder às suas dúvidas
+            e acompanhar a escolha de perto. Em São Luís, ajuda você a comparar
+            imóveis para morar ou investir, com atenção às suas prioridades e
+            agilidade no retorno.
           </p>
+          <p>Conte ao Rafael o que você está procurando.</p>
           <SocialContacts />
         </div>
       </div>

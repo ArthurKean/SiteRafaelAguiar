@@ -45,3 +45,7 @@ it("combina planta antiga e pavimentos novos e mantém apresentação independen
  expect(result.plans[0].photos).toHaveLength(1);
  expect(result.presentationImage?.src).toContain('lazer.jpg');
 });
+
+it("unifica grafias do bairro na API", () => {
+ expect(normalizeProperty({...base, neighborhood: " Ponta D'areia "})?.neighborhood).toBe("Ponta d’Areia");
+});

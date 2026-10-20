@@ -15,6 +15,7 @@ import {
 import { ContactCTA } from "../components/ContactCTA";
 import { LoadingState, ErrorState } from "../components/PropertyCard";
 import { currency } from "../utils/format";
+import { bedroomDetails } from "../utils/bedrooms";
 import NotFound from "./NotFound";
 export default function PropertyDetails() {
   const { slug = "" } = useParams();
@@ -38,6 +39,7 @@ export default function PropertyDetails() {
     ) ?? p.plans.reduce<(typeof p.plans)[number] | undefined>((lowest, item) => !lowest || item.price < lowest.price ? item : lowest, undefined);
   const presentation = p.presentationImage ?? p.images[1];
   const selectedProperty = plan ? {...p, areaMin: plan.area, areaMax: plan.area, bedrooms: plan.bedrooms, suites: plan.suites, suiteDescription: plan.suiteDescription, bathrooms: plan.bathrooms, parkingSpaces: plan.parkingSpaces} : p;
+  const rooms = bedroomDetails(selectedProperty);
   return (
     <div className="container detail-page">
       <nav className="breadcrumbs" aria-label="Caminho de navegação">
@@ -58,7 +60,7 @@ export default function PropertyDetails() {
           <span>
             <PropertyIcon name="ruler" />{areaRange(selectedProperty.areaMin, selectedProperty.areaMax)}
           </span>
-          {(selectedProperty.suiteDescription || selectedProperty.suites != null) && <span><PropertyIcon name="bed-double" />{selectedProperty.suiteDescription ?? `${selectedProperty.suites} suítes`}</span>}
+          {rooms.summary && <span><PropertyIcon name="bed-double" />{rooms.summary}</span>}
           {selectedProperty.bathrooms != null && <span><PropertyIcon name="bath" />{selectedProperty.bathrooms} banheiros</span>}
           {selectedProperty.parkingSpaces != null && <span><PropertyIcon name="car-front" />{selectedProperty.parkingSpaces} vagas</span>}
           <span>{p.type}</span>
@@ -92,22 +94,29 @@ export default function PropertyDetails() {
           >
             {plan && (
               <p className="investment-summary">
-                {[`${area(plan.area)} m²`, plan.suiteDescription ?? (plan.suites != null ? `${plan.suites} suítes` : null), plan.bathrooms != null ? `${plan.bathrooms} banheiros` : null, plan.parkingSpaces != null ? `${plan.parkingSpaces} vagas` : null, plan.unit ? `Unidade ${plan.unit}` : null, plan.orientation ? `Posição ${plan.orientation}` : null].filter(Boolean).join(" · ")}
+                {[`${area(plan.area)} m²`, rooms.summary, plan.bathrooms != null ? `${plan.bathrooms} banheiros` : null, plan.parkingSpaces != null ? `${plan.parkingSpaces} vagas` : null, plan.unit ? `Unidade ${plan.unit}` : null, plan.orientation ? `Posição ${plan.orientation}` : null].filter(Boolean).join(" · ")}
               </p>
             )}
             <p>A partir de</p>
             <strong>{currency(plan?.price ?? p.priceFrom)}</strong>
           </div>
-          {(plan?.image || plan?.drawings?.length) && (
+          <div className="investment-notice">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 11v6M12 7v2" />
+            </svg>
+            <div>
+              <strong>Confirme o valor atualizado</strong>
+              <p>Preços e disponibilidade podem mudar. Consulte Rafael para confirmar o valor da opção escolhida e as condições de pagamento.</p>
+            </div>
+          </div>
+          {(plan?.image || !!plan?.drawings?.length) && (
             <a href="#planta-selecionada" className="text-link">
               Ver planta 
             </a>
           )}
-          <p className="investment-note">
-            Consulte disponibilidade e condições de pagamento.
-          </p>
           <ContactCTA propertyName={p.name} plan={plan ?? {area: p.areaMin}} className="button-whatsapp">
-            Falar com Rafael
+            Consultar valor e disponibilidade
           </ContactCTA>
           <small>Converse pelo WhatsApp</small>
         </div>
@@ -123,15 +132,11 @@ export default function PropertyDetails() {
           height="800"
         />
         <div>
-          <span className="eyebrow">Espaço para o cotidiano</span>
           <h2>
-            Imagine os seus dias
-            <br />
-            em um novo lugar.
+            Conheça os ambientes.
           </h2>
           <p>
-            Observe os ambientes, compare as opções e reserve um tempo para
-            escolher.
+            Veja os espaços e converse com Rafael sobre o que você procura.
           </p>
         </div>
       </section>
@@ -141,14 +146,6 @@ export default function PropertyDetails() {
         <h2>Fotos da opção selecionada</h2>
         <PropertyGallery key={plan.id} property={{...p, name: `${p.name} · ${plan.name || `${area(plan.area)} m²`}`, images: plan.photos}} />
       </section>}
-      <section className="detail-contact">
-        <div>
-          <span className="eyebrow">Seu próximo passo</span>
-          <h2>Ficou com alguma dúvida?</h2>
-          <p>Converse com Rafael sobre este imóvel.</p>
-        </div>
-        <ContactCTA propertyName={p.name} plan={plan ?? {area: p.areaMin}} />
-      </section>
     </div>
   );
 }

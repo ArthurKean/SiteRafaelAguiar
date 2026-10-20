@@ -1,3 +1,4 @@
+import { neighborhoodLabel } from "../utils/format";
 import type { Property, PropertyImage, PropertyPlan } from "../types/property";
 
 // Public identifiers only. Never put write tokens in VITE_* variables.
@@ -60,7 +61,7 @@ export function normalizeProperty(p: RecordData): Property | undefined {
     ...p, id:p.id, slug:p.slug, name:p.name, description:p.description || "", shortDescription:p.shortDescription || "",
     areaMin, areaMax:areas.length ? Math.max(...areas) : Math.max(areaMin, p.areaMax ?? areaMin),
     priceFrom, priceTo:prices.length ? Math.max(...prices) : Math.max(priceFrom, p.priceTo ?? priceFrom),
-    city:p.city || "São Luís", neighborhood:p.neighborhood || "", type:p.type || "Imóvel",
+    city:p.city || "São Luís", neighborhood:neighborhoodLabel(p.neighborhood || ""), type:p.type || "Imóvel",
     featured:p.featured === true, isDemo:p.isDemo === true, createdAt:p.createdAt || "",
     features:p.features ?? [], plans,
     bedrooms: maximum('bedrooms'), suites: maximum('suites'),

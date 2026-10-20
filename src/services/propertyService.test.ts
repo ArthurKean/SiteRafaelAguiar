@@ -69,3 +69,10 @@ describe("filtros com catálogo de teste", () => {
     );
   });
 });
+
+it("encontra imóveis usando grafias antigas de Ponta d'Areia", async () => {
+ const canonical = await propertyService.list({neighborhood: "Ponta d’Areia"});
+ expect(canonical.length).toBeGreaterThan(0);
+ expect(await propertyService.list({neighborhood: " Ponta D'areia "})).toEqual(canonical);
+ expect(await propertyService.options()).toMatchObject({neighborhoods: expect.arrayContaining(["Ponta d’Areia"])});
+});

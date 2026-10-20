@@ -17,7 +17,7 @@ test("cadastro com uma foto, plantas e falha da API", async ({page})=> {
  await expect(page.locator(".editorial-section")).toHaveCount(0);
  await page.locator(".investment").getByRole("button",{name:"80 m²",exact:true}).click();
  await expect(page.locator(".investment-value strong")).toContainText("200");
- const href=await page.locator(".investment").getByRole("link",{name:"Falar com Rafael"}).getAttribute("href");
+ const href=await page.locator(".investment").getByRole("link",{name:"Consultar valor e disponibilidade"}).getAttribute("href");
  expect(new URL(href!).searchParams.get("text")).toContain("80 m²");
  await page.unroute(api); await page.route(api,route=>route.fulfill({status:503,body:"unavailable"}));
  await page.goto("/imoveis"); await expect(page.getByText("Não foi possível carregar os imóveis.")).toBeVisible();

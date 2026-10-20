@@ -16,11 +16,15 @@ for (const width of [390, 1440]) {
   await card.locator('h3 a').click();
   await expect(page.getByRole('button',{name:'189,21 m² · Sem piscina',exact:true})).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('.specs')).toContainText('3');
+  await expect(page.locator('.detail-highlights')).toContainText('3 quartos no total · 1 quarto comum + 2 suítes');
+  await expect(page.locator('.specs')).toContainText('Quartos no total');
+  await expect(page.locator('.specs')).toContainText('Quartos sem suíte');
   await expect(page.locator('.investment-value strong')).toContainText('1.900.000,00');
   await expect(page.locator('.plan-drawings img')).toHaveCount(1);
   await expect(page.locator('.option-photos')).toHaveCount(0);
   await expect(page.locator('.editorial-section > img')).toHaveAttribute('alt','Apresentação');
   await page.getByRole('button',{name:'189,21 m² · Com piscina',exact:true}).click();
+  await expect(page.locator('.detail-highlights')).toContainText('4 quartos no total · todos são suítes');
   await expect(page.locator('.investment-value strong')).toContainText('2.200.000,00');
   await expect(page.locator('.plan-drawings img')).toHaveCount(2);
   await expect(page.locator('.plan-drawings')).toContainText('Superior');

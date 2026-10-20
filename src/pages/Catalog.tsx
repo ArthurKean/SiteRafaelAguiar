@@ -57,14 +57,13 @@ export default function Catalog() {
     <>
       <section className="catalog-intro">
         <div className="container">
-          <span className="eyebrow">Encontre seu próximo endereço</span>
-          <h1>Imóveis</h1>
-          <p>Explore a seleção e descubra o que faz sentido para você.</p>
+          <h1>Imóveis à venda em São Luís</h1>
+          <p>Compare bairros, metragens e valores. Escolha os imóveis que quer conhecer.</p>
           <label className="catalog-search">
             <span>Buscar por nome, bairro ou cidade</span>
             <input
               type="search"
-              placeholder="O que você está procurando?"
+              placeholder="Digite o nome do imóvel ou bairro"
               value={filters.query ?? ""}
               onChange={(e) => update("query", e.target.value)}
             />

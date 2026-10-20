@@ -1,6 +1,6 @@
 import { loadProperties } from "./sanity";
 import type { Property, PropertyFilters } from "../types/property";
-import { normalize } from "../utils/format";
+import { normalize, neighborhoodKey, neighborhoodLabel } from "../utils/format";
 
 export function filterProperties(
   properties: Property[],
@@ -30,7 +30,7 @@ export function filterProperties(
     return (
       (!filters.query || text.includes(normalize(filters.query.trim()))) &&
       (!filters.city || p.city === filters.city) &&
-      (!filters.neighborhood || p.neighborhood === filters.neighborhood) &&
+      (!filters.neighborhood || neighborhoodKey(neighborhoodLabel(p.neighborhood)) === neighborhoodKey(neighborhoodLabel(filters.neighborhood))) &&
       (!filters.type || p.type === filters.type) &&
       (!filters.status || p.status === filters.status) &&
       (!filters.minPrice || p.priceTo >= Number(filters.minPrice)) &&
@@ -64,7 +64,10 @@ export const propertyService = {
     const properties = await loadProperties();
     return {
       cities: [...new Set(properties.map((p) => p.city))],
-      neighborhoods: [...new Set(properties.map((p) => p.neighborhood))],
+      neighborhoods: [...new Map(properties.map((p) => {
+        const label = neighborhoodLabel(p.neighborhood);
+        return [neighborhoodKey(label), label];
+      })).values()],
       types: [...new Set(properties.map((p) => p.type))],
       statuses: [...new Set(properties.flatMap((p) => p.status ? [p.status] : []))],
     };
