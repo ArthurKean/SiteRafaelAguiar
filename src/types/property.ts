@@ -1,13 +1,18 @@
-export type PropertyStatus = "Lançamento" | "Em construção" | "Na planta";
+export type PropertyStatus = "Lançamento" | "Em construção" | "Na planta" | "Pronto para morar";
 export interface PropertyImage {
   src: string;
   alt: string;
+  title?: string;
 }
 export interface PropertyPlan {
+  name?: string;
+  parkingSpaces?: number;
+  drawings?: PropertyImage[];
+  photos?: PropertyImage[];
   id: string;
   area: number;
-  bedrooms: number;
-  suites: number;
+  bedrooms?: number;
+  suites?: number;
   bathrooms?: number;
   suiteDescription?: string;
   unit?: string;
@@ -25,12 +30,12 @@ export interface Property {
   priceTo: number;
   areaMin: number;
   areaMax: number;
-  bedrooms: number;
+  bedrooms?: number;
   suites?: number;
   suiteDescription?: string;
   bathrooms?: number;
-  parkingSpaces: number;
-  type: "Apartamento" | "Cobertura";
+  parkingSpaces?: number;
+  type: string;
   status?: PropertyStatus;
   developer?: string;
   surroundings?: string;
@@ -41,6 +46,7 @@ export interface Property {
   neighborhood: string;
   featured: boolean;
   images: PropertyImage[];
+  presentationImage?: PropertyImage;
   features: string[];
   plans: PropertyPlan[];
   latitude?: number;

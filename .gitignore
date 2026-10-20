@@ -20,3 +20,8 @@ Desktop.ini
 .idea/
 .vscode/
 *.local
+
+# Backups locais de conteúdo e código
+backups/
+*.tar.gz
+*.bundle

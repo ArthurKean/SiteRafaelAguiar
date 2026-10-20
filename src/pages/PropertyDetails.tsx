@@ -1,4 +1,6 @@
-import { area } from "../utils/format";
+import { PropertyIcon } from "../components/PropertyIcon";
+import { FavoriteButton } from "../components/Favorites";
+import { area, areaRange } from "../utils/format";
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { propertyService } from "../services/propertyService";
@@ -13,6 +15,7 @@ import {
 import { ContactCTA } from "../components/ContactCTA";
 import { LoadingState, ErrorState } from "../components/PropertyCard";
 import { currency } from "../utils/format";
+import { bedroomDetails } from "../utils/bedrooms";
 import NotFound from "./NotFound";
 export default function PropertyDetails() {
   const { slug = "" } = useParams();
@@ -33,7 +36,10 @@ export default function PropertyDetails() {
   const plan =
     p.plans.find(
       (item) => selection.slug === slug && item.id === selection.planId,
-    ) ?? p.plans[0];
+    ) ?? p.plans.reduce<(typeof p.plans)[number] | undefined>((lowest, item) => !lowest || item.price < lowest.price ? item : lowest, undefined);
+  const presentation = p.presentationImage ?? p.images[1];
+  const selectedProperty = plan ? {...p, areaMin: plan.area, areaMax: plan.area, bedrooms: plan.bedrooms, suites: plan.suites, suiteDescription: plan.suiteDescription, bathrooms: plan.bathrooms, parkingSpaces: plan.parkingSpaces} : p;
+  const rooms = bedroomDetails(selectedProperty);
   return (
     <div className="container detail-page">
       <nav className="breadcrumbs" aria-label="Caminho de navegação">
@@ -45,17 +51,18 @@ export default function PropertyDetails() {
       </nav>
       <PropertyGallery property={p} />
       <div className="detail-heading">
-        <span className="eyebrow">{p.isDemo ? `${p.status} · Demonstração` : p.developer}</span>
-        <h1>{p.name}</h1>
+        <span className="eyebrow">{p.developer ?? p.status}</span>
+        <div className="detail-title-row"><h1>{p.name}</h1><FavoriteButton id={p.id} name={p.name} label /></div>
         <p>
           {p.neighborhood} · {p.city}, MA
         </p>
         <div className="detail-highlights">
           <span>
-            {area(p.areaMin)}–{area(p.areaMax)} m²
+            <PropertyIcon name="ruler" />{areaRange(selectedProperty.areaMin, selectedProperty.areaMax)}
           </span>
-          <span>{p.suiteDescription ?? `${p.suites} suítes`}</span>
-          <span>{p.parkingSpaces} vagas</span>
+          {rooms.summary && <span><PropertyIcon name="bed-double" />{rooms.summary}</span>}
+          {selectedProperty.bathrooms != null && <span><PropertyIcon name="bath" />{selectedProperty.bathrooms} banheiros</span>}
+          {selectedProperty.parkingSpaces != null && <span><PropertyIcon name="car-front" />{selectedProperty.parkingSpaces} vagas</span>}
           <span>{p.type}</span>
         </div>
       </div>
@@ -66,8 +73,8 @@ export default function PropertyDetails() {
             <p className="description">{p.description}</p>
           </section>
           <section className="spec-section">
-            <h3>Os detalhes fazem a diferença</h3>
-            <PropertySpecs property={p} />
+            <h3>{plan ? "Características da opção selecionada" : "Os detalhes fazem a diferença"}</h3>
+            <PropertySpecs property={selectedProperty} />
           </section>
         </div>
         <aside className="detail-sidebar">
@@ -87,61 +94,58 @@ export default function PropertyDetails() {
           >
             {plan && (
               <p className="investment-summary">
-                {[`${area(plan.area)} m²`, plan.suiteDescription ?? `${plan.suites} suítes`, plan.bathrooms ? `${plan.bathrooms} banheiros` : null, plan.unit ? `Unidade ${plan.unit}` : null, plan.orientation ? `Posição ${plan.orientation}` : null].filter(Boolean).join(" · ")}
+                {[`${area(plan.area)} m²`, rooms.summary, plan.bathrooms != null ? `${plan.bathrooms} banheiros` : null, plan.parkingSpaces != null ? `${plan.parkingSpaces} vagas` : null, plan.unit ? `Unidade ${plan.unit}` : null, plan.orientation ? `Posição ${plan.orientation}` : null].filter(Boolean).join(" · ")}
               </p>
             )}
             <p>A partir de</p>
             <strong>{currency(plan?.price ?? p.priceFrom)}</strong>
           </div>
-          {plan?.image && (
+          <div className="investment-notice">
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 11v6M12 7v2" />
+            </svg>
+            <div>
+              <strong>Confirme o valor atualizado</strong>
+              <p>Preços e disponibilidade podem mudar. Consulte Rafael para confirmar o valor da opção escolhida e as condições de pagamento.</p>
+            </div>
+          </div>
+          {(plan?.image || !!plan?.drawings?.length) && (
             <a href="#planta-selecionada" className="text-link">
               Ver planta 
             </a>
           )}
-          <p className="investment-note">
-            {p.isDemo ? "Valor ilustrativo. Consulte as informações reais antes de tomar uma decisão." : "Consulte disponibilidade e condições de pagamento."}
-          </p>
-          <ContactCTA propertyName={p.name} plan={plan} className="button-whatsapp">
-            Falar com Rafael
+          <ContactCTA propertyName={p.name} plan={plan ?? {area: p.areaMin}} className="button-whatsapp">
+            Consultar valor e disponibilidade
           </ContactCTA>
           <small>Converse pelo WhatsApp</small>
         </div>
         <LocationSection property={p} />
         </aside>
       </div>
-      <section className="editorial-section">
+      {presentation && <section className="editorial-section">
         <img
-          src={p.images[1].src}
-          alt={p.images[1].alt}
+          src={presentation.src}
+          alt={presentation.alt}
           loading="lazy"
           width="1400"
           height="800"
         />
         <div>
-          <span className="eyebrow">Espaço para o cotidiano</span>
           <h2>
-            Imagine os seus dias
-            <br />
-            em um novo lugar.
+            Conheça os ambientes.
           </h2>
           <p>
-            Observe os ambientes, compare as opções e reserve um tempo para
-            escolher.
+            Veja os espaços e converse com Rafael sobre o que você procura.
           </p>
-          <small>
-            {p.isDemo ? "Fotografia de referência, sem vínculo com o empreendimento." : "Perspectiva artística do Vernazza Residenziale."}
-          </small>
         </div>
       </section>
+      }
       {plan && <PropertyPlanPreview plan={plan} />}
-      <section className="detail-contact">
-        <div>
-          <span className="eyebrow">Seu próximo passo</span>
-          <h2>Ficou com alguma dúvida?</h2>
-          <p>Converse com Rafael sobre este imóvel.</p>
-        </div>
-        <ContactCTA propertyName={p.name} plan={plan} />
-      </section>
+      {!!plan?.photos?.length && <section className="option-photos">
+        <h2>Fotos da opção selecionada</h2>
+        <PropertyGallery key={plan.id} property={{...p, name: `${p.name} · ${plan.name || `${area(plan.area)} m²`}`, images: plan.photos}} />
+      </section>}
     </div>
   );
 }

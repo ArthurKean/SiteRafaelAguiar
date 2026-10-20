@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 test('galeria responde às setas ao abrir e mantém o foco ao fechar', async ({page}) => {
  await page.goto('/imoveis/vernazza-residenziale');
  const trigger=page.getByRole('button',{name:'Abrir foto 1 de Vernazza Residenziale'});

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures";
 
 test("WhatsApp flutuante aparece em todas as páginas no celular", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });

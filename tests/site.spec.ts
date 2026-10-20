@@ -1,5 +1,5 @@
-import { test, expect } from "@playwright/test";
-test("teclado, foco e link de contato", async ({ page }) => {
+import { test, expect } from "./fixtures";
+test("teclado, foco e navegação", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
   await page.keyboard.press("Tab");
@@ -7,13 +7,13 @@ test("teclado, foco e link de contato", async ({ page }) => {
     page.getByRole("link", { name: "Pular para o conteúdo" }),
   ).toBeFocused();
   await expect(page.locator(".header").getByRole("link", { name: "Falar com Rafael" }))
-    .toHaveAttribute("href", /^https:\/\/wa.me\/559891588444\?text=/);
+    .toHaveCount(0);
   await page
     .getByRole("navigation", { name: "Navegação principal" })
-    .getByRole("link", { name: "Contato", exact: true })
+    .getByRole("link", { name: "Favoritos, 0 imóveis", exact: true })
     .click();
-  await expect(page).toHaveURL(/#contato$/);
-  await expect(page.locator(".footer")).toBeInViewport();
+  await expect(page).toHaveURL(/favoritos$/);
+  await expect(page.getByRole("heading", { name: "Seus favoritos" })).toBeVisible();
 });
 test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   page,
@@ -23,11 +23,13 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "extraordinário",
+    "Encontre seu imóvel em São Luís.",
   );
   await expect(page.locator(".property-card")).toHaveCount(3);
   await page.locator("select[name=neighborhood]").selectOption("Renascença");
-  await page.locator("select[name=maxPrice]").selectOption("700000");
+  await page.getByRole("button", { name: "Valor máximo" }).click();
+  await page.getByRole("button", { name: "700 mil", exact: true }).click();
+  await page.getByRole("button", { name: "Aplicar", exact: true }).click();
   await page.getByRole("button", { name: "Buscar imóvel" }).click();
   await expect(page).toHaveURL(/neighborhood=Renasc/);
   await expect(page.locator(".property-card")).toHaveCount(1);
@@ -78,8 +80,10 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   await expect(page.getByRole("dialog")).toHaveAccessibleName(/2 \/ 5/);
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
-  for (const selector of [".investment", ".detail-contact"]) {
-    const href = await page.locator(selector).getByRole("link", { name: "Falar com Rafael" }).getAttribute("href");
+  await expect(page.locator(".detail-contact")).toHaveCount(0);
+  {
+    const selector = ".investment";
+    const href = await page.locator(selector).getByRole("link", { name: "Consultar valor e disponibilidade" }).getAttribute("href");
     const contactUrl = new URL(href!);
     expect(contactUrl.pathname).toBe("/559891588444");
     expect(contactUrl.searchParams.get("text")).toContain("Vernazza Residenziale");
@@ -87,7 +91,7 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
     expect(contactUrl.searchParams.get("text")).not.toContain("S-101");
   }
   await page.locator(".investment").getByRole("button", { name: "87,98 m²", exact: true }).click();
-  const smallHref = await page.locator(".investment").getByRole("link", { name: "Falar com Rafael" }).getAttribute("href");
+  const smallHref = await page.locator(".investment").getByRole("link", { name: "Consultar valor e disponibilidade" }).getAttribute("href");
   const smallMessage = new URL(smallHref!).searchParams.get("text");
   expect(smallMessage).toContain("87,98 m²");
   expect(smallMessage).toContain("S-101");
@@ -103,8 +107,8 @@ test("busca, filtros combinados, ordenação, vazio e navegação", async ({
   await page.goto("/rota-inexistente");
   await expect(page.getByText("404 · Endereço não encontrado")).toBeVisible();
   await page.goto("/sobre");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "curadoria",
+  await expect(page.locator("#sobre").getByRole("heading")).toContainText(
+    "Conheça Rafael Aguiar",
   );
   expect(errors).toEqual([]);
 });
@@ -112,13 +116,13 @@ test("home desktop, assets e galeria de destaques", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   await page
-    .getByRole("button", { name: "Mostrar Jardins da Península" })
+    .getByRole("button", { name: "Mostrar imagem 2 de Vernazza Residenziale" })
     .click();
-  await expect(page.locator(".hero-property")).toContainText(
-    "Jardins da Península",
+  await expect(page.locator(".immersive-caption")).toContainText(
+    "Vernazza Residenziale",
   );
   await page
-    .getByRole("button", { name: "Mostrar Vernazza Residenziale" })
+    .getByRole("button", { name: "Mostrar imagem 1 de Vernazza Residenziale" })
     .click();
   await page.evaluate(() => document.fonts.ready);
   await page.locator(".footer").scrollIntoViewIfNeeded();
@@ -139,7 +143,7 @@ for (const width of [390, 768]) {
   test(`responsividade e filtros em ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
     await page.goto("/");
-    await expect(page.locator(".hero-property")).toBeVisible();
+    await expect(page.locator(".immersive-caption")).toBeVisible();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= window.innerWidth,

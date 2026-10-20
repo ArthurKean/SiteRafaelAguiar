@@ -1,6 +1,6 @@
-import { properties } from "../data/properties";
+import { loadProperties } from "./sanity";
 import type { Property, PropertyFilters } from "../types/property";
-import { normalize } from "../utils/format";
+import { normalize, neighborhoodKey, neighborhoodLabel } from "../utils/format";
 
 export function filterProperties(
   properties: Property[],
@@ -30,12 +30,12 @@ export function filterProperties(
     return (
       (!filters.query || text.includes(normalize(filters.query.trim()))) &&
       (!filters.city || p.city === filters.city) &&
-      (!filters.neighborhood || p.neighborhood === filters.neighborhood) &&
+      (!filters.neighborhood || neighborhoodKey(neighborhoodLabel(p.neighborhood)) === neighborhoodKey(neighborhoodLabel(filters.neighborhood))) &&
       (!filters.type || p.type === filters.type) &&
       (!filters.status || p.status === filters.status) &&
       (!filters.minPrice || p.priceTo >= Number(filters.minPrice)) &&
       (!filters.maxPrice || p.priceFrom <= Number(filters.maxPrice)) &&
-      (!filters.bedrooms || p.bedrooms >= Number(filters.bedrooms)) &&
+      (!filters.bedrooms || (p.bedrooms ?? -1) >= Number(filters.bedrooms)) &&
       (!filters.minArea || p.areaMax >= Number(filters.minArea))
     );
   });
@@ -49,21 +49,25 @@ export function filterProperties(
           : b.createdAt.localeCompare(a.createdAt),
   );
 }
-// Contrato assíncrono: substituir somente este adaptador por fetch na V2.
+// Catálogo publicado no Sanity, sem dados locais de demonstração.
 export const propertyService = {
   async list(filters: PropertyFilters = {}): Promise<Property[]> {
-    return filterProperties(properties, filters);
+    return filterProperties(await loadProperties(), filters);
   },
   async featured(): Promise<Property[]> {
-    return properties.filter((p) => p.featured);
+    return (await loadProperties()).filter((p) => p.featured);
   },
   async getBySlug(slug: string): Promise<Property | undefined> {
-    return properties.find((p) => p.slug === slug);
+    return (await loadProperties()).find((p) => p.slug === slug);
   },
   async options() {
+    const properties = await loadProperties();
     return {
       cities: [...new Set(properties.map((p) => p.city))],
-      neighborhoods: [...new Set(properties.map((p) => p.neighborhood))],
+      neighborhoods: [...new Map(properties.map((p) => {
+        const label = neighborhoodLabel(p.neighborhood);
+        return [neighborhoodKey(label), label];
+      })).values()],
       types: [...new Set(properties.map((p) => p.type))],
       statuses: [...new Set(properties.flatMap((p) => p.status ? [p.status] : []))],
     };

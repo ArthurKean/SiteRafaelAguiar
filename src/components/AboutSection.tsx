@@ -1,8 +1,7 @@
 import { SocialContacts } from "./SocialContacts";
-import { Link } from "react-router-dom";
-export function AboutSection({ full = false }: { full?: boolean }) {
+export function AboutSection() {
   return (
-    <section className="about-section">
+    <section id="sobre" className="about-section" aria-labelledby="sobre-title">
       <div className="container about-grid">
         <div className="portrait-wrap">
           <img
@@ -14,34 +13,23 @@ export function AboutSection({ full = false }: { full?: boolean }) {
           />
           <div className="portrait-caption">
             <strong>Rafael Aguiar</strong>
-            <span>Curadoria de imóveis</span>
+            <span>Corretor de imóveis · CRECI 8404</span>
           </div>
         </div>
         <div className="about-copy">
-          <span className="eyebrow">Um olhar mais próximo</span>
-          {full ? (
-            <h1>Escolhas certas começam com uma boa curadoria.</h1>
-          ) : (
-            <h2>Escolhas certas começam com uma boa curadoria.</h2>
-          )}
+          <h2 id="sobre-title">Conheça Rafael Aguiar</h2>
           <p>
-            Encontrar um imóvel começa por entender o que faz sentido para você.
-            Explore as opções, compare os detalhes e converse com Rafael sobre o
-            que procura.
+            São 17 anos de experiência em vendas e uma preferência pelo que faz
+            diferença no atendimento: conversar e ouvir.
           </p>
-          {full && (
-            <p>
-              Conheça os empreendimentos da curadoria e suas opções de metragem.
-              Os imóveis usados como exemplo estão identificados como demonstração.
-            </p>
-          )}
-          {full ? (
-            <SocialContacts />
-          ) : (
-            <Link to="/sobre" className="text-link">
-              Conheça Rafael 
-            </Link>
-          )}
+          <p>
+            Rafael gosta de entender o que você procura, responder às suas dúvidas
+            e acompanhar a escolha de perto. Em São Luís, ajuda você a comparar
+            imóveis para morar ou investir, com atenção às suas prioridades e
+            agilidade no retorno.
+          </p>
+          <p>Conte ao Rafael o que você está procurando.</p>
+          <SocialContacts />
         </div>
       </div>
     </section>

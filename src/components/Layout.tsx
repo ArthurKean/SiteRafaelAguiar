@@ -1,9 +1,9 @@
+import { FavoritesLink } from "./Favorites";
 import { Icon } from "./Icon";
 import { SocialContacts } from "./SocialContacts";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
 import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-import { ContactCTA } from "./ContactCTA";
 export function Brand() {
   return (
     <Link to="/" className="brand" aria-label="Rafael Aguiar, início">
@@ -33,6 +33,7 @@ export function Layout() {
       <header className="header">
         <div className="container header-inner">
           <Brand />
+          <FavoritesLink mobile />
           <button
             className="menu-toggle icon-button"
             onClick={() => setMenu(!menu)}
@@ -50,13 +51,12 @@ export function Layout() {
               if (e.key === "Escape") setMenu(false);
             }}
           >
-            <NavLink to="/" end>
+            <Link to="/" className={location.pathname === "/" && !location.hash ? "active" : undefined} aria-current={location.pathname === "/" && !location.hash ? "page" : undefined} onClick={() => setMenu(false)}>
               Início
-            </NavLink>
-            <NavLink to="/imoveis">Imóveis</NavLink>
-            <NavLink to="/sobre">Sobre</NavLink>
-            <Link to="/#contato">Contato</Link>
-            <ContactCTA />
+            </Link>
+            <NavLink to="/imoveis" onClick={() => setMenu(false)}>Imóveis</NavLink>
+            <Link to="/#sobre" className={location.pathname === "/" && location.hash === "#sobre" ? "active" : undefined} onClick={() => { setMenu(false); if (location.pathname === "/") document.getElementById("sobre")?.scrollIntoView(); }}>Sobre</Link>
+            <FavoritesLink />
           </nav>
         </div>
       </header>
@@ -73,23 +73,19 @@ export function Layout() {
               </Link>
               <p>Corretor de imóveis · CRECI 8404</p>
               <p>
-                Uma escolha importante.
-                <br />
-                Um olhar atento a cada detalhe.
+                Imóveis em São Luís para morar ou investir.
               </p>
             </div>
             <div>
               <span className="eyebrow">Explore</span>
               <Link to="/">Início</Link>
               <Link to="/imoveis">Imóveis</Link>
-              <Link to="/sobre">Sobre Rafael</Link>
+              <Link to="/#sobre">Sobre Rafael</Link>
             </div>
             <div>
               <span className="eyebrow">Vamos conversar</span>
               <p>
-                Conte o que você procura
-                <br />
-                para o seu próximo momento.
+                Conte ao Rafael o que você procura.
               </p>
               <SocialContacts />
             </div>
@@ -97,7 +93,7 @@ export function Layout() {
           <div className="footer-bottom">
             <span>© {new Date().getFullYear()} Rafael Aguiar</span>
             <span>
-              Consulte disponibilidade e condições. Imóveis de demonstração estão identificados.
+              Consulte disponibilidade e condições.
             </span>
           </div>
         </div>
