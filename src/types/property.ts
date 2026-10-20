@@ -24,7 +24,6 @@ export interface Property {
   id: string;
   slug: string;
   name: string;
-  shortDescription: string;
   description: string;
   priceFrom: number;
   priceTo: number;
@@ -41,7 +40,6 @@ export interface Property {
   surroundings?: string;
   mapEmbedUrl?: string;
   mapUrl?: string;
-  deliveryDate?: string;
   city: string;
   neighborhood: string;
   featured: boolean;
@@ -49,14 +47,11 @@ export interface Property {
   presentationImage?: PropertyImage;
   features: string[];
   plans: PropertyPlan[];
-  latitude?: number;
-  longitude?: number;
   createdAt: string;
   isDemo: boolean;
 }
 export interface PropertyFilters {
   query?: string;
-  city?: string;
   neighborhood?: string;
   type?: string;
   minPrice?: string;

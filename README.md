@@ -1,87 +1,65 @@
 # Rafael Aguiar — Curadoria de Imóveis
 
-Catálogo imobiliário responsivo com React, TypeScript, Vite e CSS. V1 com dados locais, organizada para receber uma API futuramente.
+Catálogo imobiliário em React, TypeScript e Vite, integrado ao Sanity. O site público consulta somente imóveis publicados; o Studio é um projeto separado na mesma pasta.
 
-## Executar localmente
+- Site: https://site-rafael-aguiar.vercel.app/
+- CMS: https://rafaelaguiar.sanity.studio/
+- Node.js: 24, conforme `.nvmrc`.
 
-Use Node.js 24 (versão indicada em `.nvmrc`) e npm.
+## Executar
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Abra [localhost:5173](http://127.0.0.1:5173/).
+Site local: http://127.0.0.1:5173/. Para trabalhar no painel:
 
-## Comandos
+```sh
+npm --prefix studio-rafaelaguiar ci
+npm --prefix studio-rafaelaguiar run dev
+```
+
+## Comandos do site
 
 | Comando | Finalidade |
 | --- | --- |
-| `npm run dev` | Iniciar o desenvolvimento |
-| `npm run build` | Verificar TypeScript e gerar `dist/` |
-| `npm run preview` | Visualizar o build local |
-| `npm test` | Executar testes unitários |
-| `npm run test:e2e` | Executar testes de navegador; requer Microsoft Edge instalado |
-| `npm run images:prepare` | Gerar imagens otimizadas a partir dos originais |
+| `npm run dev` | Servidor local |
+| `npm run build` | Verificação TypeScript e build em `dist/` |
+| `npm run preview` | Visualizar o build |
+| `npm test` | Testes unitários |
+| `npm run test:e2e` | Testes em Microsoft Edge instalado |
+| `npm run images:prepare` | Gerar marca/retrato públicos e fotos exclusivas dos testes |
 
 ## Estrutura
 
-```text
-assets/originals/
-  brand/               # Logos originais fornecidos
-  portraits/           # Foto original do corretor
-  properties/          # Fotografias ilustrativas de referência
-docs/
-  PROJECT.md           # Arquitetura, decisões, limitações e origem das imagens
-public/images/         # Imagens otimizadas usadas pelo site
-scripts/               # Preparação de imagens
-src/
-  components/          # Componentes reutilizáveis
-  data/                # Dados de demonstração
-  pages/               # Páginas e rotas
-  services/            # Acesso aos dados e filtros
-  styles/              # Tokens e estilos responsivos
-  types/               # Contratos TypeScript
-  utils/               # Hooks e funções auxiliares
-tests/                 # Testes de navegador
-.env.example           # Modelo de configuração de contato
-```
+| Pasta/arquivo | Responsabilidade |
+| --- | --- |
+| `src/pages/` | Início, catálogo, favoritos, detalhes e 404 |
+| `src/components/` | Navegação, filtros, cards, galerias, contatos e características |
+| `src/services/sanity.ts` | Consulta pública e adaptação dos cadastros |
+| `src/services/propertyService.ts` | Busca, filtros, ordenação e opções de filtro |
+| `src/utils/` | Formatação, composição de quartos, contato e hooks |
+| `src/styles/tokens.css` | Valores visuais compartilhados |
+| `src/styles/global.css` | Estilos atuais, incluindo Poppins e galeria |
+| `public/images/` | Marca, retrato, ícones, fallback e licenças usados pelo site |
+| `tests/fixtures/` | Catálogo fixo usado somente nos testes |
+| `tests/assets/images/` | Fotos de teste; não são copiadas para `dist/` |
+| `assets/originals/` | Fontes das imagens locais, preservadas |
+| `studio-rafaelaguiar/` | Configuração e schema do CMS |
 
-Os originais ficam fora do código e da pasta pública. As versões de `public/images/` são versionadas para que o site funcione imediatamente após `npm ci`, sem precisar regenerar imagens.
+## Funcionamento
 
-## Funcionalidades
+O conteúdo vem da API do Sanity, projeto `jn7uxitm`, dataset `production`, com perspectiva `published`. A configuração pública pode ser sobrescrita pelas variáveis documentadas em `.env.example`. O frontend não recebe token de escrita.
 
-- Home com carrossel automático a cada 5 segundos, pausa e seleção manual.
-- Busca, filtros na URL e ordenação de imóveis.
-- Páginas individuais com galeria, especificações, plantas e contato.
-- Layout para desktop, tablet e celular, navegação por teclado e movimento reduzido.
-- Foto e identidade do corretor; CRECI 8404 no rodapé.
+O card usa o menor preço, a faixa de áreas e as maiores quantidades cadastradas nas opções. Quartos representa o total, incluindo suítes. Nos detalhes, a opção selecionada determina os números, o preço, as plantas e a mensagem de contato. Cadastros antigos sem opções e imagens de planta anteriores continuam suportados.
 
-## Configuração de contato
+As rotas são `/`, `/imoveis`, `/imoveis/:slug`, `/favoritos` e `/sobre` (redirecionamento para `/#sobre`). Favoritos são salvos neste navegador. O site não armazena leads. WhatsApp padrão: `559891588444`; Instagram: `rafaelaguiar_s`.
 
-O WhatsApp usa o número confirmado de Rafael: `559891588444` (Brasil + DDD 98 + 9158-8444). Para alterar, configure `VITE_WHATSAPP_NUMBER` e reinicie o servidor ou gere um novo build. A variável vazia mantém o número padrão.
+Alterações de conteúdo publicadas no Sanity são consultadas ao abrir/recarregar as páginas. Alterações no código do site exigem deploy na Vercel; alterações no schema/painel exigem deploy do Studio. A integração Git e a branch de produção são configuradas na Vercel.
 
-Nos detalhes, os dois botões de contato incluem o imóvel, a metragem selecionada, a unidade e a posição quando disponíveis, além de uma pergunta sobre disponibilidade e pagamento. O link abre a conversa com a mensagem preenchida; o visitante decide enviá-la. Variáveis com prefixo `VITE_` são públicas no frontend; não use esse prefixo para segredos.
+## Verificação
 
-## Dados demonstrativos
+Antes de publicar código, execute `npm test`, `npm run test:e2e` e `npm run build`. Os testes de navegador iniciam/reutilizam o servidor local. A maioria usa dados fixos; um cenário verifica a API publicada e depende da rede. Capturas são geradas em `test-results/`, ignorado pelo Git.
 
-O Vernazza contém os dados fornecidos pelo corretor em 20/09/2026, em `src/data/vernazza.ts`, e perspectivas artísticas do empreendimento. Os outros cinco imóveis são exemplos identificados. Ainda faltam o estágio da obra, o código da unidade maior e o número de banheiros do Vernazza. Não há backend, banco de dados, login ou painel administrativo nesta versão.
-
-Leia [a documentação técnica](docs/PROJECT.md) para detalhes da arquitetura, referência no Figma, limitações de SEO e origem dos assets.
-
-## Enviar ao GitHub
-
-O projeto já contém um repositório Git. Na pasta do projeto, revise e registre as alterações:
-
-```sh
-git status
-git add .
-git diff --cached --stat
-git commit -m "Organiza estrutura e documentação do projeto"
-```
-
-Depois, envie pelo GitHub Desktop ou faça push para o repositório remoto escolhido. Não é necessário executar `git init` novamente.
-
-O `.gitignore` exclui dependências, builds, caches, relatórios de testes e arquivos `.env` locais. `package-lock.json`, `.env.example`, código, documentação e imagens devem acompanhar o repositório. Se enviar pela interface web do GitHub, lembre que ela não aplica automaticamente o `.gitignore`: selecione apenas os arquivos versionáveis, sem `node_modules/`, `dist/`, `.npm-cache/` ou `test-results/`.
-
-Para hospedar o site, use o build gerado em `dist/` e configure o provedor para encaminhar as rotas da SPA para `index.html`.
+Leia [a arquitetura](docs/PROJECT.md), [o cadastro no Sanity](docs/SANITY.md) e [as decisões de produto](PRODUCT.md).

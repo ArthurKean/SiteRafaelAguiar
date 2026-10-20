@@ -19,6 +19,10 @@ Thumbs.db
 Desktop.ini
 .idea/
 .vscode/
+.claude/
+.codex/
+.cursor/
+.impeccable/
 *.local
 
 # Backups locais de conteúdo e código

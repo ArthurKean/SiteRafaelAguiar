@@ -1,4 +1,4 @@
-import { properties } from "../data/properties";
+import { properties } from "../../tests/fixtures/properties";
 import { describe, expect, it, vi } from "vitest";
 import { propertyService } from "./propertyService";
 import { buildWhatsAppUrl } from "../utils/contact";
@@ -23,7 +23,6 @@ describe("filtros com catálogo de teste", () => {
         maxPrice: "700000",
         bedrooms: "2",
         minArea: "80",
-        city: "São Luís",
         neighborhood: "Renascença",
         type: "Apartamento",
         status: "Na planta",

@@ -6,13 +6,12 @@ const project = import.meta.env.VITE_SANITY_PROJECT_ID || "jn7uxitm";
 const dataset = import.meta.env.VITE_SANITY_DATASET || "production";
 const query = `*[_type == "imovel" && ativo != false && defined(slug.current)] | order(_createdAt desc) {
   "id": _id, "slug": slug.current, "createdAt": _createdAt,
-  "name": titulo, "description": descricao, "shortDescription": descricaoCurta,
+  "name": titulo, "description": descricao,
   "priceFrom": preco, "priceTo": precoMaximo, "areaMin": area, "areaMax": areaMaxima,
   "bedrooms": quartos, "bathrooms": banheiros, "suites": suites,
   "suiteDescription": descricaoSuites, "parkingSpaces": vagas, "type": tipo,
-  status, "developer": construtora, "surroundings": entorno, "deliveryDate": entrega,
+  status, "developer": construtora, "surroundings": entorno,
   "mapUrl": mapaUrl, "mapEmbedUrl": mapaEmbedUrl,
-  "latitude": coordenadas.lat, "longitude": coordenadas.lng,
   "city": cidade, "neighborhood": bairro, "featured": destaque, "isDemo": demonstracao,
   "features": comodidades,
   "presentationImage": imagemApresentacao {"src": asset->url, alt},
@@ -58,7 +57,7 @@ export function normalizeProperty(p: RecordData): Property | undefined {
   const images = [p.cover, ...(p.images ?? [])].map(img => picture(img, p.name!)).filter((img): img is PropertyImage => !!img);
   const unique = images.filter((img, i) => images.findIndex(other => other.src === img.src) === i);
   return {
-    ...p, id:p.id, slug:p.slug, name:p.name, description:p.description || "", shortDescription:p.shortDescription || "",
+    ...p, id:p.id, slug:p.slug, name:p.name, description:p.description || "",
     areaMin, areaMax:areas.length ? Math.max(...areas) : Math.max(areaMin, p.areaMax ?? areaMin),
     priceFrom, priceTo:prices.length ? Math.max(...prices) : Math.max(priceFrom, p.priceTo ?? priceFrom),
     city:p.city || "São Luís", neighborhood:neighborhoodLabel(p.neighborhood || ""), type:p.type || "Imóvel",
@@ -90,5 +89,5 @@ export function cardImageSet(src: string): string | undefined {
     const small = new URL(src); small.searchParams.set("w", "640");
     return `${small} 640w, ${src} 1400w`;
   }
-  return src.endsWith(".webp") ? `${src.replace(".webp", "-640.webp")} 640w, ${src} 1400w` : undefined;
+  return undefined;
 }

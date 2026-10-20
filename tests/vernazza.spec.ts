@@ -6,7 +6,7 @@ test('Vernazza real: metragens, centavos, imagens e layout mobile', async ({ pag
  await expect(page.locator('.investment-value strong')).toContainText('1.308.744,15');
  await page.getByRole('button', { name: '130,49 m²', exact: true }).click();
  await expect(page.locator('.investment-value strong')).toContainText('2.508.744,15');
- await expect(page.locator('.investment-summary')).toContainText('3 suítes');
+ await expect(page.locator('.investment-summary')).toContainText('3 quartos no total · todos são suítes');
  await expect(page.locator('.investment-summary')).not.toContainText('S-101');
  await expect(page.locator('.description')).toContainText('Treviso Engenharia');
  await expect(page.locator('.description')).toContainText('Pet Place');

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildWhatsAppUrl, getContactMessage } from "./contact";
-import { vernazza } from "../data/vernazza";
+import { vernazza } from "../../tests/fixtures/vernazza";
 
 describe("contato com a metragem selecionada", () => {
   it("inclui imóvel, área, unidade e posição da opção menor", () => {
