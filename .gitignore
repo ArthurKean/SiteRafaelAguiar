@@ -29,3 +29,7 @@ Desktop.ini
 backups/
 *.tar.gz
 *.bundle
+
+# Arquivos temporarios da importacao de imoveis (books, imagens e scripts).
+/.renaissance-work/
+/.renaissance-tools/

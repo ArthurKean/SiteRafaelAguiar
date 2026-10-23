@@ -1476,6 +1476,14 @@ select {
  border: 1px solid currentColor; border-radius: var(--radius-full); font-size: 12px;
 }
 .social-contacts .social-button svg { flex: 0 0 21px; }
+.social-whatsapp-icon {
+  display: block;
+  flex: 0 0 21px;
+  width: 21px;
+  height: 21px;
+  background: currentColor;
+  mask: url("/images/whatsapp.svg") center / 18px 18px no-repeat;
+}
 .social-contacts .social-button .social-label { flex: 1; font-size: inherit; line-height: 1.4; text-align: left; }
 .social-contacts .social-button:hover { background: #88888815; }
 .ui-icon {
@@ -1523,7 +1531,7 @@ select {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: var(--color-whatsapp);
+  background: #16a34a;
   color: #fff;
   box-shadow: 0 6px 18px rgb(14 19 29 / 22%);
   animation: whatsapp-bounce 5s ease-in-out 1s infinite;
@@ -1548,7 +1556,7 @@ select {
   visibility: visible;
 }
 @media (hover: hover) and (pointer: fine) {
-  .floating-whatsapp:hover { transform: translateY(-3px); background: #174d35; }
+  .floating-whatsapp:hover { transform: translateY(-3px); background: #15803d; }
   .floating-whatsapp:hover .floating-whatsapp-label { opacity: 1; visibility: visible; }
 }
 .floating-whatsapp:active { transform: scale(.94); }
