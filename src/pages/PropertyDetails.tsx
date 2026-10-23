@@ -16,6 +16,7 @@ import { ContactCTA } from "../components/ContactCTA";
 import { LoadingState, ErrorState } from "../components/PropertyCard";
 import { currency } from "../utils/format";
 import { bedroomDetails } from "../utils/bedrooms";
+import { publicPlans } from "../utils/propertyPlans";
 import NotFound from "./NotFound";
 export default function PropertyDetails() {
   const { slug = "" } = useParams();
@@ -33,10 +34,11 @@ export default function PropertyDetails() {
   if (loading) return <LoadingState />;
   if (error) return <ErrorState />;
   if (!p) return <NotFound />;
+  const options = publicPlans(p.plans);
   const plan =
-    p.plans.find(
+    options.find(
       (item) => selection.slug === slug && item.id === selection.planId,
-    ) ?? p.plans.reduce<(typeof p.plans)[number] | undefined>((lowest, item) => !lowest || item.price < lowest.price ? item : lowest, undefined);
+    ) ?? options[0];
   const presentation = p.presentationImage ?? p.images[1];
   const selectedProperty = plan ? {...p, areaMin: plan.area, areaMax: plan.area, bedrooms: plan.bedrooms, suites: plan.suites, suiteDescription: plan.suiteDescription, bathrooms: plan.bathrooms, parkingSpaces: plan.parkingSpaces} : p;
   const rooms = bedroomDetails(selectedProperty);
@@ -82,7 +84,7 @@ export default function PropertyDetails() {
           <span className="eyebrow">Investimento</span>
           {plan && (
             <PropertyPlanSelector
-              plans={p.plans}
+              plans={options}
               selected={plan.id}
               onSelect={(planId) => setSelection({ slug, planId })}
             />
@@ -94,7 +96,7 @@ export default function PropertyDetails() {
           >
             {plan && (
               <p className="investment-summary">
-                {[`${area(plan.area)} m²`, rooms.summary, plan.bathrooms != null ? `${plan.bathrooms} banheiros` : null, plan.parkingSpaces != null ? `${plan.parkingSpaces} vagas` : null, plan.unit ? `Unidade ${plan.unit}` : null, plan.orientation ? `Posição ${plan.orientation}` : null].filter(Boolean).join(" · ")}
+                {[`${area(plan.area)} m²`, rooms.summary, plan.bathrooms != null ? `${plan.bathrooms} banheiros` : null, plan.parkingSpaces != null ? `${plan.parkingSpaces} vagas` : null].filter(Boolean).join(" · ")}
               </p>
             )}
             <p>A partir de</p>

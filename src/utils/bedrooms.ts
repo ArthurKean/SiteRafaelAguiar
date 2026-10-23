@@ -8,7 +8,9 @@ export function bedroomDetails({ bedrooms, suites, suiteDescription }: RoomCount
   const inconsistent = bedrooms != null && suites != null && suites > bedrooms;
   const total = inconsistent ? undefined : bedrooms;
   const validSuites = suites != null && suites > 0 ? suites : undefined;
-  const detail = suiteDescription?.trim();
+  const detail = suiteDescription?.split(/;\s*|\.\s+/)
+    .filter(clause => !/(?:refer\u00eancia|referencia|pre\u00e7o|valor).*\b(?:unidade|loja)\b/i.test(clause))
+    .join("; ").trim().replace(/[.;]$/, "");
   const addsInformation = detail && !(validSuites != null && new RegExp(`^${validSuites}\\s+su[ií]tes?$`, "i").test(detail));
   const totalLabel = total == null ? undefined : `${total} ${total === 1 ? "quarto" : "quartos"} no total`;
 

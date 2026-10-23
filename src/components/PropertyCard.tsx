@@ -7,7 +7,9 @@ import { areaRange } from "../utils/format";
 import { Link } from "react-router-dom";
 import type { Property } from "../types/property";
 import { currency } from "../utils/format";
+import { entryProperty } from "../utils/propertyPlans";
 export function PropertyCard({ property: p }: { property: Property }) {
+  const offer = entryProperty(p);
   const [photo, setPhoto] = useState(0);
   const touch = useRef({x: 0, y: 0, moved: false});
   const move = (amount: number) => setPhoto(i => (i + amount + p.images.length) % p.images.length);
@@ -50,18 +52,18 @@ export function PropertyCard({ property: p }: { property: Property }) {
         </h3>
         <div className="card-specs">
           <span>
-            <PropertyIcon name="ruler" />{areaRange(p.areaMin, p.areaMax)}
+            <PropertyIcon name="ruler" />{areaRange(offer.areaMin, offer.areaMax)}
           </span>
-          {p.bedrooms != null ? (
-            <span><PropertyIcon name="bed-double" />{p.bedrooms} {p.bedrooms === 1 ? "quarto" : "quartos"}</span>
+          {offer.bedrooms != null ? (
+            <span><PropertyIcon name="bed-double" />{offer.bedrooms} {offer.bedrooms === 1 ? "quarto" : "quartos"}</span>
           ) : null}
-          {p.bathrooms != null && <span><PropertyIcon name="bath" />{p.bathrooms} banheiros</span>}
-          {p.parkingSpaces != null && <span><PropertyIcon name="car-front" />{p.parkingSpaces} vagas</span>}
+          {offer.bathrooms != null && <span><PropertyIcon name="bath" />{offer.bathrooms} banheiros</span>}
+          {offer.parkingSpaces != null && <span><PropertyIcon name="car-front" />{offer.parkingSpaces} vagas</span>}
         </div>
         <div className="card-bottom">
           <div>
             <small>A partir de</small>
-            <strong>{currency(p.priceFrom)}</strong>
+            <strong>{currency(offer.priceFrom)}</strong>
           </div>
           <Link
             to={`/imoveis/${p.slug}`}

@@ -11,8 +11,8 @@ for (const width of [390, 1440]) {
   }]}}));
   await page.goto('/imoveis');
   const card=page.locator('.property-card');
-  await expect(card).toContainText('4 quartos'); await expect(card).toContainText('5 banheiros');
-  await expect(card).toContainText('3 vagas'); await expect(card).toContainText('1.900.000,00');
+  await expect(card).toContainText('3 quartos'); await expect(card).toContainText('3 banheiros');
+  await expect(card).toContainText('2 vagas'); await expect(card).toContainText('1.900.000,00');
   await card.locator('h3 a').click();
   await expect(page.getByRole('button',{name:'189,21 m² · Sem piscina',exact:true})).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('.specs')).toContainText('3');

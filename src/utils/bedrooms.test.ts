@@ -16,3 +16,12 @@ it("não afirma um total contraditório quando suítes excedem quartos", () => {
   expect(rooms.summary).toBe("3 suítes");
   expect(rooms.needsTotal).toBe(true);
 });
+
+it("omits commercial unit references from public room descriptions", () => {
+  expect(bedroomDetails({suites:4, suiteDescription:"4 su\u00edtes, lavabo; valor de refer\u00eancia da unidade 102"}).summary)
+    .toBe("4 su\u00edtes, lavabo");
+  expect(bedroomDetails({suiteDescription:"Studio integrado. Refer\u00eancia unidade 806."}).summary)
+    .toBe("Studio integrado");
+  expect(bedroomDetails({suiteDescription:"Pre\u00e7o de refer\u00eancia da unidade 102."}).summary)
+    .toBeUndefined();
+});

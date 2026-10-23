@@ -4,6 +4,7 @@ import { area, areaRange } from "../utils/format";
 import { useState } from "react";
 import type { Property, PropertyPlan } from "../types/property";
 import { bedroomDetails } from "../utils/bedrooms";
+import { planVariant, publicPlans } from "../utils/propertyPlans";
 export function PropertySpecs({ property: p }: { property: Property }) {
   const rooms = bedroomDetails(p);
   const specs = [
@@ -47,11 +48,13 @@ export function PropertyPlanSelector({
   selected: string;
   onSelect: (id: string) => void;
 }) {
+  const options = publicPlans(plans);
+  if (options.length < 2) return null;
   return (
     <fieldset className="investment-plans">
-      <legend>Escolha a opção</legend>
+      <legend>Escolha a metragem</legend>
       <div className="plan-tabs">
-        {plans.map((plan) => (
+        {options.map((plan) => (
           <button
             key={plan.id}
             type="button"
@@ -59,7 +62,7 @@ export function PropertyPlanSelector({
             aria-pressed={plan.id === selected}
             onClick={() => onSelect(plan.id)}
           >
-            {area(plan.area)} m²{plan.name ? ` · ${plan.name}` : plans.filter(p => p.area === plan.area).length > 1 ? ` · ${plan.unit || `Opção ${plans.indexOf(plan) + 1}`}` : ""}
+            {area(plan.area)} m²{planVariant(plan) ? ` · ${planVariant(plan)}` : ""}{options.some(other => other.id !== plan.id && other.area === plan.area && planVariant(other) === planVariant(plan)) ? ` · ${plan.bedrooms != null ? `${plan.bedrooms} quartos` : `${plan.suites ?? ""} suítes`}` : ""}
           </button>
         ))}
       </div>
