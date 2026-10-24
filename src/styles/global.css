@@ -71,6 +71,10 @@ p {
   outline-offset: 5px;
 }
 ::selection {
+  background: #dce8f3;
+  color: #10151e;
+}
+.immersive-copy ::selection {
   background: var(--color-accent);
   color: var(--color-primary);
 }
@@ -425,24 +429,24 @@ select {
 .footer {
   background: var(--color-primary);
   color: var(--color-on-primary);
-  padding: 56px 0 24px;
+  padding: 32px 0 20px;
 }
 .footer-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 40px;
-  padding-bottom: 48px;
+  gap: 32px;
+  padding-bottom: 24px;
 }
 .footer-grid p {
   color: #adb0b6;
   font-size: 12px;
-  margin: 20px 0;
+  margin: 12px 0 0;
 }
 .footer-signature {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 6px;
   padding-block: 2px;
 }
 .footer-signature > span {
@@ -471,7 +475,7 @@ select {
   border-top: 1px solid #ffffff20;
   display: flex;
   justify-content: space-between;
-  padding-top: 22px;
+  padding-top: 16px;
   color: #a4a8af;
   gap: 16px;
 }
@@ -830,16 +834,16 @@ select {
   position: absolute;
   bottom: 32px;
   left: 32px;
-  max-width: 470px;
+  max-width: 370px;
   background: var(--color-surface-container);
   border-radius: var(--radius-md);
-  padding: 32px;
+  padding: 20px 24px;
 }
 .editorial-section h2 {
-  margin-top: 16px;
+  margin-top: 0;
 }
 .editorial-section p {
-  margin: 16px 0;
+  margin: 10px 0 0;
 }
 .editorial-section small {
   font-size: 9px;
@@ -1560,7 +1564,7 @@ select {
   .floating-whatsapp:hover .floating-whatsapp-label { opacity: 1; visibility: visible; }
 }
 .floating-whatsapp:active { transform: scale(.94); }
-.footer { padding-bottom: 104px; }
+.footer-bottom { padding-right: 80px; }
 @keyframes whatsapp-bounce {
   0%, 20%, 100% { transform: translateY(0); }
   6% { transform: translateY(-10px); }
@@ -1586,7 +1590,7 @@ select {
 .immersive-backdrop { position: absolute; inset: 0; z-index: -2; overflow: hidden; }
 .immersive-backdrop img { position: absolute; width: 100%; height: 100%; object-fit: cover; object-position: center 55%; opacity: 0; transition: opacity 850ms ease; }
 .immersive-backdrop img.is-active { opacity: 1; }
-.immersive-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(8 15 24 / 88%), rgb(8 15 24 / 35%)), linear-gradient(0deg, rgb(8 15 24 / 65%), transparent 50%); }
+.immersive-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(8 15 24 / 78%), rgb(8 15 24 / 20%)), linear-gradient(0deg, rgb(8 15 24 / 55%), transparent 50%); }
 .immersive-content { position: relative; min-height: 710px; padding-top: 112px; padding-bottom: 24px; display: flex; flex-direction: column; }
 .immersive-copy { max-width: 760px; margin-bottom: 64px; }
 .immersive-copy h1 { text-wrap: balance; }
@@ -1879,3 +1883,21 @@ button, input, select, textarea { font-family: var(--font-body); }
 .investment-notice strong { display: block; font-size: 13px; font-weight: 600; line-height: 1.5; }
 .investment .investment-notice p { margin: 6px 0 0; font-size: 12px; line-height: 1.65; color: #493b20; }
 .investment .button-whatsapp { margin-top: 18px; padding-inline: 16px; white-space: normal; line-height: 1.5; text-align: center; }
+
+/* Compact footer contacts retain accessible touch targets. */
+.footer-grid { grid-template-columns: 1.3fr 0.7fr minmax(260px, 1fr); }
+.footer-grid .social-contacts { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 300px; gap: 10px; }
+.footer-grid .social-contacts > .social-button { min-height: 44px; padding: 10px 12px; gap: 8px; }
+.footer-grid .social-contacts .social-button svg, .footer-grid .social-whatsapp-icon { flex-basis: 18px; width: 18px; height: 18px; }
+.editorial-section h2 { font-size: clamp(23px, 2.2vw, 28px); line-height: 1.25; }
+@media (max-width: 700px) {
+  .footer { padding: 28px 0 20px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 20px; padding-bottom: 20px; }
+  .footer-grid > div:first-child { grid-column: auto; }
+  .footer-grid > div:nth-child(2) { display: flex; flex-wrap: wrap; align-items: center; column-gap: 20px; }
+  .footer-grid > div:nth-child(2) > .eyebrow { flex-basis: 100%; margin-bottom: 6px; }
+  .footer-grid > div:nth-child(2) > a { display: inline-flex; align-items: center; min-height: 44px; }
+  .footer-grid .social-contacts { max-width: 320px; }
+  .footer-bottom { padding-right: 64px; }
+  .editorial-section > div { margin-top: -24px; padding: 18px 20px; }
+}

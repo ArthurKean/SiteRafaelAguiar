@@ -40,6 +40,9 @@ export default function PropertyDetails() {
       (item) => selection.slug === slug && item.id === selection.planId,
     ) ?? options[0];
   const presentation = p.presentationImage ?? p.images[1];
+  const presentationIsLocation = /localiza|entorno|regi[aã]o|(?:vista|foto|imagem) a[eé]rea/i.test(presentation?.alt ?? "");
+  const presentationIsEnvironment = /sala|su[ií]te|living|cozinha|varanda|piscina|deck|gourmet|academia|lounge|hall|ambiente|parque aqu[aá]tico/i.test(presentation?.alt ?? "");
+  const presentationTitle = presentationIsLocation ? "Conheça a região." : presentationIsEnvironment ? "Conheça os ambientes." : "Conheça o empreendimento.";
   const selectedProperty = plan ? {...p, areaMin: plan.area, areaMax: plan.area, bedrooms: plan.bedrooms, suites: plan.suites, suiteDescription: plan.suiteDescription, bathrooms: plan.bathrooms, parkingSpaces: plan.parkingSpaces} : p;
   const rooms = bedroomDetails(selectedProperty);
   return (
@@ -134,11 +137,9 @@ export default function PropertyDetails() {
           height="800"
         />
         <div>
-          <h2>
-            Conheça os ambientes.
-          </h2>
+          <h2>{presentationTitle}</h2>
           <p>
-            Veja os espaços e converse com Rafael sobre o que você procura.
+            {presentationIsLocation ? "Veja a localização e as referências do entorno." : "Veja os espaços e converse com Rafael sobre o que você procura."}
           </p>
         </div>
       </section>
